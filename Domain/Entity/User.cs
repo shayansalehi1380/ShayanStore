@@ -18,11 +18,11 @@ namespace Domain.Entity
         public string NationalCode { get; set; } = string.Empty;
         public string Sheba { get; set; } = string.Empty;
         public DateTime InsertDate { get; set; } = DateTime.Now;
-        public DateTime ConfirmCodeExpireTime { get; set; }
+        public DateTime ConfirmCodeExpireTime { get; set; } = DateTime.Now.AddMinutes(3);
 
-        [ForeignKey("State")]
+        [ForeignKey("CityId")]
         public int CityId { get; set; }
-        public State State { get; set; } = default!;
+        public City City { get; set; } = default!;
 
     }
 }

@@ -11,8 +11,7 @@ namespace Domain.Entity
     {
         public string Name { get; set; } = string.Empty;
 
-
-        [ForeignKey("State")]
+        [ForeignKey("StateId")]
         public int StateId { get; set; }
         public State State { get; set; } = default!;
 
