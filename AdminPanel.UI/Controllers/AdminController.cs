@@ -12,13 +12,13 @@ namespace AdminPanel.UI.Controllers
         {
             _userManager = userManager;
         }
-        public IActionResult Login()
+        public IActionResult AdminLogin()
         {
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login(string email ,string password)
+        public async Task<IActionResult> AdminLogin(string email ,string password)
         { 
 
             if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
