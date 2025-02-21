@@ -1,30 +1,29 @@
 ﻿@model Domain.Entity.User
 @{
     ViewData["Title"] = "ورود ادمین";
+    Layout = null;
 }
-<h1>ورود</h1>
-<hr />
 <!DOCTYPE html>
 <html lang="fa">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/style.css">
-    <title>صفحه لاگین</title>
+    <title>ورود ادمین</title>
 </head>
 <body>
     <div class="login-container">
         <h2>ورود به حساب کاربری</h2>
-        <form>
+        <form asp-action="AdminDashboard" asp-controller="Admin" method="post">
             <div class="form-group">
-                <label asp-for="Email">نام کاربری:</label>
+                <label asp-for="Email">:نام کاربری</label>
                 <input type="text" id="username" name="username" required>
             </div>
             <div class="form-group">
-                <label asp-for="Password">رمز عبور:</label>
+                <label asp-for="Password">:رمزعبور</label>
                 <input type="password" id="password" name="password" required>
             </div>
-            <button asp-action="Admin/AdminDashboard">ورود</button>
+            <button type="submit" class="btn btn-success">ورود</button>
         </form>
     </div>
 </body>

@@ -9,16 +9,19 @@ body {
 }
 
 .login-container {
-    background-color: #fff;  /* پس‌زمینه فرم */
+    background-color: #fff; /* پس‌زمینه فرم */
     padding: 20px;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 300px;  /* عرض فرم */
+    width: 300px; /* عرض فرم */
     text-align: center;
 }
 
 .form-group {
     margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* وسط‌چین کردن عناصر */
 }
 
 label {
@@ -27,22 +30,24 @@ label {
 }
 
 input {
-    width: 100%;
+    width: 90%; /* عرض تکست‌باکس */
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 4px;
+    margin: 0 auto; /* وسط‌چین کردن تکست‌باکس */
 }
 
 button {
-    width: 100%;
+    width: 90%; /* عرض دکمه */
     padding: 10px;
     background-color: #4CAF50; /* رنگ دکمه */
     color: white;
     border: none;
     border-radius: 4px;
     cursor: pointer;
+    margin: 0 auto; /* وسط‌چین کردن دکمه */
 }
 
 button:hover {
-    background-color: #45a049; /* رنگ دکمه هنگام هاور */
+        background-color: #45a049; /* رنگ دکمه هنگام هاور */
 }
