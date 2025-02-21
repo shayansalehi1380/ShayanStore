@@ -19,7 +19,8 @@ namespace AdminPanel.UI.Controllers
 
         [HttpPost]
         public async Task<IActionResult> Login(string email ,string password)
-        {
+        { 
+
             if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
             {
                 ModelState.AddModelError("","نام کاربری یا رمز عبور وارد نشده است");
