@@ -1,4 +1,13 @@
+using Microsoft.EntityFrameworkCore;
+using Domain.DBContext;
+
 var builder = WebApplication.CreateBuilder(args);
+
+//Connect Postgresql
+builder.Services.AddDbContext<ShayanStoreDBContext>(options =>
+options.UseNpgsql(builder.Configuration
+.GetConnectionString("Host=localhost;Port=5432;Database=ShayanStoreDB;Username=postgres;Password=09011155")));
+
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
