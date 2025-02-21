@@ -4,7 +4,7 @@ body {
     align-items: center;
     height: 100vh;
     margin: 0;
-    background-color: #f0f0f0; /* رنگ پس‌زمینه */
+    background-color: #bee8ff; /* رنگ پس‌زمینه */
     font-family: Arial, sans-serif;
 }
 
@@ -40,7 +40,7 @@ input {
 button {
     width: 90%; /* عرض دکمه */
     padding: 10px;
-    background-color: #4CAF50; /* رنگ دکمه */
+    background-color: #009bf3; /* رنگ دکمه */
     color: white;
     border: none;
     border-radius: 4px;
@@ -48,6 +48,6 @@ button {
     margin: 0 auto; /* وسط‌چین کردن دکمه */
 }
 
-button:hover {
-        background-color: #45a049; /* رنگ دکمه هنگام هاور */
-}
+    button:hover {
+        background-color: #0085d0; /* رنگ دکمه هنگام هاور */
+    }
