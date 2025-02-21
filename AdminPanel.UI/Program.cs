@@ -1,16 +1,21 @@
+using AdminPanel.UI;
+using Application;
+using Domain;
 using Microsoft.EntityFrameworkCore;
 using Domain.DBContext;
+using Domain.Entity;
+using Infrastructure;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Connect to PostgreSQL  
-var connectionString = "Host=localhost;Port=5432;Database=ShayanStoreDB;Username=postgres;Password=09011155";
-builder.Services.AddDbContext<ShayanStoreDBContext>(options =>
-    options.UseNpgsql(connectionString));
+builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
+builder.Services.AddWebAppServices();
+builder.Services.AddApplicationServices();
+builder.Services.AddDomainServices();
+builder.Services.AddInfrastructureServices();
 
-// Add services to the container.  
-builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
@@ -22,7 +27,10 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseStaticFiles();
 app.UseRouting();
+app.UseSession();
+app.UseAuthentication(); 
 app.UseAuthorization();
 
 app.MapStaticAssets();
