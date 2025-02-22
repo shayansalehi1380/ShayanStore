@@ -96,12 +96,12 @@ namespace AdminPanel.UI.Controllers
             return View();
         }
 
-        public async Task<IActionResult> AdminLoginClean(string email, string password)
+        public async Task<IActionResult> AdminLoginClean(LoginAdminCommand request)
         {
             var result = await mediator.Send(new LoginAdminCommand
             {
-                Email = email,
-                Password = password
+                Email = request.Email,
+                Password = request.Password
             });
             if (!string.IsNullOrEmpty(result))
             {
