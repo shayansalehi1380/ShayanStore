@@ -70,5 +70,32 @@ namespace AdminPanel.UI.Controllers
         {
             return View();
         }
+        
+        public async Task<IActionResult> AdminLoginClean(string email, string password)
+        {
+            if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
+                return ReturnWithError("نام کاربری یا رمز عبور وارد نشده است");
+
+            var user = await _userManager.FindByEmailAsync(email);
+            if (user == null || !await _userManager.CheckPasswordAsync(user, password))
+                return ReturnWithError("نام کاربری یا رمز عبور یافت نشد");
+
+            if (!await _userManager.IsInRoleAsync(user, "Admin"))
+                return ReturnWithError("شما اجازه دسترسی به این بخش را ندارید");
+
+            var result = await _signInManager.PasswordSignInAsync(user, password, isPersistent: false, lockoutOnFailure: false);
+            if (!result.Succeeded)
+                return ReturnWithError("خطا در ورود به سیستم");
+
+            return RedirectToAction("AdminDashboard");
+        }
+
+// متد کمکی برای افزودن پیام خطا و بازگرداندن View          
+        private IActionResult ReturnWithError(string message)
+        {
+            ModelState.AddModelError("", message);
+            return View();
+        }
+
     }
 }
