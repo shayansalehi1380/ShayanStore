@@ -2,20 +2,14 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using Application.Users.v1.Commands.LoginAdmin;
+using MediatR;
 
 namespace AdminPanel.UI.Controllers
 {
-    public class AdminController : Controller
+    public class AdminController(UserManager<User> userManager, SignInManager<User> signInManager, IMediator mediator)
+        : Controller
     {
-        private readonly UserManager<User> _userManager;
-        private readonly SignInManager<User> _signInManager;
-
-        public AdminController(UserManager<User> userManager, SignInManager<User> signInManager)
-        {
-            _userManager = userManager;
-            _signInManager = signInManager;
-        }
-
         public IActionResult AdminLogin()
         {
             return View();
@@ -30,7 +24,7 @@ namespace AdminPanel.UI.Controllers
                 return View();
             }
 
-            var user = await _userManager.FindByEmailAsync(email);
+            var user = await userManager.FindByEmailAsync(email);
 
             if (user == null)
             {
@@ -38,7 +32,7 @@ namespace AdminPanel.UI.Controllers
                 return View();
             }
 
-            var isPasswordValid = await _userManager.CheckPasswordAsync(user, password);
+            var isPasswordValid = await userManager.CheckPasswordAsync(user, password);
 
             if (!isPasswordValid)
             {
@@ -47,7 +41,7 @@ namespace AdminPanel.UI.Controllers
             }
 
             // بررسی نقش کاربر (اگر نیاز باشد)
-            var isAdmin = await _userManager.IsInRoleAsync(user, "Admin");
+            var isAdmin = await userManager.IsInRoleAsync(user, "Admin");
             if (!isAdmin)
             {
                 ModelState.AddModelError("", "شما اجازه دسترسی به این بخش را ندارید");
@@ -55,7 +49,8 @@ namespace AdminPanel.UI.Controllers
             }
 
             // ورود کاربر
-            var result = await _signInManager.PasswordSignInAsync(user, password, isPersistent: false, lockoutOnFailure: false);
+            var result =
+                await signInManager.PasswordSignInAsync(user, password, isPersistent: false, lockoutOnFailure: false);
 
             if (result.Succeeded)
             {
@@ -70,24 +65,19 @@ namespace AdminPanel.UI.Controllers
         {
             return View();
         }
-        
+
         public async Task<IActionResult> AdminLoginClean(string email, string password)
         {
-            if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
-                return ReturnWithError("نام کاربری یا رمز عبور وارد نشده است");
-
-            var user = await _userManager.FindByEmailAsync(email);
-            if (user == null || !await _userManager.CheckPasswordAsync(user, password))
-                return ReturnWithError("نام کاربری یا رمز عبور یافت نشد");
-
-            if (!await _userManager.IsInRoleAsync(user, "Admin"))
-                return ReturnWithError("شما اجازه دسترسی به این بخش را ندارید");
-
-            var result = await _signInManager.PasswordSignInAsync(user, password, isPersistent: false, lockoutOnFailure: false);
-            if (!result.Succeeded)
-                return ReturnWithError("خطا در ورود به سیستم");
-
-            return RedirectToAction("AdminDashboard");
+            var result = await mediator.Send(new LoginAdminCommand
+            {
+                Email = email,
+                Password = password
+            });
+            if (!string.IsNullOrEmpty(result))
+            {
+                return RedirectToAction("AdminDashboard");
+            }
+            return RedirectToAction("AdminLogin");
         }
 
 // متد کمکی برای افزودن پیام خطا و بازگرداندن View          
@@ -96,6 +86,5 @@ namespace AdminPanel.UI.Controllers
             ModelState.AddModelError("", message);
             return View();
         }
-
     }
 }
