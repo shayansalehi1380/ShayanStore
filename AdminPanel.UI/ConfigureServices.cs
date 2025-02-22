@@ -16,6 +16,7 @@ public static class ConfigureServices
         });
         services.AddDistributedMemoryCache();
         services.AddAutoMapper(typeof(Program));
+        
         services.AddIdentity<User, Role>(option =>
             {
                 option.Password.RequireDigit = false;
@@ -28,6 +29,7 @@ public static class ConfigureServices
             })
             .AddUserManager<UserManager<User>>()
             .AddEntityFrameworkStores<ShayanStoreDBContext>();
+        
         services.ConfigureApplicationCookie(options =>
         {
             options.AccessDeniedPath = "/Admin/AccessDenied";

@@ -44,6 +44,7 @@ namespace AdminPanel.UI.Controllers
             }
             await userManager.AddToRoleAsync(user, "Admin");
         }
+        
         [HttpPost]
         public async Task<IActionResult> AdminLogin(string email, string password)
         {
