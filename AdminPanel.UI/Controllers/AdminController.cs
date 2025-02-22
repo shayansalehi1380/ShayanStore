@@ -7,7 +7,7 @@ using MediatR;
 
 namespace AdminPanel.UI.Controllers
 {
-    public class AdminController(UserManager<User> userManager, SignInManager<User> signInManager, IMediator mediator)
+    public class AdminController(UserManager<User> userManager, SignInManager<User> signInManager, IMediator mediator, RoleManager<Role> roleManager)
         : Controller
     {
         public IActionResult AdminLogin()
@@ -15,6 +15,35 @@ namespace AdminPanel.UI.Controllers
             return View();
         }
 
+        public async Task CreateAdmin()
+        {
+            var user = new User
+            {
+                UserName = "admin",
+                Email = "admin@admin.com",
+                CityId = 1,
+                ImageName = "admin.png",
+                InsertDate = DateTime.Now,
+                Sheba = string.Empty,
+                NationalCode = string.Empty,
+                Name = "admin",
+                PhoneNumber = "0921342141",
+                ConcurrencyStamp = string.Empty,
+                SecurityStamp = string.Empty,
+                Family = string.Empty,
+            };
+            await userManager.CreateAsync(user);
+            await userManager.AddPasswordAsync(user, "123456");
+            if (!roleManager.Roles.Any(x => x.Name == "Admin"))
+            {
+                await roleManager.CreateAsync(new Role
+                {
+                    Name = "Admin",
+                    NormalizedName = "ADMIN"
+                });
+            }
+            await userManager.AddToRoleAsync(user, "Admin");
+        }
         [HttpPost]
         public async Task<IActionResult> AdminLogin(string email, string password)
         {
