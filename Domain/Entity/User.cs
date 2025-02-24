@@ -16,8 +16,8 @@ namespace Domain.Entity
         public string ConfirmCode { get; set; } = string.Empty;
         public string NationalCode { get; set; } = string.Empty;
         public string Sheba { get; set; } = string.Empty;
-        public DateTime InsertDate { get; set; } = DateTime.Now;
-        public DateTime ConfirmCodeExpireTime { get; set; } = DateTime.Now.AddMinutes(3);
+        public DateTime InsertDate { get; set; } = DateTime.UtcNow;
+        public DateTime ConfirmCodeExpireTime { get; set; } = DateTime.UtcNow.AddMinutes(3);
 
         [ForeignKey("CityId")]
         public int CityId { get; set; }
