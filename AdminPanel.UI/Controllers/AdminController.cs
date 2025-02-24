@@ -20,20 +20,20 @@ namespace AdminPanel.UI.Controllers
             var user = new User
             {
                 UserName = "admin",
-                Email = "admin@admin.com",
+                Email = "shayansalehi617@gmail.com",
                 CityId = 1,
                 ImageName = "admin.png",
-                InsertDate = DateTime.Now,
+                InsertDate = DateTime.UtcNow,
                 Sheba = string.Empty,
                 NationalCode = string.Empty,
                 Name = "admin",
-                PhoneNumber = "0921342141",
+                PhoneNumber = "09015538133",
                 ConcurrencyStamp = string.Empty,
                 SecurityStamp = string.Empty,
                 Family = string.Empty,
             };
             await userManager.CreateAsync(user);
-            await userManager.AddPasswordAsync(user, "123456");
+            await userManager.AddPasswordAsync(user, "09011155");
             if (!roleManager.Roles.Any(x => x.Name == "Admin"))
             {
                 await roleManager.CreateAsync(new Role
