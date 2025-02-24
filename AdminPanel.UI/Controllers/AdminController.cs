@@ -23,7 +23,7 @@ namespace AdminPanel.UI.Controllers
                 Email = "admin@admin.com",
                 CityId = 1,
                 ImageName = "admin.png",
-                InsertDate = DateTime.Now,
+                InsertDate = DateTime.UtcNow,
                 Sheba = string.Empty,
                 NationalCode = string.Empty,
                 Name = "admin",
