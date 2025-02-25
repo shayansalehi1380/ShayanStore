@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Application.Users.v1.Commands.LoginAdmin;
 using Application.Users.v1.Commands.LogOutAdmin;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AdminPanel.UI.Controllers
 {
@@ -72,14 +73,10 @@ namespace AdminPanel.UI.Controllers
             await mediator.Send(new LogOutAdminCommand());
         }
 
+        [Authorize("Admin")]
         public IActionResult AdminDashboard()
         {
-            if (User.Identity.IsAuthenticated)
-            {
-                return View();
-            }
-
-            return RedirectToAction("AdminLogin");
+            return View();
         }
     }
 }

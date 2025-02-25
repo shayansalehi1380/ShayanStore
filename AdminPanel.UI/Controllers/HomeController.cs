@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using AdminPanel.UI.Models;
+using Domain.Entity;
 
 namespace AdminPanel.UI.Controllers;
 
@@ -15,16 +16,18 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
-        if (!User.Identity!.IsAuthenticated)
-        {
-            return RedirectToAction("AdminDashboard", "Admin");
-        }
+        // if (!User.Identity!.IsAuthenticated)
+        // {
+        //     return RedirectToAction("AdminDashboard", "Admin");
+        // }
 
         return View();
     }
 
     public IActionResult Privacy()
     {
+        ViewBag.ASGar = "";
+        ViewBag.User = new User();
         return View();
     }
 

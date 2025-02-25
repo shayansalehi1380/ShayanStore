@@ -9,11 +9,12 @@ namespace AdminPanel.UI.Controllers
 {
     public class CityController(IUnitOfWork unitOfWork) : Controller
     {
-        public async Task<ActionResult> Create(string name)
+        public async Task<ActionResult> Create(string name, int stateId)
         {
             await unitOfWork.GenericRepository<City>().AddAsync(new City
             {
                 Name = name,
+                StateId = stateId,
             }, CancellationToken.None);
             return Ok();
         }
@@ -23,7 +24,7 @@ namespace AdminPanel.UI.Controllers
             return await unitOfWork.GenericRepository<City>().TableNoTracking.ToListAsync();
         }
 
-        public async Task<ActionResult> Update(int id, string name)
+        public async Task<ActionResult> Update(int id, string name, int stateId)
         {
             var city = await unitOfWork.GenericRepository<City>().GetByIdAsync(id, CancellationToken.None);
             if (city == null)
@@ -32,6 +33,7 @@ namespace AdminPanel.UI.Controllers
             }
 
             city.Name = name;
+            city.StateId = stateId;
 
             await unitOfWork.GenericRepository<City>().UpdateAsync(city, CancellationToken.None);
             return Ok(city);
@@ -46,6 +48,18 @@ namespace AdminPanel.UI.Controllers
             }
 
             await unitOfWork.GenericRepository<City>().DeleteAsync(city, CancellationToken.None);
+            return Ok(city);
+        }
+
+        public async Task<ActionResult> SoftDelete(int id)
+        {
+            var city = await unitOfWork.GenericRepository<City>().GetByIdAsync(id, CancellationToken.None);
+            if (city == null)
+            {
+                return NotFound();
+            }
+            city.IsDelete = true;
+            await unitOfWork.GenericRepository<City>().UpdateAsync(city, CancellationToken.None);
             return Ok(city);
         }
     }
