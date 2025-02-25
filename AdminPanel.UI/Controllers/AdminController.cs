@@ -7,7 +7,11 @@ using MediatR;
 
 namespace AdminPanel.UI.Controllers
 {
-    public class AdminController(UserManager<User> userManager, SignInManager<User> signInManager, IMediator mediator, RoleManager<Role> roleManager)
+    public class AdminController(
+        UserManager<User> userManager,
+        SignInManager<User> signInManager,
+        IMediator mediator,
+        RoleManager<Role> roleManager)
         : Controller
     {
         public IActionResult AdminLogin()
@@ -42,21 +46,39 @@ namespace AdminPanel.UI.Controllers
                     NormalizedName = "ADMIN"
                 });
             }
+
             await userManager.AddToRoleAsync(user, "Admin");
         }
-        
+
         [HttpPost]
         public async Task<IActionResult> AdminLogin(LoginAdminCommand request)
         {
-            var result = await mediator.Send(new LoginAdminCommand
-            {
-                Email = request.Email,
-                Password = request.Password
-            });
+            // var result = await mediator.Send(new LoginAdminCommand
+            // {
+            //     Email = request.Email,
+            //     Password = request.Password
+            // });
+            string result = string.Empty;
+            if (string.IsNullOrEmpty(request.Email) || string.IsNullOrEmpty(request.Password))
+                result = "نام کاربری یا رمز عبور وارد نشده است";
+
+            var user = await userManager.FindByEmailAsync(request.Email);
+            if (user == null || !await userManager.CheckPasswordAsync(user, request.Password))
+                result = "نام کاربری یا رمز عبور یافت نشد";
+
+            if (!await userManager.IsInRoleAsync(user, "Admin"))
+                result = "شما اجازه دسترسی به این بخش را ندارید";
+
+            var resultIden =
+                await signInManager.PasswordSignInAsync(user, request.Password, isPersistent: false,
+                    lockoutOnFailure: false);
+            if (!resultIden.Succeeded)
+                result = "خطا در ورود به سیستم";
             if (!string.IsNullOrEmpty(result))
             {
                 return RedirectToAction("AdminDashboard");
             }
+
             return RedirectToAction("AdminLogin");
         }
 
