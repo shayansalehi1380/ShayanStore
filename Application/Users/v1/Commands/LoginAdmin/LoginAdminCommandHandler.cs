@@ -12,7 +12,7 @@ public class LoginAdminCommandHandler(UserManager<User> userManager, SignInManag
         if (string.IsNullOrEmpty(request.Username) || string.IsNullOrEmpty(request.Password))
             return "نام کاربری یا رمز عبور وارد نشده است";
 
-        var user = await userManager.FindByEmailAsync(request.Username);
+        var user = await userManager.FindByNameAsync(request.Username);
         if (user == null || !await userManager.CheckPasswordAsync(user, request.Password))
             return "نام کاربری یا رمز عبور یافت نشد";
 

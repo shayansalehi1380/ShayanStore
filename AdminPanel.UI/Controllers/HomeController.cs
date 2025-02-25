@@ -17,7 +17,7 @@ public class HomeController : Controller
     {
         if (!User.Identity!.IsAuthenticated)
         {
-            return RedirectToAction("AdminLogin", "Admin");
+            return RedirectToAction("AdminDashboard", "Admin");
         }
 
         return View();

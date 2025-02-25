@@ -67,7 +67,12 @@ namespace AdminPanel.UI.Controllers
 
         public IActionResult AdminDashboard()
         {
-            return View();
+            if (User.Identity.IsAuthenticated)
+            {
+                return View();
+            }
+            return RedirectToAction("AdminLogin");
+            
         }
     }
 }
