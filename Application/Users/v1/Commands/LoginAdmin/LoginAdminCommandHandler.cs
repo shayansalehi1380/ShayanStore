@@ -9,10 +9,10 @@ public class LoginAdminCommandHandler(UserManager<User> userManager, SignInManag
 {
     public async Task<string> Handle(LoginAdminCommand request, CancellationToken cancellationToken)
     {
-        if (string.IsNullOrEmpty(request.Email) || string.IsNullOrEmpty(request.Password))
+        if (string.IsNullOrEmpty(request.Username) || string.IsNullOrEmpty(request.Password))
             return "نام کاربری یا رمز عبور وارد نشده است";
 
-        var user = await userManager.FindByEmailAsync(request.Email);
+        var user = await userManager.FindByEmailAsync(request.Username);
         if (user == null || !await userManager.CheckPasswordAsync(user, request.Password))
             return "نام کاربری یا رمز عبور یافت نشد";
 

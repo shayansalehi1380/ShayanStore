@@ -1,4 +1,5 @@
-﻿@{
+﻿@model Application.Users.v1.Commands.LoginAdmin.LoginAdminCommand
+@{
     ViewData["Title"] = "ورود ادمین";
     Layout = null;
 }
@@ -13,14 +14,14 @@
 <body>
     <div class="login-container">
         <h2>ورود به مدیریت فروشگاه</h2>
-        <form asp-action="AdminDashboard" asp-controller="Admin" method="post">
+        <form asp-action="AdminLogin" asp-controller="Admin" method="post">
             <div class="form-group">
                 <label name="email">:نام کاربری</label>
-                <input type="text" id="username" name="username" required>
+                <input type="text" id="username" asp-for="Username"  required>
             </div>
             <div class="form-group">
                 <label name="Password">:رمزعبور</label>
-                <input type="password" id="password" name="password" required>
+                <input type="password" id="password" asp-for="Password"  required>
             </div>
             <button type="submit" class="btn btn-success">ورود</button>
         </form>
