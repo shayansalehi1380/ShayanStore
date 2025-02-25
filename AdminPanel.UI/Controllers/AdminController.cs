@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Application.Users.v1.Commands.LoginAdmin;
+using Application.Users.v1.Commands.LogOutAdmin;
 using MediatR;
 
 namespace AdminPanel.UI.Controllers
@@ -62,7 +63,13 @@ namespace AdminPanel.UI.Controllers
             {
                 return RedirectToAction("AdminDashboard");
             }
+
             return RedirectToAction("AdminLogin");
+        }
+
+        public async Task LogOut()
+        {
+            await mediator.Send(new LogOutAdminCommand());
         }
 
         public IActionResult AdminDashboard()
@@ -71,8 +78,8 @@ namespace AdminPanel.UI.Controllers
             {
                 return View();
             }
+
             return RedirectToAction("AdminLogin");
-            
         }
     }
 }
