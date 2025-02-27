@@ -1,6 +1,6 @@
 ﻿@model Application.Users.v1.Commands.LoginAdmin.LoginAdminCommand
 @{
-    ViewData["Title"] = "ورود ادمین";
+    ViewData["Title"] = "ورود | پنل مدیریت";
     Layout = null;
 }
 <!DOCTYPE html>
@@ -8,13 +8,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/LoginAdminStyle.css">
+    <link rel="stylesheet" href="~/css/LoginAdminStyle.css">
     <link rel="stylesheet" href="~/AdminDashboard/plugins/font-awesome/css/font-awesome.min.css">
-    <title>ورود ادمین</title>
+    <title>@ViewData["Title"]</title>
 </head>
 <body>
     <div class="login-container">
-        <h2>ورود به مدیریت فروشگاه</h2>
+        <h2>ورود به پنل مدیریت</h2>
         <form asp-action="AdminLogin" asp-controller="Admin" method="post">
             <div class="form-group">
                 <label name="email">:نام کاربری</label>
