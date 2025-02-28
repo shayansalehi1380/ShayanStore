@@ -19,11 +19,11 @@ namespace AdminPanel.UI.Controllers
             return Ok();
         }
 
-        public async Task<ActionResult<List<City>>> GetAllCity()
+        public async Task<ActionResult> GetAllCity()
         {
-            await unitOfWork.GenericRepository<City>()
+            ViewBag.Cities = await unitOfWork.GenericRepository<City>()
                 .TableNoTracking
-                .Include(x=>x.State)
+                .Include(x => x.State)
                 .ToListAsync();
 
             return View();
