@@ -13,7 +13,7 @@ public class StateController(IUnitOfWork unitOfWork) : Controller
         {
             Name = name,
         }, CancellationToken.None);
-        return Ok();
+        return RedirectToAction("GetAllCity", "City");
     }
 
     public async Task<ActionResult<List<State>>> GetAll()
@@ -29,7 +29,7 @@ public class StateController(IUnitOfWork unitOfWork) : Controller
             return NotFound();
         }
 
-        state.Name = name; 
+        state.Name = name;
 
         await unitOfWork.GenericRepository<State>().UpdateAsync(state, CancellationToken.None);
         return Ok(state);

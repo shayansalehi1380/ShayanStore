@@ -9,9 +9,10 @@ public static class ConfigureServices
 {
     public static IServiceCollection AddDomainServices(this IServiceCollection services)
     {
-        var connectionString = "Host=localhost;Port=5432;Database=ShayanStoreDB;Username=postgres;Password=09011155";
+        var connectionString =
+            "Data Source=185.88.152.27,1430;Initial Catalog=ShayanStore;User ID=Shayan;Password=i4qO3j^93;Trust Server Certificate=True";
         services.AddDbContext<ShayanStoreDBContext>(options =>
-            options.UseNpgsql(connectionString));
+            options.UseSqlServer(connectionString));
         return services;
     }
 }

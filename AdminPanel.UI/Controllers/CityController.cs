@@ -4,10 +4,11 @@ using Infrastructure.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Xml.Linq;
+using Microsoft.AspNetCore.Identity;
 
 namespace AdminPanel.UI.Controllers
 {
-    public class CityController(IUnitOfWork unitOfWork) : Controller
+    public class CityController(IUnitOfWork unitOfWork, UserManager<User> userManager) : Controller
     {
         public async Task<ActionResult> Create(string name, int stateId)
         {
@@ -16,7 +17,7 @@ namespace AdminPanel.UI.Controllers
                 Name = name,
                 StateId = stateId,
             }, CancellationToken.None);
-            return Ok();
+            return RedirectToAction("GetAllCity");
         }
 
         public async Task<ActionResult> GetAllCity()
@@ -25,7 +26,8 @@ namespace AdminPanel.UI.Controllers
                 .TableNoTracking
                 .Include(x => x.State)
                 .ToListAsync();
-
+            ViewBag.State = await unitOfWork.GenericRepository<State>().TableNoTracking.Include(x => x.Cities)
+                .ToListAsync();
             return View();
         }
 
@@ -66,7 +68,7 @@ namespace AdminPanel.UI.Controllers
 
             city.IsDelete = true;
             await unitOfWork.GenericRepository<City>().UpdateAsync(city, CancellationToken.None);
-            return Ok(city);
+            return RedirectToAction("GetAllCity");
         }
     }
 }

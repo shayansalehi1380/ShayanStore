@@ -1,4 +1,5 @@
 ﻿using Application.Interface;
+using Domain.DBContext;
 using Domain.Entity;
 using Microsoft.EntityFrameworkCore;
 using Xunit;
@@ -7,14 +8,14 @@ namespace Infrastructure.Repositories;
 
 public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
 {
-    private readonly DbContext _dbContext;
+    private readonly ShayanStoreDBContext _dbContext;
 
     public DbSet<T> Entities { get; }
 
     public IQueryable<T> Table => Entities;
     public IQueryable<T> TableNoTracking => Entities.AsNoTracking();
 
-    public GenericRepository(DbContext dbContext)
+    public GenericRepository(ShayanStoreDBContext dbContext)
     {
         _dbContext = dbContext;
         Entities = _dbContext.Set<T>();

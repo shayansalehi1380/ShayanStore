@@ -5,12 +5,9 @@ using Domain.Entity;
 
 namespace Infrastructure.Repositories;
 
-public class UnitOfWork:IUnitOfWork
+public class UnitOfWork(ShayanStoreDBContext _db):IUnitOfWork
 {
-    private readonly ShayanStoreDBContext _db;
     private Hashtable? _repositories;
-    
-    
     public IGenericRepository<T> GenericRepository<T>() where T : BaseEntity
     {
         if (_repositories is null)
