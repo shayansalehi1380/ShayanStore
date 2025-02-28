@@ -20,7 +20,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var item in cities)
+                @foreach (var item in Model)
                 {
                     <tr>
                       <form asp-controller="City" asp-action="GetAll" method="post" style="display:inline;">
