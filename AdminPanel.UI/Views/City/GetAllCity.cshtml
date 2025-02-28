@@ -1,7 +1,5 @@
 ﻿@{
     List<Domain.Entity.City> cities = ViewBag.Cities;
-    Domain.Entity.City city = ViewBag.City;
-    Domain.Entity.State state = ViewBag.State;
 }
 
 <div class="card">
@@ -20,7 +18,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var item in Model)
+                @foreach (var item in cities)
                 {
                     <tr>
                       <form asp-controller="City" asp-action="GetAll" method="post" style="display:inline;">
