@@ -23,7 +23,7 @@ namespace AdminPanel.UI.Controllers
         {
             await unitOfWork.GenericRepository<City>()
                 .TableNoTracking
-                // .Include(x=>x.State)
+                .Include(x=>x.State)
                 .ToListAsync();
 
             return View();
