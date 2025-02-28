@@ -16,7 +16,7 @@ public class StateController(IUnitOfWork unitOfWork) : Controller
         return RedirectToAction("GetAllCity", "City");
     }
 
-    public async Task<ActionResult<List<State>>> GetAll()
+    public async Task<ActionResult<List<State>>> GetAllState()
     {
         return await unitOfWork.GenericRepository<State>().TableNoTracking.ToListAsync();
     }
@@ -45,5 +45,18 @@ public class StateController(IUnitOfWork unitOfWork) : Controller
 
         await unitOfWork.GenericRepository<State>().DeleteAsync(state, CancellationToken.None);
         return Ok(state);
+    }
+
+    public async Task<ActionResult> SoftDelete(int id)
+    {
+        var state = await unitOfWork.GenericRepository<State>().GetByIdAsync(id, CancellationToken.None);
+        if (state == null)
+        {
+            return NotFound();
+        }
+
+        state.IsDelete = true;
+        await unitOfWork.GenericRepository<State>().UpdateAsync(state, CancellationToken.None);
+        return RedirectToAction("GetAllCity","City");
     }
 }
