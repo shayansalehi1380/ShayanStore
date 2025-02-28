@@ -1,5 +1,5 @@
 ﻿@{
-    List<Domain.Entity.City> cities = ViewBag.Cities;
+    List<Domain.Entity.City> city = ViewBag.Cities;
 }
 
 <div class="card">
@@ -18,10 +18,10 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var item in cities)
+                @foreach (var item in city)
                 {
                     <tr>
-                      <form asp-controller="City" asp-action="GetAll" method="post" style="display:inline;">
+                      <form asp-controller="City" asp-action="GetAll" method="post">
                         <td>@item.Id</td>
                         <td>@item.Name</td>
                         <td>@item.State.Name</td>
