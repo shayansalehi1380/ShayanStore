@@ -19,9 +19,14 @@ namespace AdminPanel.UI.Controllers
             return Ok();
         }
 
-        public async Task<ActionResult<List<City>>> GetAll()
+        public async Task<ActionResult<List<City>>> GetAllCity()
         {
-            return await unitOfWork.GenericRepository<City>().TableNoTracking.ToListAsync();
+            await unitOfWork.GenericRepository<City>()
+                .TableNoTracking
+                // .Include(x=>x.State)
+                .ToListAsync();
+
+            return View();
         }
 
         public async Task<ActionResult> Update(int id, string name, int stateId)
@@ -58,6 +63,7 @@ namespace AdminPanel.UI.Controllers
             {
                 return NotFound();
             }
+
             city.IsDelete = true;
             await unitOfWork.GenericRepository<City>().UpdateAsync(city, CancellationToken.None);
             return Ok(city);
