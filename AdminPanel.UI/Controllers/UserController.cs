@@ -10,7 +10,7 @@ namespace AdminPanel.UI.Controllers
     {
         public async Task<IActionResult> GetAllUser()
         {
-            var users = await userManager.Users.ToListAsync();
+            ViewBag.Users = await userManager.Users.ToListAsync();
             return View();
         }
 
@@ -21,12 +21,13 @@ namespace AdminPanel.UI.Controllers
                 UserName = name
             };
 
-            var result = await userManager.CreateAsync(newUser);  
+            var result = await userManager.CreateAsync(newUser);
 
             if (result.Succeeded)
             {
                 return RedirectToAction("GetAllUser");
             }
+
             return View("GetAllUser");
         }
 
@@ -39,11 +40,13 @@ namespace AdminPanel.UI.Controllers
                 ModelState.AddModelError("", "کاربر یافت نشد");
                 return RedirectToAction("GetAllUser");
             }
+
             var result = await userManager.DeleteAsync(user);
             if (result.Succeeded)
             {
                 return RedirectToAction("GetAllUser");
             }
+
             return View("GetAllUser");
         }
     }

@@ -1,7 +1,9 @@
-﻿@model List<Domain.Entity.User>
+﻿@using Domain.Entity
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model List<Domain.Entity.User>
 
 @{
-    var users = ViewBag.Users as List<Domain.Entity.User>;
+    List<User> users = ViewBag.Users;
 }
 
 <div class="row">
@@ -28,7 +30,8 @@
                         </form>
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title">کاربران</h3> <!-- Fixed spelling from "کابران" to "کاربران" (if that's what you intended) -->
+                                <h3 class="card-title">کاربران</h3>
+                                <!-- Fixed spelling from "کابران" to "کاربران" (if that's what you intended) -->
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body p-0">
@@ -39,16 +42,22 @@
                                         <th>نقش کاربر</th>
                                         <th>عملیات</th>
                                     </tr>
-                                    <tr>
-                                        <th style="width: 10px">@users.Id</th>
-                                        <th>@users.Name</th>
-                                        <th>@users.Role</th>
-                                        <th>
-                                            <span class="badge badge-warning">ویرایش</span>
-                                            <a class="badge badge-danger"
-                                               href="@Url.Action("Delete", "User", new { id = users.Id })">حذف</a>
-                                        </th>
-                                    </tr>
+                                    @foreach (var user in users)
+                                    {
+                                        <tr>
+                                            <th style="width: 10px">@user.Id</th>
+                                            <th>@user.Name</th>
+                                            <th>
+                                                role
+                                            </th>
+                                            <th>
+                                                <span class="badge badge-warning">ویرایش</span>
+                                                <a class="badge badge-danger"
+                                                   href="@Url.Action("Delete", "User", new { id = user.Id })">حذف</a>
+                                            </th>
+                                        </tr>
+                                    }
+
                                 </table>
                             </div>
                             <!-- /.card-body -->
