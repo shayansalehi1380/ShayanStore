@@ -18,7 +18,19 @@ namespace AdminPanel.UI.Controllers
         {
             var newUser = new User
             {
-                UserName = name
+                UserName = name,
+                Family = string.Empty,
+                Email = string.Empty,
+                PhoneNumber = string.Empty,
+                Name = string.Empty,
+                CityId = 1,
+                Sheba = string.Empty,
+                ImageName = string.Empty,
+                InsertDate = DateTime.Now,
+                NationalCode = string.Empty,
+                ConcurrencyStamp = string.Empty,
+                SecurityStamp = string.Empty,
+                ConfirmCode = string.Empty,
             };
 
             var result = await userManager.CreateAsync(newUser);
@@ -41,7 +53,8 @@ namespace AdminPanel.UI.Controllers
                 return RedirectToAction("GetAllUser");
             }
 
-            var result = await userManager.DeleteAsync(user);
+            user.IsDelete = true;
+            var result = await userManager.UpdateAsync(user);
             if (result.Succeeded)
             {
                 return RedirectToAction("GetAllUser");

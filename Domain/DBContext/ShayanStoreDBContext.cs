@@ -31,6 +31,7 @@ namespace Domain.DBContext
         {
             modelBuilder.Entity<City>().HasQueryFilter(x => !x.IsDelete);
             modelBuilder.Entity<State>().HasQueryFilter(x => !x.IsDelete);
+            modelBuilder.Entity<User>().HasQueryFilter(x => !x.IsDelete);
 
             base.OnModelCreating(modelBuilder);
         }

@@ -16,12 +16,10 @@ namespace Domain.Entity
         public string ConfirmCode { get; set; } = string.Empty;
         public string NationalCode { get; set; } = string.Empty;
         public string Sheba { get; set; } = string.Empty;
+        public bool IsDelete { get; set; } = false;
         public DateTime InsertDate { get; set; } = DateTime.UtcNow;
         public DateTime ConfirmCodeExpireTime { get; set; } = DateTime.UtcNow.AddMinutes(3);
-
-        [ForeignKey("CityId")]
-        public int CityId { get; set; }
+        [ForeignKey("CityId")] public int CityId { get; set; }
         public City City { get; set; } = default!;
-
     }
 }

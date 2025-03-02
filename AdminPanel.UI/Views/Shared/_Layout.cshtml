@@ -30,7 +30,6 @@
     <link rel="stylesheet" href="~/AdminDashboard/dist/css/bootstrap-rtl.min.css">
     <!-- template rtl version -->
     <link rel="stylesheet" href="~/AdminDashboard/dist/css/custom-style.css">
-
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
@@ -296,5 +295,7 @@
 <script src="~/AdminDashboard/dist/js/pages/dashboard.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="~/AdminDashboard/dist/js/demo.js"></script>
+@await RenderSectionAsync("script",false)
+
 </body>
 </html>

@@ -17,10 +17,11 @@ namespace AdminPanel.UI.Controllers
                 Name = name,
                 StateId = stateId,
             }, CancellationToken.None);
-            return RedirectToAction("GetAllCity");
+            return RedirectToAction("GetAllCity", new { tabs = 2 });
+
         }
 
-        public async Task<ActionResult> GetAllCity()
+        public async Task<ActionResult> GetAllCity(int tabs = 1)
         {
             ViewBag.Cities = await unitOfWork.GenericRepository<City>()
                 .TableNoTracking
@@ -28,6 +29,7 @@ namespace AdminPanel.UI.Controllers
                 .ToListAsync();
             ViewBag.State = await unitOfWork.GenericRepository<State>().TableNoTracking.Include(x => x.Cities)
                 .ToListAsync();
+            ViewBag.selectTab = tabs;
             return View();
         }
 
@@ -43,7 +45,7 @@ namespace AdminPanel.UI.Controllers
             city.StateId = stateId;
 
             await unitOfWork.GenericRepository<City>().UpdateAsync(city, CancellationToken.None);
-            return Ok(city);
+            return RedirectToAction("GetAllCity", new { tabs = 2 });
         }
 
         public async Task<ActionResult> Delete(int id)
@@ -55,7 +57,8 @@ namespace AdminPanel.UI.Controllers
             }
 
             await unitOfWork.GenericRepository<City>().DeleteAsync(city, CancellationToken.None);
-            return Ok(city);
+            return RedirectToAction("GetAllCity", new { tabs = 2 });
+
         }
 
         public async Task<ActionResult> SoftDelete(int id)
@@ -68,7 +71,8 @@ namespace AdminPanel.UI.Controllers
 
             city.IsDelete = true;
             await unitOfWork.GenericRepository<City>().UpdateAsync(city, CancellationToken.None);
-            return RedirectToAction("GetAllCity");
+            return RedirectToAction("GetAllCity", new { tabs = 2 });
+
         }
     }
 }
