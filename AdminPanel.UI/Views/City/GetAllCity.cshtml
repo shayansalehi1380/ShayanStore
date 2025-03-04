@@ -57,12 +57,21 @@
                                             <th>@state.Name</th>
                                             <th>@state.Cities.Count</th>
                                             <th>
-                                                <span class="badge badge-warning">ویرایش</span>
+                                                <form>
+                                                    <button type="button" class="badge badge-warning editeState"
+                                                            data-toggle="modal" data-target="#editStateModal">
+                                                        ویرایش
+                                                    </button>
+                                                    <input type="text" name="sId" class="sId" value="@state.Id" hidden="hidden" />
+                                                    <input type="text" name="sName" class="sName" value="@state.Name" hidden="hidden" />
+                                                </form>
+
                                                 <a class="badge badge-danger"
                                                    href="@Url.Action("SoftDelete", "State", new { id = @state.Id })">حذف</a>
                                             </th>
                                         </tr>
                                     }
+                                    
 
                                 </table>
                             </div>
@@ -124,11 +133,10 @@
                                             <th>@city.State.Name</th>
                                             <th>
                                                 <form>
-                                                    <a type="button" class="badge badge-warning editeCity"
-                                                       data-toggle="modal"
-                                                       data-target="#exampleModal">
+                                                    <button type="button" class="badge badge-warning editeCity"
+                                                            data-toggle="modal" data-target="#exampleModal">
                                                         ویرایش
-                                                    </a>
+                                                    </button>
                                                     <input type="text" name="mId" class="mId" value="@city.Id"
                                                            hidden="hidden"/>
                                                     <input type="text" name="mName" class="mName" value="@city.Name"
@@ -138,7 +146,7 @@
                                                 </form>
 
                                                 <a class="badge badge-danger"
-                                                   href="@Url.Action("SoftDelete", "City", new { id = @city.Id })">حذف</a>
+                                                   href="@Url.Action("SoftDelete", "City", new { id = city.Id })">حذف</a>
                                             </th>
                                         </tr>
                                     }
@@ -175,7 +183,7 @@
                                placeholder="نام شهر را وارد کنید">
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputEmail1">استان</label>
+                        <label for="exampleInputEmail1">اُستان</label>
                         <select class="form-control" id="StateId" name="stateId">
                             @foreach (var i in states)
                             {
@@ -192,14 +200,33 @@
     </div>
 </div>
 
+
+
+<div class="modal fade" id="editStateModal" tabindex="-1" role="dialog" aria-labelledby="editStateModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h5 class="modal-title" id="editStateModalLabel">ویرایش اُستان</h5>
+            </div>
+            <div class="modal-body">
+                <form asp-action="Update" asp-controller="State" method="post">
+                    <input id="stateId" name="id" hidden="hidden" />
+                    <div class="form-group">
+                        <label for="NameState">نام اُستان</label>
+                        <input type="text" class="form-control" id="NameState" name="name" placeholder="نام اُستان را وارد کنید">
+                    </div>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">بستن</button>
+                    <button type="submit" class="btn btn-primary">ثبت</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 @section script
-
-
-
-
-
-
-
 {
     <script>
         $(document).ready(function () {
@@ -211,5 +238,13 @@
                 $("#StateId").val(currentRow.find($("input.mStateId[type=text]")).val());
             })
         })
+
+        $(document).ready(function () {
+            $(".editeState").click(function () {
+                var currentRow = $(this).closest("form");
+                $("#stateId").val(currentRow.find($("input.sId[type=text]")).val());
+                $("#NameState").val(currentRow.find($("input.sName[type=text]")).val());
+            });
+        });
     </script>
 }

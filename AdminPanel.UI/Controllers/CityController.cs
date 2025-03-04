@@ -26,8 +26,11 @@ namespace AdminPanel.UI.Controllers
             ViewBag.Cities = await unitOfWork.GenericRepository<City>()
                 .TableNoTracking
                 .Include(x => x.State)
+                .AsSplitQuery()
                 .ToListAsync();
-            ViewBag.State = await unitOfWork.GenericRepository<State>().TableNoTracking.Include(x => x.Cities)
+            ViewBag.State = await unitOfWork.GenericRepository<State>().TableNoTracking
+                .Include(x => x.Cities)
+                .AsSplitQuery()
                 .ToListAsync();
             ViewBag.selectTab = tabs;
             return View();

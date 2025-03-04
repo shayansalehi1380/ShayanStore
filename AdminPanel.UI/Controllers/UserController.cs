@@ -3,27 +3,114 @@ using Domain.Entity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
-
+using Application.Dtos.Users;
 namespace AdminPanel.UI.Controllers
 {
-    public class UserController(UserManager<User> userManager, SignInManager<User> signInManager) : Controller
+    public class UserController(UserManager<User> userManager, SignInManager<User> signInManager, RoleManager<Role> roleManager, IUnitOfWork work) : Controller
     {
-        public async Task<IActionResult> GetAllUser()
+
+        public async Task<IActionResult> GetAllUser(string? search)
         {
-            ViewBag.Users = await userManager.Users.ToListAsync();
+            var users = new List<UserDto>();
+            var query = userManager.Users.AsTracking()
+                .Include(c => c.City).AsQueryable();
+
+            if (!string.IsNullOrEmpty(search))
+            {
+                query = query.Where(x => x.PhoneNumber.Contains(search) || x.Name.Contains(search) || x.UserName.Contains(search));
+            }
+
+            var entityUsers = await query.ToListAsync();
+            ViewBag.Roles = await roleManager.Roles.ToListAsync();
+            ViewBag.Cities = await work.GenericRepository<City>().TableNoTracking.ToListAsync();
+
+            //var newUser = new User
+            //{
+            //    UserName = "09015538133",
+            //    Family = string.Empty,
+            //    Email = string.Empty,
+            //    PhoneNumber = string.Empty,
+            //    Name = string.Empty,
+            //    CityId = 1,
+            //    Sheba = string.Empty,
+            //    ImageName = string.Empty,
+            //    InsertDate = DateTime.Now,
+            //    NationalCode = string.Empty,
+            //    ConcurrencyStamp = string.Empty,
+            //    SecurityStamp = string.Empty,
+            //    ConfirmCode = string.Empty,
+            //};
+            //await userManager.CreateAsync(newUser);
+            //var newUser1 = new User
+            //{
+            //    UserName = "0921129482",
+            //    Family = string.Empty,
+            //    Email = string.Empty,
+            //    PhoneNumber = string.Empty,
+            //    Name = string.Empty,
+            //    CityId = 1,
+            //    Sheba = string.Empty,
+            //    ImageName = string.Empty,
+            //    InsertDate = DateTime.Now,
+            //    NationalCode = string.Empty,
+            //    ConcurrencyStamp = string.Empty,
+            //    SecurityStamp = string.Empty,
+            //    ConfirmCode = string.Empty,
+            //};
+            //await userManager.CreateAsync(newUser1);
+
+            //if (!await roleManager.RoleExistsAsync("Admin"))
+            //{
+            //    await roleManager.CreateAsync(new Role
+            //    {
+            //        Name = "Admin",
+            //    });
+            //}
+            //if (!await roleManager.RoleExistsAsync("User"))
+            //{
+            //    await roleManager.CreateAsync(new Role
+            //    {
+            //        Name = "User",
+            //    });
+            //}
+            //await userManager.AddToRoleAsync(newUser, "Admin");
+            //await userManager.AddToRoleAsync(newUser1, "Admin");
+            //await userManager.AddToRoleAsync(newUser1, "User");
+            //await userManager.AddToRoleAsync(newUser, "User");
+
+
+
+            foreach (var i in entityUsers)
+            {
+
+                users.Add(new UserDto
+                {
+                    City = i.City,
+                    Email = i.Email,
+                    Family = i.Family,
+                    InsertDate = i.InsertDate,
+                    Name = i.Name,
+                    PhoneNumber = i.PhoneNumber,
+                    Roles = await userManager.GetRolesAsync(i),
+                    UserName = i.UserName,
+                    Id = i.Id
+                });
+            }
+            ViewBag.Users = users;
+
             return View();
         }
 
-        public async Task<IActionResult> Create(string name)
+        public async Task<IActionResult> Create(UserDto request)
         {
             var newUser = new User
             {
-                UserName = name,
-                Family = string.Empty,
-                Email = string.Empty,
-                PhoneNumber = string.Empty,
-                Name = string.Empty,
-                CityId = 1,
+                UserName = request.PhoneNumber,
+                Family = request.Family,
+                Email = request.Email,
+                PhoneNumber = request.PhoneNumber,
+                Name = request.Name,
+                CityId = request.CityId,
                 Sheba = string.Empty,
                 ImageName = string.Empty,
                 InsertDate = DateTime.Now,
@@ -34,6 +121,11 @@ namespace AdminPanel.UI.Controllers
             };
 
             var result = await userManager.CreateAsync(newUser);
+
+            foreach(var i in request.Roles)
+            {
+                await userManager.AddToRoleAsync(newUser, i);
+            }
 
             if (result.Succeeded)
             {
