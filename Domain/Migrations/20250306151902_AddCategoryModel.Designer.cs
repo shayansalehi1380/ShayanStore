@@ -4,6 +4,7 @@ using Domain.DBContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Domain.Migrations
 {
     [DbContext(typeof(ShayanStoreDBContext))]
-    partial class ShayanStoreDBContextModelSnapshot : ModelSnapshot
+    [Migration("20250306151902_AddCategoryModel")]
+    partial class AddCategoryModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -33,16 +36,7 @@ namespace Domain.Migrations
                     b.Property<bool>("IsDelete")
                         .HasColumnType("bit");
 
-                    b.Property<int>("MainCategoryId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("MainCategoryId");
 
                     b.ToTable("Categories");
                 });
@@ -70,26 +64,6 @@ namespace Domain.Migrations
                     b.HasIndex("StateId");
 
                     b.ToTable("Cities");
-                });
-
-            modelBuilder.Entity("Domain.Entity.MainCategory", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<bool>("IsDelete")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("MainCategories");
                 });
 
             modelBuilder.Entity("Domain.Entity.Role", b =>
@@ -351,17 +325,6 @@ namespace Domain.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("Domain.Entity.Category", b =>
-                {
-                    b.HasOne("Domain.Entity.MainCategory", "MainCategory")
-                        .WithMany("Categories")
-                        .HasForeignKey("MainCategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("MainCategory");
-                });
-
             modelBuilder.Entity("Domain.Entity.City", b =>
                 {
                     b.HasOne("Domain.Entity.State", "State")
@@ -433,11 +396,6 @@ namespace Domain.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("Domain.Entity.MainCategory", b =>
-                {
-                    b.Navigation("Categories");
                 });
 
             modelBuilder.Entity("Domain.Entity.State", b =>
