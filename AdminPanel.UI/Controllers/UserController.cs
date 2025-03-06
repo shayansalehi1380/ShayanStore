@@ -136,23 +136,24 @@ namespace AdminPanel.UI.Controllers
         }
 
 
-        public async Task<IActionResult> Delete(int userId)
+        public async Task<IActionResult> Delete(UserDto request)
         {
-            var user = await userManager.FindByIdAsync(userId.ToString());
+
+            var user = await userManager.FindByIdAsync(request.Id.ToString());
+
             if (user == null)
             {
                 ModelState.AddModelError("", "کاربر یافت نشد");
                 return RedirectToAction("GetAllUser");
             }
 
-            user.IsDelete = true;
-            var result = await userManager.UpdateAsync(user);
+            var result = await userManager.DeleteAsync(user);
+
             if (result.Succeeded)
             {
                 return RedirectToAction("GetAllUser");
             }
-
-            return View("GetAllUser");
+            return RedirectToAction("GetAllUser");
         }
     }
 }
