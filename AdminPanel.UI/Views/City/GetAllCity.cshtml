@@ -13,6 +13,29 @@
         cityTab = "active";
     }
 }
+
+@section link {
+    <style>
+        #searchUser {
+            border-top-right-radius: 5px;
+            border-bottom-right-radius: 5px;
+            border-top-left-radius: 0 !important;
+            border-bottom-left-radius: 0 !important;
+            border: none;
+            background-color: #f2f4f6;
+        }
+
+        #searchIcon {
+            border: none;
+            background-color: #f2f4f6;
+        }
+
+        .modal {
+            top: 5%;
+        }
+    </style>
+}
+
 <div class="row">
     <div class="col-12">`
         <div class="card" style="margin: 15px 15px 0px 15px;">
@@ -35,6 +58,14 @@
                             </div>
                             <div style="padding-top: 15px">
                                 <button type="submit" class="btn btn-primary">ثبت اُستان</button>
+                            </div>
+                            <div class="input-group input-group-sm w-25 p-2">
+                                <input class="form-control form-control-navbar" id="searchUser" name="search" type="search" placeholder="جستجو" aria-label="Search">
+                                <div class="input-group-append">
+                                    <button class="btn btn-navbar" id="searchIcon" type="submit">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                                </div>
                             </div>
                         </form>
                         <div class="card">
@@ -110,6 +141,14 @@
                             </div>
                             <div style="padding-top: 15px">
                                 <button type="submit" class="btn btn-primary">ثبت شهر</button>
+                            </div>
+                            <div class="input-group input-group-sm w-25 p-2">
+                                <input class="form-control form-control-navbar" id="searchUser" name="search" type="search" placeholder="جستجو" aria-label="Search">
+                                <div class="input-group-append">
+                                    <button class="btn btn-navbar" id="searchIcon" type="submit">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                                </div>
                             </div>
                         </form>
                         <div class="card">

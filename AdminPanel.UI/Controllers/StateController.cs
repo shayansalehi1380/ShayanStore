@@ -1,7 +1,9 @@
 ﻿using Application.Interface;
 using Domain.Entity;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace AdminPanel.UI.Controllers;
 
@@ -16,8 +18,14 @@ public class StateController(IUnitOfWork unitOfWork) : Controller
         return RedirectToAction("GetAllCity", "City");
     }
 
-    public async Task<ActionResult<List<State>>> GetAllState()
+    public async Task<ActionResult<List<State>>> GetAllState(string? search)
     {
+        IQueryable<State> query = unitOfWork.GenericRepository<State>().TableNoTracking;
+
+        if (!string.IsNullOrEmpty(search))
+        {
+            query = query.Where(x => x.Name.Contains(search));
+        }
         return await unitOfWork.GenericRepository<State>().TableNoTracking.ToListAsync();
     }
 

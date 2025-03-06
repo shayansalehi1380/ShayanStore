@@ -9,6 +9,6 @@ namespace Domain.Entity
     public class MainCategory : BaseEntity
     {
         public string Title { get; set; } = string.Empty;
-        public ICollection<Category> categories { get; set; } = default!;
+        public ICollection<Category> Categories { get; set; } = default!;
     }
 }

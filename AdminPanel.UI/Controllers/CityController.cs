@@ -21,7 +21,7 @@ namespace AdminPanel.UI.Controllers
 
         }
 
-        public async Task<ActionResult> GetAllCity(int tabs = 1)
+        public async Task<ActionResult> GetAllCity(string? search , int tabs = 1)
         {
             ViewBag.Cities = await unitOfWork.GenericRepository<City>()
                 .TableNoTracking
@@ -33,6 +33,13 @@ namespace AdminPanel.UI.Controllers
                 .AsSplitQuery()
                 .ToListAsync();
             ViewBag.selectTab = tabs;
+
+            IQueryable<City> query = unitOfWork.GenericRepository<City>().TableNoTracking;
+
+            if (!string.IsNullOrEmpty(search))
+            {
+                query = query.Where(x => x.Name.Contains(search) || x.State.Name.Contains(search));
+            }
             return View();
         }
 
