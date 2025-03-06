@@ -11,7 +11,6 @@ namespace AdminPanel.UI.Controllers
 {
     public class AdminController(
         UserManager<User> userManager,
-        SignInManager<User> signInManager,
         IMediator mediator,
         RoleManager<Role> roleManager)
         : Controller

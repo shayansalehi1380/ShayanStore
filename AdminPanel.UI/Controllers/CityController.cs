@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace AdminPanel.UI.Controllers
 {
-    public class CityController(IUnitOfWork unitOfWork, UserManager<User> userManager) : Controller
+    public class CityController(IUnitOfWork unitOfWork) : Controller
     {
         public async Task<ActionResult> Create(string name, int stateId)
         {

@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using Application.Dtos.Users;
 namespace AdminPanel.UI.Controllers
 {
-    public class UserController(UserManager<User> userManager, SignInManager<User> signInManager, RoleManager<Role> roleManager, IUnitOfWork work) : Controller
+    public class UserController(UserManager<User> userManager, RoleManager<Role> roleManager, IUnitOfWork work) : Controller
     {
 
         public async Task<IActionResult> GetAllUser(string? search)
