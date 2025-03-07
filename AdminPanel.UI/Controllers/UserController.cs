@@ -136,6 +136,43 @@ namespace AdminPanel.UI.Controllers
         }
 
 
+        public async Task<IActionResult> Update(UserDto request) 
+        {
+            var user = await userManager.FindByIdAsync(request.Id.ToString());
+
+            if (user == null)
+            {
+                ModelState.AddModelError("", "کاربر یافت نشد");
+                return RedirectToAction("GetAllUser");
+            }
+
+            user.UserName = request.PhoneNumber;
+            user.Family = request.Family;
+            user.Email = request.Email;
+            user.PhoneNumber = request.PhoneNumber;
+            user.Name = request.Name;
+            user.CityId = request.CityId;
+
+            var result = await userManager.UpdateAsync(user);
+
+            if (result.Succeeded)
+            {
+
+                var currentRoles = await userManager.GetRolesAsync(user);
+                await userManager.RemoveFromRolesAsync(user, currentRoles);
+
+                foreach (var role in request.Roles)
+                {
+                    await userManager.AddToRoleAsync(user, role);
+                }
+
+                return RedirectToAction("GetAllUser");
+            }
+
+            return View("GetAllUser");
+        }
+
+
         public async Task<IActionResult> Delete(UserDto request)
         {
 
