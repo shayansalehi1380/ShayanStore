@@ -49,25 +49,29 @@
                 <div class="tab-content">
 
                     <div class="@stateTab tab-pane" id="activity">
-                        <form asp-controller="State" asp-action="Create" method="post"
-                              class="d-flex justify-content-start align-items-center" style="gap: 10px">
-                            <div class="form-group">
-                                <label for="exampleInputEmail1">نام اُستان</label>
-                                <input type="text" class="form-control" name="name" id="exampleInputEmail1"
-                                       placeholder="نام اُستان را وارد کنید">
-                            </div>
-                            <div style="padding-top: 15px">
-                                <button type="submit" class="btn btn-primary">ثبت اُستان</button>
-                            </div>
-                            <div class="input-group input-group-sm w-25 p-2">
-                                <input class="form-control form-control-navbar" id="searchUser" name="search" type="search" placeholder="جستجو" aria-label="Search">
+                     
+                        <div class="d-flex justify-content-between align-items-center" >
+                            <form asp-controller="State" asp-action="Create" method="post"
+                                  class="d-flex justify-content-start align-items-center" style="gap: 10px">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">نام اُستان</label>
+                                    <input type="text" class="form-control" name="name" id="exampleInputEmail1"
+                                           placeholder="نام اُستان را وارد کنید">
+                                </div>
+                                <div style="padding-top: 15px">
+                                    <button type="submit" class="btn btn-primary">ثبت اُستان</button>
+                                </div>
+
+                            </form>
+                            <form class="input-group input-group-sm w-25 p-2" asp-action="GetAllCity" asp-controller="City" method="post">
+                                <input class="form-control form-control-navbar" id="searchUser" name="searchState" type="search" placeholder="جستجو" aria-label="Search">
                                 <div class="input-group-append">
                                     <button class="btn btn-navbar" id="searchIcon" type="submit">
                                         <i class="fa fa-search"></i>
                                     </button>
                                 </div>
-                            </div>
-                        </form>
+                            </form>
+                        </div>
                         <div class="card">
                             <div class="card-header">
                                 <h3 class="card-title">اُستان ها</h3>
@@ -111,46 +115,50 @@
                     </div>
                     <!-- /.tab-pane -->
                     <div class="@cityTab tab-pane" id="timeline">
-                        <form asp-controller="City" asp-action="Create" method="post"
-                              class="d-flex justify-content-start align-items-center" style="gap: 15px">
-                            <div class="form-group">
-                                <label for="exampleInputEmail1">نام شهر</label>
-                                <input type="text" class="form-control" name="name" id="exampleInputEmail1"
-                                       placeholder="نام شهر را وارد کنید">
-                            </div>
-                            <div class="form-group">
-                                <label>نام اُستان</label>
-                                <select class="form-control select2" name="stateId" style="width: 100%;">
-                                    @{
-                                        var index = 0;
-                                        foreach (var state in states)
-                                        {
-                                            if (index == 0)
+                        <div class="d-flex justify-content-between align-items-center">
+                            <form asp-controller="City" asp-action="Create" method="post"
+                                  class="d-flex justify-content-start align-items-center" style="gap: 15px">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">نام شهر</label>
+                                    <input type="text" class="form-control" name="name" id="exampleInputEmail1"
+                                           placeholder="نام شهر را وارد کنید">
+                                </div>
+                                <div class="form-group">
+                                    <label>نام اُستان</label>
+                                    <select class="form-control select2" name="stateId" style="width: 100%;">
+                                        @{
+                                            var index = 0;
+                                            foreach (var state in states)
                                             {
-                                                <option selected="selected" value="@state.Id">@state.Name</option>
-                                            }
-                                            else
-                                            {
-                                                <option value="@state.Id">@state.Name</option>
-                                            }
+                                                if (index == 0)
+                                                {
+                                                    <option selected="selected" value="@state.Id">@state.Name</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="@state.Id">@state.Name</option>
+                                                }
 
-                                            index++;
+                                                index++;
+                                            }
                                         }
-                                    }
-                                </select>
-                            </div>
-                            <div style="padding-top: 15px">
-                                <button type="submit" class="btn btn-primary">ثبت شهر</button>
-                            </div>
-                            <div class="input-group input-group-sm w-25 p-2">
-                                <input class="form-control form-control-navbar" id="searchUser" name="search" type="search" placeholder="جستجو" aria-label="Search">
+                                    </select>
+                                </div>
+                                <div style="padding-top: 15px">
+                                    <button type="submit" class="btn btn-primary">ثبت شهر</button>
+                                </div>
+
+                            </form>
+                            <form class="input-group input-group-sm w-25 p-2" asp-action="GetAllCity" asp-controller="City" method="post">
+                                <input class="form-control form-control-navbar" id="searchUser" name="searchCity" type="search" placeholder="جستجو" aria-label="Search">
+                                <input name="tabs" value="2" hidden="hidden"/>
                                 <div class="input-group-append">
                                     <button class="btn btn-navbar" id="searchIcon" type="submit">
                                         <i class="fa fa-search"></i>
                                     </button>
                                 </div>
-                            </div>
-                        </form>
+                            </form>
+                        </div>
                         <div class="card">
                             <div class="card-header">
                                 <h3 class="card-title">شهر ها</h3>

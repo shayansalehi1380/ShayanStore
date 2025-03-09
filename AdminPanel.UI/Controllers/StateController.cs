@@ -15,7 +15,7 @@ public class StateController(IUnitOfWork unitOfWork) : Controller
         {
             Name = name,
         }, CancellationToken.None);
-        return RedirectToAction("GetAllCity", new { tabs = 1 });
+        return RedirectToAction("GetAllCity","City",new { tabs = 1 });
     }
 
     public async Task<ActionResult<List<State>>> GetAllState(string? search)
@@ -26,7 +26,7 @@ public class StateController(IUnitOfWork unitOfWork) : Controller
         {
             query = query.Where(x => x.Name.Contains(search));
         }
-        return await unitOfWork.GenericRepository<State>().TableNoTracking.ToListAsync();
+        return await query.ToListAsync();
     }
 
     public async Task<ActionResult> Update(int id, string name)

@@ -11,14 +11,27 @@ namespace AdminPanel.UI.Controllers
         public async Task<ActionResult<List<MainCategory>>> GetAllMainCategory(string? search, int tabs = 1)
         {
             ViewBag.selectTab = tabs;
-            IQueryable<MainCategory> query = unitOfWork.GenericRepository<MainCategory>().TableNoTracking;
+            IQueryable<MainCategory> queryMainCategory = unitOfWork.GenericRepository<MainCategory>()
+                .TableNoTracking
+                .Include(x => x.Categories);
 
             if (!string.IsNullOrEmpty(search))
             {
-                query = query.Where(x => x.Title.Contains(search));
+                queryMainCategory = queryMainCategory.Where(x => x.Title.Contains(search));
             }
-            ViewBag.MainCategories = await query.ToListAsync();
 
+            ViewBag.MainCategories = await queryMainCategory.ToListAsync();
+
+            IQueryable<Category> queryCategory = unitOfWork.GenericRepository<Category>()
+                .TableNoTracking
+                .Include(x=>x.MainCategory);
+
+            if (!string.IsNullOrEmpty(search))
+            {
+                queryCategory = queryCategory.Where(x => x.Name.Contains(search));
+            }
+
+            ViewBag.Categories = await queryCategory.ToListAsync();
             return View();
         }
 
@@ -33,7 +46,8 @@ namespace AdminPanel.UI.Controllers
 
         public async Task<ActionResult> Update(int id, string name)
         {
-            var maincategory = await unitOfWork.GenericRepository<MainCategory>().Table.FirstOrDefaultAsync(x => x.Id == id, CancellationToken.None);
+            var maincategory = await unitOfWork.GenericRepository<MainCategory>().Table
+                .FirstOrDefaultAsync(x => x.Id == id, CancellationToken.None);
             if (maincategory == null)
             {
                 return NotFound();
@@ -47,7 +61,8 @@ namespace AdminPanel.UI.Controllers
 
         public async Task<ActionResult> SoftDelete(int id)
         {
-            var maincategory = await unitOfWork.GenericRepository<MainCategory>().GetByIdAsync(id, CancellationToken.None);
+            var maincategory =
+                await unitOfWork.GenericRepository<MainCategory>().GetByIdAsync(id, CancellationToken.None);
             if (maincategory == null)
             {
                 return NotFound();
@@ -60,7 +75,8 @@ namespace AdminPanel.UI.Controllers
 
         public async Task<ActionResult> Delete(int id)
         {
-            var maincategory = await unitOfWork.GenericRepository<MainCategory>().GetByIdAsync(id, CancellationToken.None);
+            var maincategory =
+                await unitOfWork.GenericRepository<MainCategory>().GetByIdAsync(id, CancellationToken.None);
             if (maincategory == null)
             {
                 return NotFound();

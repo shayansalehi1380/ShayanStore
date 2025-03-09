@@ -4,11 +4,13 @@ using Infrastructure.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Xml.Linq;
+using Application.Cities.v1.Commands.SoftDeleteCity;
+using MediatR;
 using Microsoft.AspNetCore.Identity;
 
 namespace AdminPanel.UI.Controllers
 {
-    public class CityController(IUnitOfWork unitOfWork) : Controller
+    public class CityController(IUnitOfWork unitOfWork,IMediator mediator) : Controller
     {
         public async Task<ActionResult> Create(string name, int stateId)
         {
@@ -18,28 +20,33 @@ namespace AdminPanel.UI.Controllers
                 StateId = stateId,
             }, CancellationToken.None);
             return RedirectToAction("GetAllCity", new { tabs = 2 });
-
         }
 
-        public async Task<ActionResult> GetAllCity(string? search , int tabs = 1)
+        public async Task<ActionResult> GetAllCity(string? searchCity, string? searchState, int tabs = 1)
         {
-            ViewBag.Cities = await unitOfWork.GenericRepository<City>()
+            IQueryable<City> queryCity = unitOfWork.GenericRepository<City>()
                 .TableNoTracking
                 .Include(x => x.State)
-                .AsSplitQuery()
-                .ToListAsync();
-            ViewBag.State = await unitOfWork.GenericRepository<State>().TableNoTracking
+                .AsSplitQuery();
+
+            IQueryable<State> queryState = unitOfWork.GenericRepository<State>().TableNoTracking
                 .Include(x => x.Cities)
-                .AsSplitQuery()
-                .ToListAsync();
+                .AsSplitQuery();
+
             ViewBag.selectTab = tabs;
 
-            IQueryable<City> query = unitOfWork.GenericRepository<City>().TableNoTracking;
-
-            if (!string.IsNullOrEmpty(search))
+            if (!string.IsNullOrEmpty(searchCity))
             {
-                query = query.Where(x => x.Name.Contains(search) || x.State.Name.Contains(search));
+                queryCity = queryCity.Where(x => x.Name.Contains(searchCity) || x.State.Name.Contains(searchCity));
             }
+
+            if (!string.IsNullOrEmpty(searchState))
+            {
+                queryState = queryState.Where(x => x.Name.Contains(searchState));
+            }
+
+            ViewBag.Cities = await queryCity.ToListAsync();
+            ViewBag.State = await queryState.ToListAsync();
             return View();
         }
 
@@ -68,21 +75,15 @@ namespace AdminPanel.UI.Controllers
 
             await unitOfWork.GenericRepository<City>().DeleteAsync(city, CancellationToken.None);
             return RedirectToAction("GetAllCity", new { tabs = 2 });
-
         }
 
         public async Task<ActionResult> SoftDelete(int id)
         {
-            var city = await unitOfWork.GenericRepository<City>().GetByIdAsync(id, CancellationToken.None);
-            if (city == null)
+           var result =  await mediator.Send(new SoftDeleteCityCommand
             {
-                return NotFound();
-            }
-
-            city.IsDelete = true;
-            await unitOfWork.GenericRepository<City>().UpdateAsync(city, CancellationToken.None);
+                Id = id
+            },CancellationToken.None);
             return RedirectToAction("GetAllCity", new { tabs = 2 });
-
         }
     }
 }

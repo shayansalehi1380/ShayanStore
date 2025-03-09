@@ -7,7 +7,7 @@ namespace Application.Users.v1.Commands.LoginAdmin;
 public class LoginAdminCommandHandler(UserManager<User> userManager, SignInManager<User> signInManager)
     : IRequestHandler<LoginAdminCommand, string>
 {
-    public async Task<string> Handle(LoginAdminCommand request, CancellationToken cancellationToken)
+    public async Task<string>  Handle(LoginAdminCommand request, CancellationToken cancellationToken)
     {
         if (string.IsNullOrEmpty(request.Username) || string.IsNullOrEmpty(request.Password))
             return "نام کاربری یا رمز عبور وارد نشده است";
