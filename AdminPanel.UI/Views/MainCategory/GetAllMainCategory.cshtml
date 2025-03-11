@@ -51,25 +51,28 @@
                 <div class="tab-content">
 
                     <div class="@maincategoriesTab tab-pane" id="activity">
-                        <form asp-controller="MainCategory" asp-action="Create" method="post"
-                              class="d-flex justify-content-start align-items-center" style="gap: 10px">
-                            <div class="form-group">
-                                <label for="exampleInputEmail1">نام دسته بندی مادر</label>
-                                <input type="text" class="form-control" name="name" id="exampleInputEmail1"
-                                       placeholder="نام دسته بندی مادر را وارد کنید">
-                            </div>
-                            <div style="padding-top: 15px">
-                                <button type="submit" class="btn btn-primary">ثبت دسته بندی مادر</button>
-                            </div>
-                            <div class="input-group input-group-sm w-25 p-2">
-                                <input class="form-control form-control-navbar" id="searchUser" name="search" type="search" placeholder="جستجو" aria-label="Search">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <form asp-controller="MainCategory" asp-action="Create" method="post"
+                                  class="d-flex justify-content-start align-items-center" style="gap: 10px">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">نام دسته بندی مادر</label>
+                                    <input type="text" class="form-control" name="name" id="exampleInputEmail1"
+                                           placeholder="نام دسته بندی مادر را وارد کنید">
+                                </div>
+                                <div style="padding-top: 15px">
+                                    <button type="submit" class="btn btn-primary">ثبت دسته بندی مادر</button>
+                                </div>
+
+                            </form>
+                            <form class="input-group input-group-sm w-25 p-2" asp-action="GetAllMainCategory" asp-controller="MainCategory" method="post">
+                                <input class="form-control form-control-navbar" id="searchUser" name="searchMainCategory" type="search" placeholder="جستجو" aria-label="Search">
                                 <div class="input-group-append">
                                     <button class="btn btn-navbar" id="searchIcon" type="submit">
                                         <i class="fa fa-search"></i>
                                     </button>
                                 </div>
-                            </div>
-                        </form>
+                            </form>
+                        </div>
                         <div class="card">
                             <div class="card-header">
                                 <h3 class="card-title">دسته بندی های مادر</h3>
@@ -112,46 +115,50 @@
                         </div>
                     </div>
                     <div class="@categoriesTab tab-pane" id="timeline">
-                        <form asp-controller="Category" asp-action="Create" method="post"
-                              class="d-flex justify-content-start align-items-center" style="gap: 15px">
-                            <div class="form-group">
-                                <label for="exampleInputEmail1">نام زیر دسته</label>
-                                <input type="text" class="form-control" name="name" id="exampleInputEmail1"
-                                       placeholder="نام زیر دسته را وارد کنید">
-                            </div>
-                            <div class="form-group">
-                                <label>نام دسته بندی مادر</label>
-                                <select class="form-control select2" name="stateId" style="width: 100%;">
-                                    @{
-                                        var index = 0;
-                                        foreach (var category in categories)
-                                        {
-                                            if (index == 0)
+                        <div class="d-flex justify-content-between align-items-center">
+                            <form asp-controller="Category" asp-action="Create" method="post"
+                                  class="d-flex justify-content-start align-items-center" style="gap: 15px">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">نام زیردسته</label>
+                                    <input type="text" class="form-control" name="name" id="exampleInputEmail1"
+                                           placeholder="نام زیردسته را وارد کنید">
+                                </div>
+                                <div class="form-group">
+                                    <label>نام دسته بندی مادر</label>
+                                    <select class="form-control select2" name="stateId" style="width: 100%;">
+                                        @{
+                                            var index = 0;
+                                            foreach (var maincategory in maincategories)
                                             {
-                                                <option selected="selected" value="@category.Id">@category.Name</option>
-                                            }
-                                            else
-                                            {
-                                                <option value="@category.Id">@category.Name</option>
-                                            }
+                                                if (index == 0)
+                                                {
+                                                    <option selected="selected" value="@maincategory.Id">@maincategory.Title</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="@maincategory.Id">@maincategory.Title</option>
+                                                }
 
-                                            index++;
+                                                index++;
+                                            }
                                         }
-                                    }
-                                </select>
-                            </div>
-                            <div style="padding-top: 15px">
-                                <button type="submit" class="btn btn-primary">ثبت زیر دسته</button>
-                            </div>
-                            <div class="input-group input-group-sm w-25 p-2">
-                                <input class="form-control form-control-navbar" id="searchUser" name="search" type="search" placeholder="جستجو" aria-label="Search">
+                                    </select>
+                                </div>
+                                <div style="padding-top: 15px">
+                                    <button type="submit" class="btn btn-primary">ثبت زیردسته</button>
+                                </div>
+
+                            </form>
+                            <form class="input-group input-group-sm w-25 p-2" asp-action="GetAllCategory" asp-controller="Category" method="post">
+                                <input class="form-control form-control-navbar" id="searchUser" name="searchCategory" type="search" placeholder="جستجو" aria-label="Search">
+                                <input name="tabs" value="2" hidden="hidden" />
                                 <div class="input-group-append">
                                     <button class="btn btn-navbar" id="searchIcon" type="submit">
                                         <i class="fa fa-search"></i>
                                     </button>
                                 </div>
-                            </div>
-                        </form>
+                            </form>
+                        </div>
                         <div class="card">
                             <div class="card-header">
                                 <h3 class="card-title">زیر دسته ها</h3>
@@ -215,7 +222,7 @@
                 <h5 class="modal-title" id="exampleModalLabel">ویرایش زیر دسته</h5>
             </div>
             <div class="modal-body">
-                <form asp-action="Update" asp-controller="Maincategory" method="post">
+                <form asp-action="Update" asp-controller="Category" method="post">
                     <input id="CityId" name="id" hidden="hidden" />
                     <div class="form-group">
                         <label for="exampleInputEmail1">نام زیر دسته</label>
@@ -251,7 +258,7 @@
                 <h5 class="modal-title" id="editStateModalLabel">ویرایش دسته بندی مادر</h5>
             </div>
             <div class="modal-body">
-                <form asp-action="Update" asp-controller="Category" method="post">
+                <form asp-action="Update" asp-controller="MainCategory" method="post">
                     <input id="stateId" name="id" hidden="hidden" />
                     <div class="form-group">
                         <label for="NameState">نام دسته بندی مادر</label>

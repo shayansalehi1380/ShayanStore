@@ -7,38 +7,55 @@ namespace AdminPanel.UI.Controllers
 {
     public class CategoryController(IUnitOfWork unitOfWork) : Controller
     {
-        public async Task<ActionResult<List<Category>>> GetAllCategory(string? search, int tabs = 2)
+        public async Task<ActionResult<List<Category>>> GetAllCategory(string? searchCategory, int tabs = 2)
         {
+
             ViewBag.selectTab = tabs;
-            IQueryable<Category> query = unitOfWork.GenericRepository<Category>().TableNoTracking;
 
-            if (!string.IsNullOrEmpty(search))
+            IQueryable<Category> queryCategories = unitOfWork.GenericRepository<Category>()
+                .TableNoTracking
+                .Include(x => x.MainCategory)
+                .AsSplitQuery();
+
+            IQueryable<MainCategory> queryMainCategories = unitOfWork.GenericRepository<MainCategory>().TableNoTracking
+                .Include(x => x.Categories)
+                .AsSplitQuery();
+
+            if (!string.IsNullOrEmpty(searchCategory))
             {
-                query = query.Where(x => x.Name.Contains(search));
+                queryMainCategories = queryMainCategories.Where(x => x.Title.Contains(searchCategory));
             }
-            ViewBag.Categories = await query.ToListAsync();
 
-            return View("GetAllMainCategory", "MainCategory");
+            if (!string.IsNullOrEmpty(searchCategory))
+            {
+                queryCategories = queryCategories.Where(x => x.Name.Contains(searchCategory) || x.MainCategory.Title.Contains(searchCategory));
+            }
+            ViewBag.Categories = await queryCategories.ToListAsync();
+            ViewBag.MainCategories = await queryMainCategories.ToListAsync();
+
+            return RedirectToAction("GetAllMainCategory", "MainCategory", new { tabs = 2 });
         }
 
-        public async Task<ActionResult> Create(string name)
+        public async Task<ActionResult> Create(string name, int Maincategoryid)
         {
             await unitOfWork.GenericRepository<Category>().AddAsync(new Category
             {
                 Name = name,
+                MainCategoryId = Maincategoryid
             }, CancellationToken.None);
             return RedirectToAction("GetAllMainCategory", "MainCategory", new { tabs = 2 });
         }
 
-        public async Task<ActionResult> Update(int id, string name)
+        public async Task<ActionResult> Update(int id, string name, int Maincategoryid)
         {
-            var category = await unitOfWork.GenericRepository<Category>().Table.FirstOrDefaultAsync(x => x.Id == id, CancellationToken.None);
+            var category = await unitOfWork.GenericRepository<Category>().GetByIdAsync(id, CancellationToken.None);
             if (category == null)
             {
                 return NotFound();
             }
 
             category.Name = name;
+            category.MainCategoryId = Maincategoryid;
 
             await unitOfWork.GenericRepository<Category>().UpdateAsync(category, CancellationToken.None);
             return RedirectToAction("GetAllMainCategory", "MainCategory", new { tabs = 2 });
