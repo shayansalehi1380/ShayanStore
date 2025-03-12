@@ -8,7 +8,7 @@ namespace AdminPanel.UI.Controllers
 {
     public class MainCategoryController(IUnitOfWork unitOfWork) : Controller
     {
-        public async Task<ActionResult<List<MainCategory>>> GetAllMainCategory(string? searchMainCategory, int tabs = 1)
+        public async Task<ActionResult<List<MainCategory>>> GetAllMainCategory(string? searchMainCategory,string? searchCategory, int tabs = 1)
         {
             ViewBag.selectTab = tabs;
 
@@ -27,9 +27,9 @@ namespace AdminPanel.UI.Controllers
                 .TableNoTracking
                 .Include(x=>x.MainCategory);
 
-            if (!string.IsNullOrEmpty(searchMainCategory))
+            if (!string.IsNullOrEmpty(searchCategory))
             {
-                queryCategory = queryCategory.Where(x => x.Name.Contains(searchMainCategory));
+                queryCategory = queryCategory.Where(x => x.Name.Contains(searchCategory));
             }
 
             ViewBag.Categories = await queryCategory.ToListAsync();

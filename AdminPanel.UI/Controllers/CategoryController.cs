@@ -36,17 +36,17 @@ namespace AdminPanel.UI.Controllers
             return RedirectToAction("GetAllMainCategory", "MainCategory", new { tabs = 2 });
         }
 
-        public async Task<ActionResult> Create(string name, int Maincategoryid)
+        public async Task<ActionResult> Create(string name, int mainCategoryId)
         {
             await unitOfWork.GenericRepository<Category>().AddAsync(new Category
             {
                 Name = name,
-                MainCategoryId = Maincategoryid
+                MainCategoryId = mainCategoryId
             }, CancellationToken.None);
             return RedirectToAction("GetAllMainCategory", "MainCategory", new { tabs = 2 });
         }
 
-        public async Task<ActionResult> Update(int id, string name, int Maincategoryid)
+        public async Task<ActionResult> Update(int id, string name, int mainCategoryId)
         {
             var category = await unitOfWork.GenericRepository<Category>().GetByIdAsync(id, CancellationToken.None);
             if (category == null)
@@ -55,7 +55,7 @@ namespace AdminPanel.UI.Controllers
             }
 
             category.Name = name;
-            category.MainCategoryId = Maincategoryid;
+            category.MainCategoryId = mainCategoryId;
 
             await unitOfWork.GenericRepository<Category>().UpdateAsync(category, CancellationToken.None);
             return RedirectToAction("GetAllMainCategory", "MainCategory", new { tabs = 2 });

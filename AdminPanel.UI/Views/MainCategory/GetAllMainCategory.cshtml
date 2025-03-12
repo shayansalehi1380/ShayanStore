@@ -125,7 +125,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label>نام دسته بندی مادر</label>
-                                    <select class="form-control select2" name="stateId" style="width: 100%;">
+                                    <select class="form-control select2" name="mainCategoryId" style="width: 100%;">
                                         @{
                                             var index = 0;
                                             foreach (var maincategory in maincategories)
@@ -149,7 +149,7 @@
                                 </div>
 
                             </form>
-                            <form class="input-group input-group-sm w-25 p-2" asp-action="GetAllCategory" asp-controller="Category" method="post">
+                            <form class="input-group input-group-sm w-25 p-2" asp-action="GetAllMainCategory" asp-controller="MainCategory" method="post">
                                 <input class="form-control form-control-navbar" id="searchUser" name="searchCategory" type="search" placeholder="جستجو" aria-label="Search">
                                 <input name="tabs" value="2" hidden="hidden" />
                                 <div class="input-group-append">
@@ -223,15 +223,15 @@
             </div>
             <div class="modal-body">
                 <form asp-action="Update" asp-controller="Category" method="post">
-                    <input id="CityId" name="id" hidden="hidden" />
+                    <input id="CatId" name="id" hidden="hidden" />
                     <div class="form-group">
                         <label for="exampleInputEmail1">نام زیر دسته</label>
-                        <input type="text" class="form-control" id="NameCity" name="name" aria-describedby="emailHelp"
+                        <input type="text" class="form-control" id="NameCat" name="name" aria-describedby="emailHelp"
                                placeholder="نام زیر دسته را وارد کنید">
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">دسته بندی مادر</label>
-                        <select class="form-control" id="StateId" name="stateId">
+                        <select class="form-control" id="MainCatId" name="mainCategoryId">
                             @foreach (var i in maincategories)
                             {
                                 <option value="@i.Id">@i.Title</option>
@@ -279,9 +279,9 @@
 
             $(".editeCity").click(function () {
                 var currentRow = $(this).closest("form")
-                $("#CityId").val(currentRow.find($("input.mId[type=text]")).val());
-                $("#NameCity").val(currentRow.find($("input.mName[type=text]")).val());
-                $("#StateId").val(currentRow.find($("input.mStateId[type=text]")).val());
+                $("#CatId").val(currentRow.find($("input.mId[type=text]")).val());
+                $("#NameCat").val(currentRow.find($("input.mName[type=text]")).val());
+                $("#MainCatId").val(currentRow.find($("input.mStateId[type=text]")).val());
             })
         })
 
