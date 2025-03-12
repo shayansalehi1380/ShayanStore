@@ -15,7 +15,7 @@ public class StateController(IUnitOfWork unitOfWork) : Controller
         {
             Name = name,
         }, CancellationToken.None);
-        return RedirectToAction("GetAllCity","City",new { tabs = 1 });
+        return RedirectToAction("ManageProvince","Admin",new { tabs = 1 });
     }
 
     public async Task<ActionResult<List<State>>> GetAllState(string? search)
@@ -40,7 +40,7 @@ public class StateController(IUnitOfWork unitOfWork) : Controller
         state.Name = name;
 
         await unitOfWork.GenericRepository<State>().UpdateAsync(state, CancellationToken.None);
-        return RedirectToAction("GetAllCity", "City", new { tabs = 1 });
+        return RedirectToAction("ManageProvince", "Admin", new { tabs = 1 });
     }
 
     public async Task<ActionResult> Delete(int id)

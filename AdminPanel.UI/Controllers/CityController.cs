@@ -19,7 +19,7 @@ namespace AdminPanel.UI.Controllers
                 Name = name,
                 StateId = stateId,
             }, CancellationToken.None);
-            return RedirectToAction("GetAllCity", new { tabs = 2 });
+            return RedirectToAction("ManageProvince","Admin", new { tabs = 2 });
         }
 
         public async Task<ActionResult> GetAllCity(string? searchCity, string? searchState, int tabs = 1)
@@ -62,7 +62,7 @@ namespace AdminPanel.UI.Controllers
             city.StateId = stateId;
 
             await unitOfWork.GenericRepository<City>().UpdateAsync(city, CancellationToken.None);
-            return RedirectToAction("GetAllCity", new { tabs = 2 });
+            return RedirectToAction("ManageProvince", "Admin",new { tabs = 2 });
         }
 
         public async Task<ActionResult> Delete(int id)

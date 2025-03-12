@@ -1,0 +1,14 @@
+﻿<div class="form-group">
+    <label for="exampleInputFile">ارسال فایل</label>
+    <form asp-controller="UploadFile" asp-action="UploadFromFile" method="post" enctype="multipart/form-data" class="input-group">
+        <div class="custom-file">
+            <input type="text" name="patch" >
+            <input type="file" name="file" class="custom-file-input" id="exampleInputFile">
+            <label class="custom-file-label" for="exampleInputFile">انتخاب فایل</label>
+        </div>
+        <div class="input-group-append">
+            <a type="submit" class="input-group-text" id="">Upload</a>
+        </div>
+<button type="submit" style="cursor: pointer">ثبت</button>        
+    </form>
+</div>

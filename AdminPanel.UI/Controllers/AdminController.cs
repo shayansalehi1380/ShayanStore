@@ -2,17 +2,19 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using Application.Interface;
 using Application.Users.v1.Commands.LoginAdmin;
 using Application.Users.v1.Commands.LogOutAdmin;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;
 
 namespace AdminPanel.UI.Controllers
 {
     public class AdminController(
         UserManager<User> userManager,
         IMediator mediator,
-        RoleManager<Role> roleManager)
+        RoleManager<Role> roleManager,IUnitOfWork unitOfWork)
         : Controller
     {
         public IActionResult AdminLogin()
@@ -77,5 +79,41 @@ namespace AdminPanel.UI.Controllers
         {
             return View();
         }
+        
+       // _________________________________________________________________________________________________________________________________________________________________
+       
+       public async Task<ActionResult> ManageProvince(string? searchCity, string? searchState, int tabs = 1)
+       {
+           IQueryable<City> queryCity = unitOfWork.GenericRepository<City>()
+               .TableNoTracking
+               .Include(x => x.State)
+               .AsSplitQuery();
+
+           IQueryable<State> queryState = unitOfWork.GenericRepository<State>().TableNoTracking
+               .Include(x => x.Cities)
+               .AsSplitQuery();
+
+           ViewBag.selectTab = tabs;
+
+           if (!string.IsNullOrEmpty(searchCity))
+           {
+               queryCity = queryCity.Where(x => x.Name.Contains(searchCity) || x.State.Name.Contains(searchCity));
+           }
+
+           if (!string.IsNullOrEmpty(searchState))
+           {
+               queryState = queryState.Where(x => x.Name.Contains(searchState));
+           }
+
+           ViewBag.Cities = await queryCity.OrderByDescending(x=>x.Id).ToListAsync();
+           ViewBag.State = await queryState.OrderByDescending(x=>x.Id).ToListAsync();
+           return View();
+       }
+
+       public async Task<ActionResult> UploadImage()
+       {
+           return View();
+       }
+        
     }
 }

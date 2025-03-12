@@ -11,8 +11,8 @@ namespace Domain.Entity
     {
         public string Name { get; set; } = string.Empty;
 
-        [ForeignKey("MainCategoryId")]
         public int MainCategoryId { get; set; }
+        [ForeignKey("MainCategoryId")]
         public MainCategory MainCategory { get; set; } = default!;
     }
 }
