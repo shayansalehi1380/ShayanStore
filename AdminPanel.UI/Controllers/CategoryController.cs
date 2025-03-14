@@ -33,7 +33,7 @@ namespace AdminPanel.UI.Controllers
             ViewBag.Categories = await queryCategories.ToListAsync();
             ViewBag.MainCategories = await queryMainCategories.ToListAsync();
 
-            return RedirectToAction("GetAllMainCategory", "MainCategory", new { tabs = 2 });
+            return RedirectToAction("ManageCategory", "Admin", new { tabs = 2 });
         }
 
         public async Task<ActionResult> Create(string name, int mainCategoryId)
@@ -43,7 +43,7 @@ namespace AdminPanel.UI.Controllers
                 Name = name,
                 MainCategoryId = mainCategoryId
             }, CancellationToken.None);
-            return RedirectToAction("GetAllMainCategory", "MainCategory", new { tabs = 2 });
+            return RedirectToAction("ManageCategory", "Admin", new { tabs = 2 });
         }
 
         public async Task<ActionResult> Update(int id, string name, int mainCategoryId)
@@ -58,7 +58,7 @@ namespace AdminPanel.UI.Controllers
             category.MainCategoryId = mainCategoryId;
 
             await unitOfWork.GenericRepository<Category>().UpdateAsync(category, CancellationToken.None);
-            return RedirectToAction("GetAllMainCategory", "MainCategory", new { tabs = 2 });
+            return RedirectToAction("ManageCategory", "Admin", new { tabs = 2 });
         }
 
         public async Task<ActionResult> SoftDelete(int id)
@@ -71,7 +71,7 @@ namespace AdminPanel.UI.Controllers
 
             category.IsDelete = true;
             await unitOfWork.GenericRepository<Category>().UpdateAsync(category, CancellationToken.None);
-            return RedirectToAction("GetAllMainCategory", "MainCategory", new { tabs = 2 });
+            return RedirectToAction("ManageCategory", "Admin", new { tabs = 2 });
         }
 
         public async Task<ActionResult> Delete(int id)
@@ -83,7 +83,7 @@ namespace AdminPanel.UI.Controllers
             }
 
             await unitOfWork.GenericRepository<Category>().DeleteAsync(category, CancellationToken.None);
-            return RedirectToAction("GetAllMainCategory", "MainCategory", new { tabs = 2 });
+            return RedirectToAction("ManageCategory", "Admin", new { tabs = 2 });
         }
     }
 }

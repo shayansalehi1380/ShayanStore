@@ -33,7 +33,7 @@ namespace AdminPanel.UI.Controllers
             }
 
             ViewBag.Categories = await queryCategory.ToListAsync();
-            return View();
+            return View("ManageCategory", "Admin");
         }
 
         public async Task<ActionResult> Create(string name)
@@ -42,7 +42,7 @@ namespace AdminPanel.UI.Controllers
             {
                 Title = name,
             }, CancellationToken.None);
-            return RedirectToAction("GetAllMainCategory", new { tabs = 1 });
+            return RedirectToAction("ManageCategory","Admin", new { tabs = 1 });
         }
 
         public async Task<ActionResult> Update(int id, string name)
@@ -56,7 +56,7 @@ namespace AdminPanel.UI.Controllers
             maincategory.Title = name;
 
             await unitOfWork.GenericRepository<MainCategory>().UpdateAsync(maincategory, CancellationToken.None);
-            return RedirectToAction("GetAllMainCategory", "MainCategory", new { tabs = 1 });
+            return RedirectToAction("ManageCategory", "Admin", new { tabs = 1 });
         }
 
         public async Task<ActionResult> SoftDelete(int id)
@@ -70,7 +70,7 @@ namespace AdminPanel.UI.Controllers
 
             maincategory.IsDelete = true;
             await unitOfWork.GenericRepository<MainCategory>().UpdateAsync(maincategory, CancellationToken.None);
-            return RedirectToAction("GetAllMainCategory", new { tabs = 1 });
+            return RedirectToAction("ManageCategory", "Admin", new { tabs = 1 });
         }
 
         public async Task<ActionResult> Delete(int id)
@@ -83,7 +83,7 @@ namespace AdminPanel.UI.Controllers
             }
 
             await unitOfWork.GenericRepository<MainCategory>().DeleteAsync(maincategory, CancellationToken.None);
-            return RedirectToAction("GetAllMainCategory", new { tabs = 1 });
+            return RedirectToAction("ManageCategory", "Admin", new { tabs = 1 });
         }
     }
 }

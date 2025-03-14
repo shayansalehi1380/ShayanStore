@@ -129,10 +129,10 @@ namespace AdminPanel.UI.Controllers
 
             if (result.Succeeded)
             {
-                return RedirectToAction("GetAllUser");
+                return RedirectToAction("ManageUser","Admin");
             }
 
-            return View("GetAllUser");
+            return View("ManageUser", "Admin");
         }
 
 
@@ -143,7 +143,7 @@ namespace AdminPanel.UI.Controllers
             if (user == null)
             {
                 ModelState.AddModelError("", "کاربر یافت نشد");
-                return RedirectToAction("GetAllUser");
+                return RedirectToAction("ManageUser", "Admin");
             }
 
             user.UserName = request.PhoneNumber;
@@ -166,10 +166,10 @@ namespace AdminPanel.UI.Controllers
                     await userManager.AddToRoleAsync(user, role);
                 }
 
-                return RedirectToAction("GetAllUser");
+                return RedirectToAction("ManageUser", "Admin");
             }
 
-            return View("GetAllUser");
+            return View("ManageUser", "Admin");
         }
 
 
@@ -181,16 +181,16 @@ namespace AdminPanel.UI.Controllers
             if (user == null)
             {
                 ModelState.AddModelError("", "کاربر یافت نشد");
-                return RedirectToAction("GetAllUser");
+                return RedirectToAction("ManageUser", "Admin");
             }
 
             var result = await userManager.DeleteAsync(user);
 
             if (result.Succeeded)
             {
-                return RedirectToAction("GetAllUser");
+                return RedirectToAction("ManageUser", "Admin");
             }
-            return RedirectToAction("GetAllUser");
+            return RedirectToAction("ManageUser", "Admin");
         }
     }
 }

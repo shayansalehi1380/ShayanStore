@@ -8,6 +8,7 @@ using Application.Users.v1.Commands.LogOutAdmin;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
+using Application.Dtos.Users;
 
 namespace AdminPanel.UI.Controllers
 {
@@ -110,7 +111,129 @@ namespace AdminPanel.UI.Controllers
            return View();
        }
 
-       public async Task<ActionResult> UploadImage()
+
+        public async Task<IActionResult> ManageUser(string? search)
+        {
+            var users = new List<UserDto>();
+            var query = userManager.Users.AsTracking()
+                .Include(c => c.City).AsQueryable();
+
+            if (!string.IsNullOrEmpty(search))
+            {
+                query = query.Where(x => x.PhoneNumber.Contains(search) || x.Name.Contains(search) || x.UserName.Contains(search));
+            }
+
+            var entityUsers = await query.ToListAsync();
+            ViewBag.Roles = await roleManager.Roles.ToListAsync();
+            ViewBag.Cities = await unitOfWork.GenericRepository<City>().TableNoTracking.ToListAsync();
+
+            //var newUser = new User
+            //{
+            //    UserName = "09015538133",
+            //    Family = string.Empty,
+            //    Email = string.Empty,
+            //    PhoneNumber = string.Empty,
+            //    Name = string.Empty,
+            //    CityId = 1,
+            //    Sheba = string.Empty,
+            //    ImageName = string.Empty,
+            //    InsertDate = DateTime.Now,
+            //    NationalCode = string.Empty,
+            //    ConcurrencyStamp = string.Empty,
+            //    SecurityStamp = string.Empty,
+            //    ConfirmCode = string.Empty,
+            //};
+            //await userManager.CreateAsync(newUser);
+            //var newUser1 = new User
+            //{
+            //    UserName = "0921129482",
+            //    Family = string.Empty,
+            //    Email = string.Empty,
+            //    PhoneNumber = string.Empty,
+            //    Name = string.Empty,
+            //    CityId = 1,
+            //    Sheba = string.Empty,
+            //    ImageName = string.Empty,
+            //    InsertDate = DateTime.Now,
+            //    NationalCode = string.Empty,
+            //    ConcurrencyStamp = string.Empty,
+            //    SecurityStamp = string.Empty,
+            //    ConfirmCode = string.Empty,
+            //};
+            //await userManager.CreateAsync(newUser1);
+
+            //if (!await roleManager.RoleExistsAsync("Admin"))
+            //{
+            //    await roleManager.CreateAsync(new Role
+            //    {
+            //        Name = "Admin",
+            //    });
+            //}
+            //if (!await roleManager.RoleExistsAsync("User"))
+            //{
+            //    await roleManager.CreateAsync(new Role
+            //    {
+            //        Name = "User",
+            //    });
+            //}
+            //await userManager.AddToRoleAsync(newUser, "Admin");
+            //await userManager.AddToRoleAsync(newUser1, "Admin");
+            //await userManager.AddToRoleAsync(newUser1, "User");
+            //await userManager.AddToRoleAsync(newUser, "User");
+
+
+
+            foreach (var i in entityUsers)
+            {
+
+                users.Add(new UserDto
+                {
+                    City = i.City,
+                    Email = i.Email,
+                    Family = i.Family,
+                    InsertDate = i.InsertDate,
+                    Name = i.Name,
+                    PhoneNumber = i.PhoneNumber,
+                    Roles = await userManager.GetRolesAsync(i),
+                    UserName = i.UserName,
+                    Id = i.Id
+                });
+            }
+            ViewBag.Users = users;
+
+            return View();
+        }
+
+
+        public async Task<ActionResult<List<MainCategory>>> ManageCategory(string? searchMainCategory, string? searchCategory, int tabs = 1)
+        {
+            ViewBag.selectTab = tabs;
+
+            IQueryable<MainCategory> queryMainCategory = unitOfWork.GenericRepository<MainCategory>()
+                .TableNoTracking
+                .Include(x => x.Categories);
+
+            if (!string.IsNullOrEmpty(searchMainCategory))
+            {
+                queryMainCategory = queryMainCategory.Where(x => x.Title.Contains(searchMainCategory));
+            }
+
+            ViewBag.MainCategories = await queryMainCategory.ToListAsync();
+
+            IQueryable<Category> queryCategory = unitOfWork.GenericRepository<Category>()
+                .TableNoTracking
+                .Include(x => x.MainCategory);
+
+            if (!string.IsNullOrEmpty(searchCategory))
+            {
+                queryCategory = queryCategory.Where(x => x.Name.Contains(searchCategory));
+            }
+
+            ViewBag.Categories = await queryCategory.ToListAsync();
+            return View();
+        }
+
+        public async Task<ActionResult> UploadImage()
        {
            return View();
        }

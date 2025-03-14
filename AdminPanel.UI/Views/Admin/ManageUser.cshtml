@@ -1,0 +1,295 @@
+﻿@using Application.Dtos.Users
+@using Domain.Entity
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model List<Domain.Entity.User>
+
+@{
+    List<UserDto> users = ViewBag.Users;
+    List<City> cities = ViewBag.Cities;
+    List<Role> roles = ViewBag.Roles;
+}
+@section link {
+    <style>
+        #searchUser {
+            border-top-right-radius: 5px;
+            border-bottom-right-radius: 5px;
+            border-top-left-radius: 0 !important;
+            border-bottom-left-radius: 0 !important;
+            border: none;
+            background-color: #f2f4f6;
+        }
+
+        #searchIcon {
+            border: none;
+            background-color: #f2f4f6;
+        }
+
+        .modal {
+            top: 5%;
+        }
+    </style>
+}
+<div class="row">
+    <div class="col-12">
+        <div class="card" style="margin: 15px 15px 0px 15px;">
+            <div class="card-header p-2">
+                <ul class="nav nav-pills">
+                    <li class="nav-item"><a class="nav-link active" href="#activity" data-toggle="tab">کاربران</a></li>
+                </ul>
+            </div><!-- /.card-header -->
+            <div class="card-body">
+                <div class="tab-content">
+                    <div class="active tab-pane" id="activity">
+                        <form asp-controller="Admin" asp-action="ManageUser" method="post" class="d-flex justify-content-between align-items-center pb-2" style="gap: 10px">
+                            <div class="p-1">
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal1">کاربر جدید</button>
+                            </div>
+                            <div class="input-group input-group-sm w-25 p-2">
+                                <input class="form-control form-control-navbar" id="searchUser" name="search" type="search" placeholder="جستجو" aria-label="Search">
+                                <div class="input-group-append">
+                                    <button class="btn btn-navbar" id="searchIcon" type="submit">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">کاربران</h3>
+                                <!-- Fixed spelling from "کابران" to "کاربران" (if that's what you intended) -->
+                            </div>
+                            <!-- /.card-header -->
+                            <div class="card-body p-0">
+                                <table class="table table-striped">
+                                    <tr>
+                                        <th style="width: 10px">#</th>
+                                        <th>نام کاربر</th>
+                                        <th>نقش کاربر</th>
+                                        <th>عملیات</th>
+                                    </tr>
+                                    @foreach (var user in users)
+                                    {
+                                        <tr>
+                                            <th style="width: 10px">@user.Id</th>
+                                            <th>@user.Name @user.Family</th>
+                                            <th>
+                                                @foreach (var i in user.Roles)
+                                                {
+                                                    <span class="badge badge-info">@i</span>
+                                                }
+                                            </th>
+                                            <th>
+                                                <form>
+                                                    <button type="button" class="badge badge-warning editeUser"
+                                                            data-toggle="modal" data-target="#exampleModal">
+                                                        ویرایش
+                                                    </button>
+                                                    <input type="text" name="mId" class="mId" value="@user.Id"
+                                                           hidden="hidden" />
+                                                    <input type="text" name="mName" class="mName" value="@user.Name"
+                                                           hidden="hidden" />
+                                                    <input type="text" name="mFamily" class="mFamily"
+                                                           value="@user.Family" hidden="hidden" />
+                                                    <input type="text" name="mEmail" class="mEmail"
+                                                           value="@user.Email" hidden="hidden" />
+                                                    <input type="text" name="mPhoneNumber" class="mPhoneNumber"
+                                                           value="@user.PhoneNumber" hidden="hidden" />
+                                                    @{
+                                                        string combineRoles = string.Empty;
+                                                        foreach (var r in user.Roles)
+                                                        {
+                                                            combineRoles += r + ",";
+                                                        }
+                                                    }
+                                                    <input type="text" name="mRole" class="mRole"
+                                                           value="@combineRoles" hidden="hidden" />
+                                                    <input type="text" name="mCity" class="mCity"
+                                                           value="@user.City.Id" hidden="hidden" />
+
+                                                </form>
+                                                <a class="badge badge-danger"
+                                                   href="@Url.Action("Delete", "User", new { id = user.Id })">حذف</a>
+                                            </th>
+                                        </tr>
+                                    }
+
+                                </table>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+                    </div> <!-- Closing active tab-pane div -->
+                </div> <!-- Closing tab-content div -->
+            </div><!-- /.card-body -->
+        </div> <!-- /.card -->
+    </div><!-- /.col-12 -->
+</div><!-- /.row -->
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h5 class="modal-title" id="exampleModalLabel">ویرایش  کاربر</h5>
+            </div>
+            <div class="modal-body">
+                <form asp-action="Update" asp-controller="User" method="post">
+                    <input id="IdUser" name="id" hidden="hidden" />
+                    <div class=" d-flex justify-content-between align-content-center" style="gap:10px">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">نام </label>
+                            <input type="text" class="form-control" id="NameUser" name="Name" aria-describedby="emailHelp"
+                                   placeholder="نام  را وارد کنید">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">نام خانوادگی</label>
+                            <input type="text" class="form-control" id="FamilyUser" name="Family" aria-describedby="emailHelp"
+                                   placeholder="نام خانوادگی را وارد کنید">
+                        </div>
+                    </div>
+                    <div class=" d-flex justify-content-between align-content-center" style="gap:10px">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">ایمیل</label>
+                            <input type="text" class="form-control" id="EmailUser" name="Email" aria-describedby="emailHelp"
+                                   placeholder="ایمیل را وارد کنید">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">شماره تماس</label>
+                            <input type="text" class="form-control" id="PhoneNumberUser" name="PhoneNumber" aria-describedby="emailHelp"
+                                   placeholder="شماره تماس را وارد کنید">
+                        </div>
+                    </div>
+                    <div class=" d-flex justify-content-between align-content-center" style="gap:10px">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">نقش کاربر</label>
+                            <select class="form-control select2" id="RolesUser" name="Roles" multiple="multiple" data-placeholder="نقش کاربر"
+                                    style="width: 100%;text-align: right">
+                                @foreach (var i in roles)
+                                {
+                                    if (i.Name.Equals("User"))
+                                    {
+                                        <option value="@i.Name" selected="selected">@i.Name</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@i.Name">@i.Name</option>
+                                    }
+                                }
+
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">شهر</label>
+                            <select class="form-control" id="CityIdUser" name="CityId">
+                                @foreach (var i in cities)
+                                {
+                                    <option value="@i.Id">@i.Name</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">بستن</button>
+                    <button type="submit" class="btn btn-primary">ثبت</button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h5 class="modal-title" id="exampleModalLabel">ثبت  کاربر</h5>
+            </div>
+            <div class="modal-body">
+                <form asp-action="Create" asp-controller="User" method="post">
+                    <div class=" d-flex justify-content-between align-content-center" style="gap:10px">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">نام </label>
+                            <input type="text" class="form-control" id="NameUser" name="Name" aria-describedby="emailHelp"
+                                   placeholder="نام  را وارد کنید">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">نام خانوادگی</label>
+                            <input type="text" class="form-control" id="FamilyUser" name="Family" aria-describedby="emailHelp"
+                                   placeholder="نام خانوادگی را وارد کنید">
+                        </div>
+                    </div>
+                    <div class=" d-flex justify-content-between align-content-center" style="gap:10px">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">ایمیل</label>
+                            <input type="text" class="form-control" id="EmailUser" name="Email" aria-describedby="emailHelp"
+                                   placeholder="ایمیل را وارد کنید">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">شماره تماس</label>
+                            <input type="text" class="form-control" id="PhoneNumberUser" name="PhoneNumber" aria-describedby="emailHelp"
+                                   placeholder="شماره تماس را وارد کنید">
+                        </div>
+                    </div>
+                    <div class=" d-flex justify-content-between align-content-center" style="gap:10px">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">نقش کاربر</label>
+                            <select class="form-control select2" id="RolesUser" name="Roles" multiple="multiple" data-placeholder="نقش کاربر"
+                                    style="width: 100%;text-align: right">
+                                @foreach (var i in roles)
+                                {
+                                    if (i.Name.Equals("User"))
+                                    {
+                                        <option value="@i.Name" selected="selected">@i.Name</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@i.Name">@i.Name</option>
+                                    }
+                                }
+
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">شهر</label>
+                            <select class="form-control" id="CityIdUser" name="CityId">
+                                @foreach (var i in cities)
+                                {
+                                    <option value="@i.Id">@i.Name</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">بستن</button>
+                    <button type="submit" class="btn btn-primary">ثبت</button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section script
+{
+    <script>
+        $(document).ready(function () {
+
+            $(".editeUser").click(function () {
+                var currentRow = $(this).closest("form")
+                $("#IdUser").val(currentRow.find($("input.mId[type=text]")).val());
+                $("#NameUser").val(currentRow.find($("input.mName[type=text]")).val());
+                $("#FamilyUser").val(currentRow.find($("input.mFamily[type=text]")).val());
+                $("#EmailUser").val(currentRow.find($("input.mEmail[type=text]")).val());
+                $("#PhoneNumberUser").val(currentRow.find($("input.mPhoneNumber[type=text]")).val());
+                var roles = currentRow.find($("input.mRole[type=text]")).val().split(",");
+                $("#RolesUser").val(roles).trigger("change");
+                $("#CityIdUser").val(currentRow.find($("input.mCity[type=text]")).val());
+            });
+            $('.select2').select2();
+        })
+    </script>
+}
