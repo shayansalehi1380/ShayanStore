@@ -10,6 +10,7 @@ namespace Domain.DBContext
         public DbSet<City> Cities { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<MainCategory> MainCategories { get; set; }
+        public DbSet<SubCategory> SubCategories { get; set; }
 
         public ShayanStoreDBContext(DbContextOptions<ShayanStoreDBContext> options) : base(options)
         {
@@ -36,6 +37,7 @@ namespace Domain.DBContext
             modelBuilder.Entity<User>().HasQueryFilter(x => !x.IsDelete);
             modelBuilder.Entity<Category>().HasQueryFilter(x => !x.IsDelete);
             modelBuilder.Entity<MainCategory>().HasQueryFilter(x => !x.IsDelete);
+            modelBuilder.Entity<SubCategory>().HasQueryFilter(x => !x.IsDelete);
 
             base.OnModelCreating(modelBuilder);
         }

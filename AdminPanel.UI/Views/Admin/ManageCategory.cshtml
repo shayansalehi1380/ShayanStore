@@ -1,17 +1,23 @@
 ﻿@{
     List<Domain.Entity.Category> categories = ViewBag.Categories;
     List<Domain.Entity.MainCategory> maincategories = ViewBag.MainCategories;
+    List<Domain.Entity.SubCategory> subcategories = ViewBag.SubCategories;
 
     int selectTab = ViewBag.selectTab;
     string maincategoriesTab = string.Empty;
     string categoriesTab = string.Empty;
+    string subcategoriesTab = string.Empty;
     if (selectTab == 1)
     {
         maincategoriesTab = "active";
     }
-    else
+    else if (selectTab == 2)
     {
         categoriesTab = "active";
+    }
+    else if (selectTab == 3)
+    {
+        subcategoriesTab = "active";
     }
 }
 
@@ -44,7 +50,7 @@
             <div class="card-header p-2">
                 <ul class="nav nav-pills">
                     <li class="nav-item"><a class="nav-link @maincategoriesTab" href="#activity" data-toggle="tab">دسته بندی مادر</a></li>
-                    <li class="nav-item"><a class="nav-link @categoriesTab" href="#timeline" data-toggle="tab">زیر دسته</a></li>
+                    <li class="nav-item"><a class="nav-link @categoriesTab" href="#timeline" data-toggle="tab">دسته بندی</a></li>
                 </ul>
             </div><!-- /.card-body -->
             <div class="card-body">
@@ -83,7 +89,7 @@
                                     <tr>
                                         <th style="width: 10px">#</th>
                                         <th>نام دسته بندی مادر</th>
-                                        <th>تعداد زیر دسته ها</th>
+                                        <th>تعداد دسته بندی ها</th>
                                         <th>عملیات</th>
                                     </tr>
                                     @foreach (var maincategory in maincategories)
@@ -119,9 +125,9 @@
                             <form asp-controller="Category" asp-action="Create" method="post"
                                   class="d-flex justify-content-start align-items-center" style="gap: 15px">
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">نام زیردسته</label>
+                                    <label for="exampleInputEmail1">نام دسته بندی</label>
                                     <input type="text" class="form-control" name="name" id="exampleInputEmail1"
-                                           placeholder="نام زیردسته را وارد کنید">
+                                           placeholder="نام دسته بندی را وارد کنید">
                                 </div>
                                 <div class="form-group">
                                     <label>نام دسته بندی مادر</label>
@@ -145,7 +151,7 @@
                                     </select>
                                 </div>
                                 <div style="padding-top: 15px">
-                                    <button type="submit" class="btn btn-primary">ثبت زیردسته</button>
+                                    <button type="submit" class="btn btn-primary">ثبت دسته بندی</button>
                                 </div>
 
                             </form>
@@ -161,14 +167,14 @@
                         </div>
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title">زیر دسته ها</h3>
+                                <h3 class="card-title">دسته بندی ها</h3>
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body p-0">
                                 <table class="table table-striped">
                                     <tr>
                                         <th style="width: 10px">#</th>
-                                        <th>نام زیر دسته</th>
+                                        <th>نام دسته بندی</th>
                                         <th>نام دسته بندی مادر</th>
                                         <th>عملیات</th>
                                     </tr>
@@ -203,6 +209,95 @@
                             <!-- /.card-body -->
                         </div>
                     </div>
+                    <div class="@subcategoriesTab tab-pane" id="timeline">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <form asp-controller="SubCategory" asp-action="Create" method="post"
+                                  class="d-flex justify-content-start align-items-center" style="gap: 15px">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">نام زیر دسته</label>
+                                    <input type="text" class="form-control" name="name" id="exampleInputEmail1"
+                                           placeholder="نام زیر دسته را وارد کنید">
+                                </div>
+                                <div class="form-group">
+                                    <label>نام دسته بندی</label>
+                                    <select class="form-control select2" name="mainCategoryId" style="width: 100%;">
+                                        @{
+                                            var index = 0;
+                                            foreach (var category in categories)
+                                            {
+                                                if (index == 0)
+                                                {
+                                                    <option selected="selected" value="@category.Id">@category.Name</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="@category.Id">@category.Name</option>
+                                                }
+
+                                                index++;
+                                            }
+                                        }
+                                    </select>
+                                </div>
+                                <div style="padding-top: 15px">
+                                    <button type="submit" class="btn btn-primary">ثبت زیر دسته</button>
+                                </div>
+
+                            </form>
+                            <form class="input-group input-group-sm w-25 p-2" asp-action="ManageCategory" asp-controller="Admin" method="post">
+                                <input class="form-control form-control-navbar" id="searchUser" name="searchCategory" type="search" placeholder="جستجو" aria-label="Search">
+                                <input name="tabs" value="2" hidden="hidden" />
+                                <div class="input-group-append">
+                                    <button class="btn btn-navbar" id="searchIcon" type="submit">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">زیرر دسته ها</h3>
+                            </div>
+                            <!-- /.card-header -->
+                            <div class="card-body p-0">
+                                <table class="table table-striped">
+                                    <tr>
+                                        <th style="width: 10px">#</th>
+                                        <th>نام زیر دسته</th>
+                                        <th>نام دسته بندی</th>
+                                        <th>عملیات</th>
+                                    </tr>
+                                    @foreach (var subcategory in subcategories)
+                                    {
+                                        <tr>
+                                            <th style="width: 10px">@subcategory.Id</th>
+                                            <th>@subcategory.Title</th>
+                                            <th>@subcategory.Category.Name</th>
+                                            <th>
+                                                <form>
+                                                    <button type="button" class="badge badge-warning editeCity"
+                                                            data-toggle="modal" data-target="#editeSubModal">
+                                                        ویرایش
+                                                    </button>
+                                                    <input type="text" name="mId" class="pId" value="@subcategory.Id"
+                                                           hidden="hidden" />
+                                                    <input type="text" name="mName" class="pName" value="@subcategory"
+                                                           hidden="hidden" />
+                                                    <input type="text" name="mSubId" class="mSubId"
+                                                           value="@subcategory.CategoryId" hidden="hidden" />
+                                                </form>
+
+                                                <a class="badge badge-danger"
+                                                   href="@Url.Action("SoftDelete", "SubCategory", new { id = subcategory.Id })">حذف</a>
+                                            </th>
+                                        </tr>
+                                    }
+
+                                </table>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+                    </div>
                 </div>
                 <!-- /.tab-content -->
             </div><!-- /.card-body -->
@@ -211,7 +306,7 @@
     </div>
 </div>
 
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+<div class="modal fade" id="editeSubModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
      aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -222,12 +317,49 @@
                 <h5 class="modal-title" id="exampleModalLabel">ویرایش زیر دسته</h5>
             </div>
             <div class="modal-body">
+                <form asp-action="Update" asp-controller="SubCategory" method="post">
+                    <input id="SubCatId" name="id" hidden="hidden" />
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">نام زیر دسته</label>
+                        <input type="text" class="form-control" id="NameSubCat" name="name" aria-describedby="emailHelp"
+                               placeholder="نام زیر سته را وارد کنید">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">دسته بندی</label>
+                        <select class="form-control" id="MainCatId" name="mainCategoryId">
+                            @foreach (var i in categories)
+                            {
+                                <option value="@i.Id">@i.Name</option>
+                            }
+                        </select>
+                    </div>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">بستن</button>
+                    <button type="submit" class="btn btn-primary">ثبت</button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h5 class="modal-title" id="exampleModalLabel">ویرایش دسته بندی</h5>
+            </div>
+            <div class="modal-body">
                 <form asp-action="Update" asp-controller="Category" method="post">
                     <input id="CatId" name="id" hidden="hidden" />
                     <div class="form-group">
-                        <label for="exampleInputEmail1">نام زیر دسته</label>
+                        <label for="exampleInputEmail1">نام دسته بندی</label>
                         <input type="text" class="form-control" id="NameCat" name="name" aria-describedby="emailHelp"
-                               placeholder="نام زیر دسته را وارد کنید">
+                               placeholder="نام دسته بندی را وارد کنید">
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">دسته بندی مادر</label>
@@ -290,6 +422,14 @@
                 var currentRow = $(this).closest("form");
                 $("#stateId").val(currentRow.find($("input.sId[type=text]")).val());
                 $("#NameState").val(currentRow.find($("input.sName[type=text]")).val());
+            });
+        });
+
+        $(document).ready(function () {
+            $(".editeSubModal").click(function () {
+                var currentRow = $(this).closest("form");
+                $("#SubCatId").val(currentRow.find($("input.pId[type=text]")).val());
+                $("#NameSubCat").val(currentRow.find($("input.pName[type=text]")).val());
             });
         });
     </script>
