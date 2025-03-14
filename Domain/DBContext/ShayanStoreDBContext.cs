@@ -1,4 +1,7 @@
-﻿using Domain.Entity;
+﻿using Domain.Entity.BasicInfo;
+using Domain.Entity.Products.Categories;
+using Domain.Entity.Products.Features;
+using Domain.Entity.Users;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,6 +14,8 @@ namespace Domain.DBContext
         public DbSet<Category> Categories { get; set; }
         public DbSet<MainCategory> MainCategories { get; set; }
         public DbSet<SubCategory> SubCategories { get; set; }
+        public DbSet<Feature> Features { get; set; }
+        public DbSet<FeatureDetails> FeatureDetails { get; set; }
 
         public ShayanStoreDBContext(DbContextOptions<ShayanStoreDBContext> options) : base(options)
         {
@@ -38,6 +43,8 @@ namespace Domain.DBContext
             modelBuilder.Entity<Category>().HasQueryFilter(x => !x.IsDelete);
             modelBuilder.Entity<MainCategory>().HasQueryFilter(x => !x.IsDelete);
             modelBuilder.Entity<SubCategory>().HasQueryFilter(x => !x.IsDelete);
+            modelBuilder.Entity<Feature>().HasQueryFilter(x => !x.IsDelete);
+            modelBuilder.Entity<FeatureDetails>().HasQueryFilter(x => !x.IsDelete);
 
             base.OnModelCreating(modelBuilder);
         }

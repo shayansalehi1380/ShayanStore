@@ -1,5 +1,4 @@
-﻿using Domain.Entity;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Application.Interface;
@@ -9,6 +8,9 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Application.Dtos.Users;
+using Domain.Entity.BasicInfo;
+using Domain.Entity.Products.Categories;
+using Domain.Entity.Users;
 
 namespace AdminPanel.UI.Controllers
 {

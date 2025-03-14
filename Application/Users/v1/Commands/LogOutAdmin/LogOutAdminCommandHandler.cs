@@ -1,4 +1,4 @@
-﻿using Domain.Entity;
+﻿using Domain.Entity.Users;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 

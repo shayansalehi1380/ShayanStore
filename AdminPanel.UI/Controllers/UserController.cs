@@ -1,9 +1,11 @@
 ﻿using Application.Interface;
-using Domain.Entity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Application.Dtos.Users;
+using Domain.Entity.BasicInfo;
+using Domain.Entity.Users;
+
 namespace AdminPanel.UI.Controllers
 {
     public class UserController(UserManager<User> userManager, RoleManager<Role> roleManager, IUnitOfWork work) : Controller

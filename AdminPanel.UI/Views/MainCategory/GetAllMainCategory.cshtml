@@ -1,6 +1,7 @@
-﻿@{
-    List<Domain.Entity.Category> categories = ViewBag.Categories;
-    List<Domain.Entity.MainCategory> maincategories = ViewBag.MainCategories;
+﻿@using Domain.Entity.Products.Categories
+@{
+    List<Category> categories = ViewBag.Categories;
+    List<MainCategory> maincategories = ViewBag.MainCategories;
 
     int selectTab = ViewBag.selectTab;
     string maincategoriesTab = string.Empty;

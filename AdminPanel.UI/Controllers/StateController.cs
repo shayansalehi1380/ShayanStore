@@ -1,5 +1,5 @@
 ﻿using Application.Interface;
-using Domain.Entity;
+using Domain.Entity.BasicInfo;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;

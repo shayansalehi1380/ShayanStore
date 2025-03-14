@@ -1,7 +1,7 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using AdminPanel.UI.Models;
-using Domain.Entity;
+using Domain.Entity.Users;
 
 namespace AdminPanel.UI.Controllers;
 

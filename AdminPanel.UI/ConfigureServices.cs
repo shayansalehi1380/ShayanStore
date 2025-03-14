@@ -1,5 +1,5 @@
 ﻿using Domain.DBContext;
-using Domain.Entity;
+using Domain.Entity.Users;
 using Microsoft.AspNetCore.Identity;
 
 namespace AdminPanel.UI;

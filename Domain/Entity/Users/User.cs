@@ -1,12 +1,8 @@
-﻿using Microsoft.AspNetCore.Identity;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using Domain.Entity.BasicInfo;
+using Microsoft.AspNetCore.Identity;
 
-namespace Domain.Entity
+namespace Domain.Entity.Users
 {
     public class User : IdentityUser<int>
     {

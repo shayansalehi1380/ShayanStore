@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using Domain.Common;
 
-namespace Domain.Entity
+namespace Domain.Entity.Products.Categories
 {
     public class SubCategory : BaseEntity
     {

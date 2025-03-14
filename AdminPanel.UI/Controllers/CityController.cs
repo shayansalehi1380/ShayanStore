@@ -1,10 +1,10 @@
 ﻿using Application.Interface;
-using Domain.Entity;
 using Infrastructure.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Xml.Linq;
 using Application.Cities.v1.Commands.SoftDeleteCity;
+using Domain.Entity.BasicInfo;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 

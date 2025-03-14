@@ -1,6 +1,6 @@
 ﻿using Application.Interface;
+using Domain.Common;
 using Domain.DBContext;
-using Domain.Entity;
 using Microsoft.EntityFrameworkCore;
 using Xunit;
 

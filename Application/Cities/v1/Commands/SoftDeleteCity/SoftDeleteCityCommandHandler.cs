@@ -1,5 +1,5 @@
 ﻿using Application.Interface;
-using Domain.Entity;
+using Domain.Entity.BasicInfo;
 using MediatR;
 
 namespace Application.Cities.v1.Commands.SoftDeleteCity;

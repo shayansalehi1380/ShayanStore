@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using Application.Interface;
+using Domain.Common;
 using Domain.DBContext;
-using Domain.Entity;
 
 namespace Infrastructure.Repositories;
 

@@ -3,7 +3,6 @@ using Application;
 using Domain;
 using Microsoft.EntityFrameworkCore;
 using Domain.DBContext;
-using Domain.Entity;
 using Infrastructure;
 using Microsoft.AspNetCore.Identity;
 

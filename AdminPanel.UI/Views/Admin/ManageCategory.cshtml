@@ -1,7 +1,8 @@
-﻿@{
-    List<Domain.Entity.Category> categories = ViewBag.Categories;
-    List<Domain.Entity.MainCategory> maincategories = ViewBag.MainCategories;
-    List<Domain.Entity.SubCategory> subcategories = ViewBag.SubCategories;
+﻿@using Domain.Entity.Products.Categories
+@{
+    List<Category> categories = ViewBag.Categories;
+    List<MainCategory> maincategories = ViewBag.MainCategories;
+    List<SubCategory> subcategories = ViewBag.SubCategories;
 
     int selectTab = ViewBag.selectTab;
     string maincategoriesTab = string.Empty;
@@ -51,6 +52,7 @@
                 <ul class="nav nav-pills">
                     <li class="nav-item"><a class="nav-link @maincategoriesTab" href="#activity" data-toggle="tab">دسته بندی مادر</a></li>
                     <li class="nav-item"><a class="nav-link @categoriesTab" href="#timeline" data-toggle="tab">دسته بندی</a></li>
+                    <li class="nav-item"><a class="nav-link @subcategoriesTab" href="#subCat" data-toggle="tab">زیر دسته بندی</a></li>
                 </ul>
             </div><!-- /.card-body -->
             <div class="card-body">
@@ -209,7 +211,7 @@
                             <!-- /.card-body -->
                         </div>
                     </div>
-                    <div class="@subcategoriesTab tab-pane" id="timeline">
+                    <div class="@subcategoriesTab tab-pane" id="subCat">
                         <div class="d-flex justify-content-between align-items-center">
                             <form asp-controller="SubCategory" asp-action="Create" method="post"
                                   class="d-flex justify-content-start align-items-center" style="gap: 15px">
@@ -246,7 +248,7 @@
                             </form>
                             <form class="input-group input-group-sm w-25 p-2" asp-action="ManageCategory" asp-controller="Admin" method="post">
                                 <input class="form-control form-control-navbar" id="searchUser" name="searchSubCategory" type="search" placeholder="جستجو" aria-label="Search">
-                                <input name="tabs" value="2" hidden="hidden" />
+                                <input name="tabs" value="3" hidden="hidden" />
                                 <div class="input-group-append">
                                     <button class="btn btn-navbar" id="searchIcon" type="submit">
                                         <i class="fa fa-search"></i>
@@ -275,13 +277,13 @@
                                             <th>@subcategory.Category.Name</th>
                                             <th>
                                                 <form>
-                                                    <button type="button" class="badge badge-warning editeCity"
+                                                    <button type="button" class="badge badge-warning sub-cat-button" 
                                                             data-toggle="modal" data-target="#editeSubModal">
                                                         ویرایش
                                                     </button>
                                                     <input type="text" name="mId" class="pId" value="@subcategory.Id"
                                                            hidden="hidden" />
-                                                    <input type="text" name="mName" class="pName" value="@subcategory"
+                                                    <input type="text" name="mName" class="pName" value="@subcategory.Title"
                                                            hidden="hidden" />
                                                     <input type="text" name="mSubId" class="mSubId"
                                                            value="@subcategory.CategoryId" hidden="hidden" />
@@ -326,7 +328,7 @@
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">دسته بندی</label>
-                        <select class="form-control" id="MainCatId" name="mainCategoryId">
+                        <select class="form-control" id="CatId" name="mainCategoryId">
                             @foreach (var i in categories)
                             {
                                 <option value="@i.Id">@i.Name</option>
@@ -414,23 +416,21 @@
                 $("#CatId").val(currentRow.find($("input.mId[type=text]")).val());
                 $("#NameCat").val(currentRow.find($("input.mName[type=text]")).val());
                 $("#MainCatId").val(currentRow.find($("input.mStateId[type=text]")).val());
-            })
-        })
+            });
 
-        $(document).ready(function () {
             $(".editeState").click(function () {
                 var currentRow = $(this).closest("form");
                 $("#stateId").val(currentRow.find($("input.sId[type=text]")).val());
                 $("#NameState").val(currentRow.find($("input.sName[type=text]")).val());
             });
-        });
 
-        $(document).ready(function () {
             $(".editeSubModal").click(function () {
                 var currentRow = $(this).closest("form");
                 $("#SubCatId").val(currentRow.find($("input.pId[type=text]")).val());
+                $("#CatId").val(currentRow.find($("input.mSubId[type=text]")).val());
                 $("#NameSubCat").val(currentRow.find($("input.pName[type=text]")).val());
             });
-        });
+        })
+  
     </script>
 }

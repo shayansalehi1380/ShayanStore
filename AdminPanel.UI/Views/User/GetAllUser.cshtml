@@ -1,7 +1,8 @@
 ﻿@using Application.Dtos.Users
-@using Domain.Entity
+@using Domain.Entity.BasicInfo
+@using Domain.Entity.Users
 @using Microsoft.AspNetCore.Mvc.TagHelpers
-@model List<Domain.Entity.User>
+@model List<Domain.Entity.Users.User>
 
 @{
     List<UserDto> users = ViewBag.Users;

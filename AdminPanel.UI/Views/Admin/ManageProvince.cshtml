@@ -1,6 +1,7 @@
-﻿@{
-    List<Domain.Entity.City> cities = ViewBag.Cities;
-    List<Domain.Entity.State> states = ViewBag.State;
+﻿@using Domain.Entity.BasicInfo
+@{
+    List<City> cities = ViewBag.Cities;
+    List<State> states = ViewBag.State;
     int selectTab = ViewBag.selectTab;
     string stateTab = string.Empty;
     string cityTab = string.Empty;
