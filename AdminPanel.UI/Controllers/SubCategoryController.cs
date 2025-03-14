@@ -8,7 +8,7 @@ namespace AdminPanel.UI.Controllers
 {
     public class SubCategoryController(IUnitOfWork unitOfWork) : Controller
     {
-        public async Task<ActionResult<List<SubCategory>>> GetAllSubCategory(string? searchCategory, int tabs = 2)
+        public async Task<ActionResult<List<SubCategory>>> GetAllSubCategory(string? searchSubCategory, int tabs = 2)
         {
             ViewBag.selectTab = tabs;
 
@@ -21,14 +21,14 @@ namespace AdminPanel.UI.Controllers
                 .Include(x => x.SubCategories)
                 .AsSplitQuery();
 
-            if (!string.IsNullOrEmpty(searchCategory))
+            if (!string.IsNullOrEmpty(searchSubCategory))
             {
-                queryCategories = queryCategories.Where(x => x.Name.Contains(searchCategory));
+                queryCategories = queryCategories.Where(x => x.Name.Contains(searchSubCategory));
             }
 
-            if (!string.IsNullOrEmpty(searchCategory))
+            if (!string.IsNullOrEmpty(searchSubCategory))
             {
-                querySubCategories = querySubCategories.Where(x => x.Title.Contains(searchCategory) || x.Category.Name.Contains(searchCategory));
+                querySubCategories = querySubCategories.Where(x => x.Title.Contains(searchSubCategory) || x.Category.Name.Contains(searchSubCategory));
             }
             ViewBag.SubCategories = await querySubCategories.ToListAsync();
             ViewBag.Categories = await queryCategories.ToListAsync();
