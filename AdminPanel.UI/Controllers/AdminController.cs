@@ -11,6 +11,7 @@ using Application.Dtos.Users;
 using Domain.Entity.BasicInfo;
 using Domain.Entity.Products.Categories;
 using Domain.Entity.Users;
+using Domain.Entity.Products.Features;
 
 namespace AdminPanel.UI.Controllers
 {
@@ -248,10 +249,38 @@ namespace AdminPanel.UI.Controllers
             return View();
         }
 
+        public async Task<ActionResult> ManageFeature(string? searchFeature, string? searchDetailsFeature, int tabs = 1)
+        {
+            ViewBag.selectTab = tabs;
+
+            IQueryable<Feature> queryFeature = unitOfWork.GenericRepository<Feature>()
+                .TableNoTracking
+                .Include(x => x.Details);
+
+            if (!string.IsNullOrEmpty(searchFeature))
+            {
+                queryFeature = queryFeature.Where(x => x.Title.Contains(searchFeature));
+            }
+
+            ViewBag.Features = await queryFeature.ToListAsync();
+
+            IQueryable<FeatureDetails> queryDetailsFeature = unitOfWork.GenericRepository<FeatureDetails>()
+                .TableNoTracking
+                .Include(x => x.Feature);
+
+            if (!string.IsNullOrEmpty(searchDetailsFeature))
+            {
+                queryDetailsFeature = queryDetailsFeature.Where(x => x.Title.Contains(searchDetailsFeature));
+            }
+
+            ViewBag.DetailsFeatures = await queryDetailsFeature.ToListAsync();
+            return View();
+        }
+
         public async Task<ActionResult> UploadImage()
-       {
-           return View();
-       }
+        {
+            return View();
+        }
         
     }
 }

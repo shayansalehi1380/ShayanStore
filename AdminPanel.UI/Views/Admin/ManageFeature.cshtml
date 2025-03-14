@@ -1,0 +1,319 @@
+﻿@using Domain.Entity.Products.Features
+@{
+    List<FeatureDetails> featuredetails = ViewBag.FeatureDetails;
+    List<Feature> features = ViewBag.Features;
+
+    int selectTab = ViewBag.selectTab;
+
+    string featuresTab = string.Empty;
+    string featuredetailsTab = string.Empty;
+    if (selectTab == 1)
+    {
+        featuresTab = "active";
+    }
+    else
+    {
+        featuredetailsTab = "active";
+    }
+}
+
+@section link {
+    <style>
+        #searchUser {
+            border-top-right-radius: 5px;
+            border-bottom-right-radius: 5px;
+            border-top-left-radius: 0 !important;
+            border-bottom-left-radius: 0 !important;
+            border: none;
+            background-color: #f2f4f6;
+        }
+
+        #searchIcon {
+            border: none;
+            background-color: #f2f4f6;
+        }
+
+        .modal {
+            top: 5%;
+        }
+    </style>
+}
+
+<div class="row">
+    <div class="col-12">
+        `
+        <div class="card" style="margin: 15px 15px 0px 15px;">
+            <div class="card-header p-2">
+                <ul class="nav nav-pills">
+                    <li class="nav-item"><a class="nav-link @featuresTab" href="#activity" data-toggle="tab">ویژگی</a></li>
+                    <li class="nav-item"><a class="nav-link @featuredetailsTab" href="#timeline" data-toggle="tab">جزئیات ویژگی</a></li>
+                </ul>
+            </div><!-- /.card-header -->
+            <div class="card-body">
+                <div class="tab-content">
+
+                    <div class="@featuresTab tab-pane" id="activity">
+
+                        <div class="d-flex justify-content-between align-items-center">
+                            <form asp-controller="Feature" asp-action="Create" method="post"
+                                  class="d-flex justify-content-start align-items-center" style="gap: 10px">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">نام ویژگی</label>
+                                    <input type="text" class="form-control" name="name" id="exampleInputEmail1"
+                                           placeholder="نام ویژگی را وارد کنید">
+                                </div>
+                                <div class="form-group">
+                                    <label for="featureOrder">اولویت ویژگی</label>
+                                    <input type="number" class="form-control" name="priority" id="featureOrder"
+                                           placeholder="اولویت ویژگی را وارد کنید">
+                                </div>
+                                <div style="padding-top: 15px">
+                                    <button type="submit" class="btn btn-primary">ثبت ویژگی</button>
+                                </div>
+
+                            </form>
+                            <form class="input-group input-group-sm w-25 p-2" asp-action="ManageFeature" asp-controller="Admin" method="post">
+                                <input class="form-control form-control-navbar" id="searchUser" name="searchFeature" type="search" placeholder="جستجو" aria-label="Search">
+                                <div class="input-group-append">
+                                    <button class="btn btn-navbar" id="searchIcon" type="submit">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">ویژگی ها</h3>
+                            </div>
+                            <!-- /.card-header -->
+                            <div class="card-body p-0">
+                                <table class="table table-striped">
+                                    <tr>
+                                        <th style="width: 10px">#</th>
+                                        <th>نام ویژگی</th>
+                                        <th>اولویت ویژگی</th>
+                                        <th>عملیات</th>
+                                    </tr>
+                                    @foreach (var feature in features)
+                                    {
+                                        <tr>
+                                            <th style="width: 10px">@feature.Id</th>
+                                            <th>@feature.Title</th>
+                                            <th>@feature.Priority</th>
+                                            <th>
+                                                <form>
+                                                    <button type="button" class="badge badge-warning editeFeature"
+                                                            data-toggle="modal" data-target="#editFeatureModal">
+                                                        ویرایش
+                                                    </button>
+                                                    <input type="text" name="fId" class="fId" value="@feature.Id" hidden="hidden" />
+                                                    <input type="text" name="fName" class="fName" value="@feature.Title" hidden="hidden" />
+                                                    <input type="text" name="fPriority" class="fPriority" value="@feature.Priority" hidden="hidden" />
+                                                </form>
+
+                                                <a class="badge badge-danger"
+                                                   href="@Url.Action("SoftDelete", "Feature", new { id = feature.Id })">حذف</a>
+                                            </th>
+                                        </tr>
+                                    }
+
+
+                                </table>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+                    </div>
+                    <!-- /.tab-pane -->
+                    <div class="@featuredetailsTab tab-pane" id="timeline">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <form asp-controller="FeatureDetails" asp-action="Create" method="post"
+                                  class="d-flex justify-content-start align-items-center" style="gap: 15px">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">نام جزئیات ویژگی</label>
+                                    <input type="text" class="form-control" name="name" id="exampleInputEmail1"
+                                           placeholder="نام جزئیات ویژگی را وارد کنید">
+                                </div>
+                                <div class="form-group">
+                                    <label for="featureOrder">اولویت ویژگی</label>
+                                    <input type="number" class="form-control" name="priority" id="featureOrder"
+                                           placeholder="اولویت ویژگی را وارد کنید">
+                                </div>
+                                <div class="form-group">
+                                    <label>نام ویژگی</label>
+                                    <select class="form-control select2" name="stateId" style="width: 100%;">
+                                        @{
+                                            var index = 0;
+                                            foreach (var feature in features)
+                                            {
+                                                if (index == 0)
+                                                {
+                                                    <option selected="selected" value="@feature.Id">@feature.Title</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="@feature.Id">@feature.Title</option>
+                                                }
+
+                                                index++;
+                                            }
+                                        }
+                                    </select>
+                                </div>
+                                <div style="padding-top: 15px">
+                                    <button type="submit" class="btn btn-primary">ثبت جزئیات ویژگی</button>
+                                </div>
+
+                            </form>
+                            <form class="input-group input-group-sm w-25 p-2" asp-action="ManageFeature" asp-controller="Admin" method="post">
+                                <input class="form-control form-control-navbar" id="searchUser" name="searchFeatureDetails" type="search" placeholder="جستجو" aria-label="Search">
+                                <input name="tabs" value="2" hidden="hidden" />
+                                <div class="input-group-append">
+                                    <button class="btn btn-navbar" id="searchIcon" type="submit">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">جزئیات ویژگی ها</h3>
+                            </div>
+                            <!-- /.card-header -->
+                            <div class="card-body p-0">
+                                <table class="table table-striped">
+                                    <tr>
+                                        <th style="width: 10px">#</th>
+                                        <th>نام جزئیات ویژگی</th>
+                                        <th>نام ویژگی</th>
+                                        <th>عملیات</th>
+                                    </tr>
+                                    @foreach (var featuredatail in featuredetails)
+                                    {
+                                        <tr>
+                                            <th style="width: 10px">@featuredatail.Id</th>
+                                            <th>@featuredatail.Title</th>
+                                            <th>@featuredatail.Feature.Title</th>
+                                            <th>
+                                                <form>
+                                                    <button type="button" class="badge badge-warning editeFeatureDatails"
+                                                            data-toggle="modal" data-target="#exampleModal">
+                                                        ویرایش
+                                                    </button>
+                                                    <input type="text" name="fdId" class="fdId" value="@featuredatail.Id"
+                                                           hidden="hidden" />
+                                                    <input type="text" name="fdName" class="fdName" value="@featuredatail.Title"
+                                                           hidden="hidden" />
+                                                    <input type="text" name="fdPriority" class="fdPriority" value="@featuredatail.Priority"
+                                                           hidden="hidden" />
+                                                    <input type="text" name="fFeatureId" class="fFeatureId"
+                                                           value="@featuredatail.FeatureId" hidden="hidden" />
+                                                </form>
+
+                                                <a class="badge badge-danger"
+                                                   href="@Url.Action("SoftDelete", "FeatureDatails", new { id = featuredatail.Id })">حذف</a>
+                                            </th>
+                                        </tr>
+                                    }
+
+                                </table>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+                    </div>
+                </div>
+                <!-- /.tab-content -->
+            </div><!-- /.card-body -->
+        </div>
+        <!-- /.nav-tabs-custom -->
+    </div>
+</div>
+
+<div class="modal fade" id="editeFeatureDatails" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h5 class="modal-title" id="exampleModalLabel">ویرایش جزئیات ویژگی</h5>
+            </div>
+            <div class="modal-body">
+                <form asp-action="Update" asp-controller="FeatureDatails" method="post">
+                    <input id="FeatureDatailsId" name="id" hidden="hidden" />
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">نام جزئیات ویژگی</label>
+                        <input type="text" class="form-control" id="NameFeatureDatails" name="name" aria-describedby="emailHelp"
+                               placeholder="نام جزئیات ویژگی را وارد کنید">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">ویژگی</label>
+                        <select class="form-control" id="featureId" name="priority">
+                            @foreach (var i in features)
+                            {
+                                <option value="@i.Id">@i.Title</option>
+                            }
+                        </select>
+                    </div>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">بستن</button>
+                    <button type="submit" class="btn btn-primary">ثبت</button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+<div class="modal fade" id="editFeatureModal" tabindex="-1" role="dialog" aria-labelledby="editStateModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h5 class="modal-title" id="editStateModalLabel">ویرایش ویژگی</h5>
+            </div>
+            <div class="modal-body">
+                <form asp-action="Update" asp-controller="Feature" method="post">
+                    <input id="FeatureId" name="id" hidden="hidden" />
+                    <div class="form-group">
+                        <label for="NameFeature">نام ویژگی</label>
+                        <input type="text" class="form-control" id="NameFeature" name="name" placeholder="نام ویژگی را وارد کنید">
+                    </div>
+                    <div class="form-group">
+                        <label for="OrderFeature">اولویت ویژگی</label>
+                        <input type="number" class="form-control" id="OrderFeature" name="order" placeholder="اولویت ویژگی را وارد کنید">
+                    </div>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">بستن</button>
+                    <button type="submit" class="btn btn-primary">ثبت</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section script
+{
+    <script>
+        $(document).ready(function () {
+
+            $(".editeFeatureDatails").click(function () {
+                var currentRow = $(this).closest("form")
+                $("#FeatureDatailsId").val(currentRow.find($("input.fdId[type=text]")).val());
+                $("#NameFeatureDatails").val(currentRow.find($("input.fdName[type=text]")).val());
+                $("#featureId").val(currentRow.find($("input.fdPriority[type=text]")).val());
+            })
+        })
+
+        $(document).ready(function () {
+            $(".editeFeature").click(function () {
+                var currentRow = $(this).closest("form");
+                $("#FeatureId").val(currentRow.find($("input.fId[type=text]")).val());
+                $("#NameFeature").val(currentRow.find($("input.fName[type=text]")).val());
+                $("#OrderFeature").val(currentRow.find($("input.fPriority[type=text]")).val());
+            });
+        });
+    </script>
+}
