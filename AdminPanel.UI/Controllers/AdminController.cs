@@ -205,7 +205,7 @@ namespace AdminPanel.UI.Controllers
         }
 
 
-        public async Task<ActionResult<List<MainCategory>>> ManageCategory(string? searchMainCategory, string? searchCategory, int tabs = 1)
+        public async Task<ActionResult<List<MainCategory>>> ManageCategory(string? searchMainCategory, string? searchCategory, string? searchSubCategory, int tabs = 1)
         {
             ViewBag.selectTab = tabs;
 
@@ -220,6 +220,7 @@ namespace AdminPanel.UI.Controllers
 
             ViewBag.MainCategories = await queryMainCategory.ToListAsync();
 
+
             IQueryable<Category> queryCategory = unitOfWork.GenericRepository<Category>()
                 .TableNoTracking
                 .Include(x => x.MainCategory);
@@ -229,7 +230,19 @@ namespace AdminPanel.UI.Controllers
                 queryCategory = queryCategory.Where(x => x.Name.Contains(searchCategory));
             }
 
-            ViewBag.Categories = await queryCategory.ToListAsync();
+            ViewBag.Categories = await queryCategory.ToListAsync(); 
+
+
+            IQueryable<SubCategory> querySubCategory = unitOfWork.GenericRepository<SubCategory>()
+                .TableNoTracking
+                .Include(x => x.Category);
+
+            if (!string.IsNullOrEmpty(searchSubCategory))
+            {
+                querySubCategory = querySubCategory.Where(x => x.Title.Contains(searchSubCategory));
+            }
+
+            ViewBag.SubCategories = await querySubCategory.ToListAsync();
             return View();
         }
 
