@@ -140,7 +140,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label>نام ویژگی</label>
-                                    <select class="form-control select2" name="stateId" style="width: 100%;">
+                                    <select class="form-control select2" name="featureId" style="width: 100%;">
                                         @{
                                             var index = 0;
                                             foreach (var feature in features)
@@ -239,7 +239,7 @@
                 <h5 class="modal-title" id="exampleModalLabel">ویرایش جزئیات ویژگی</h5>
             </div>
             <div class="modal-body">
-                <form asp-action="Update" asp-controller="FeatureDatails" method="post">
+                <form asp-action="Update" asp-controller="FeatureDetails" method="post">
                     <input id="FeatureDatailsId" name="id" hidden="hidden" />
                     <div class="form-group">
                         <label for="exampleInputEmail1">نام جزئیات ویژگی</label>
@@ -284,7 +284,7 @@
                     </div>
                     <div class="form-group">
                         <label for="OrderFeature">اولویت ویژگی</label>
-                        <input type="number" class="form-control" id="OrderFeature" name="order" placeholder="اولویت ویژگی را وارد کنید">
+                        <input type="number" class="form-control" id="OrderFeature" name="priority" placeholder="اولویت ویژگی را وارد کنید">
                     </div>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">بستن</button>
                     <button type="submit" class="btn btn-primary">ثبت</button>
