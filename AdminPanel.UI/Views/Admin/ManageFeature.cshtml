@@ -1,8 +1,9 @@
-﻿@using Domain.Entity.Products.Features
+﻿@using Application.Common.ApiResult
+@using Domain.Entity.Products.Features
 @{
     List<FeatureDetails> featuredetails = ViewBag.DetailsFeatures;
     List<Feature> features = ViewBag.Features;
-
+    FunctionStatus status = ViewBag.Status;
     int selectTab = ViewBag.selectTab;
 
     string featuresTab = string.Empty;
@@ -15,6 +16,9 @@
     {
         featuredetailsTab = "active";
     }
+
+    bool isError = status == FunctionStatus.Error ? true : false;
+    bool isSuccess = status == FunctionStatus.Success ? true : false;
 }
 
 @section link {
@@ -45,8 +49,10 @@
         <div class="card" style="margin: 15px 15px 0px 15px;">
             <div class="card-header p-2">
                 <ul class="nav nav-pills">
-                    <li class="nav-item"><a class="nav-link @featuresTab" href="#activity" data-toggle="tab">ویژگی</a></li>
-                    <li class="nav-item"><a class="nav-link @featuredetailsTab" href="#timeline" data-toggle="tab">جزئیات ویژگی</a></li>
+                    <li class="nav-item"><a class="nav-link @featuresTab" href="#activity" data-toggle="tab">ویژگی</a>
+                    </li>
+                    <li class="nav-item"><a class="nav-link @featuredetailsTab" href="#timeline" data-toggle="tab">جزئیات
+                            ویژگی</a></li>
                 </ul>
             </div><!-- /.card-header -->
             <div class="card-body">
@@ -72,8 +78,10 @@
                                 </div>
 
                             </form>
-                            <form class="input-group input-group-sm w-25 p-2" asp-action="ManageFeature" asp-controller="Admin" method="post">
-                                <input class="form-control form-control-navbar" id="searchUser" name="searchFeature" type="search" placeholder="جستجو" aria-label="Search">
+                            <form class="input-group input-group-sm w-25 p-2" asp-action="ManageFeature"
+                                  asp-controller="Admin" method="post">
+                                <input class="form-control form-control-navbar" id="searchUser" name="searchFeature"
+                                       type="search" placeholder="جستجو" aria-label="Search">
                                 <div class="input-group-append">
                                     <button class="btn btn-navbar" id="searchIcon" type="submit">
                                         <i class="fa fa-search"></i>
@@ -106,9 +114,12 @@
                                                             data-toggle="modal" data-target="#editFeatureModal">
                                                         ویرایش
                                                     </button>
-                                                    <input type="text" name="fId" class="fId" value="@feature.Id" hidden="hidden" />
-                                                    <input type="text" name="fName" class="fName" value="@feature.Title" hidden="hidden" />
-                                                    <input type="text" name="fPriority" class="fPriority" value="@feature.Priority" hidden="hidden" />
+                                                    <input type="text" name="fId" class="fId" value="@feature.Id"
+                                                           hidden="hidden"/>
+                                                    <input type="text" name="fName" class="fName" value="@feature.Title"
+                                                           hidden="hidden"/>
+                                                    <input type="text" name="fPriority" class="fPriority"
+                                                           value="@feature.Priority" hidden="hidden"/>
                                                 </form>
 
                                                 <a class="badge badge-danger"
@@ -147,7 +158,8 @@
                                             {
                                                 if (index == 0)
                                                 {
-                                                    <option selected="selected" value="@feature.Id">@feature.Title</option>
+                                                    <option selected="selected"
+                                                            value="@feature.Id">@feature.Title</option>
                                                 }
                                                 else
                                                 {
@@ -164,9 +176,12 @@
                                 </div>
 
                             </form>
-                            <form class="input-group input-group-sm w-25 p-2" asp-action="ManageFeature" asp-controller="Admin" method="post">
-                                <input class="form-control form-control-navbar" id="searchUser" name="searchFeatureDetails" type="search" placeholder="جستجو" aria-label="Search">
-                                <input name="tabs" value="2" hidden="hidden" />
+                            <form class="input-group input-group-sm w-25 p-2" asp-action="ManageFeature"
+                                  asp-controller="Admin" method="post">
+                                <input class="form-control form-control-navbar" id="searchUser"
+                                       name="searchFeatureDetails" type="search" placeholder="جستجو"
+                                       aria-label="Search">
+                                <input name="tabs" value="2" hidden="hidden"/>
                                 <div class="input-group-append">
                                     <button class="btn btn-navbar" id="searchIcon" type="submit">
                                         <i class="fa fa-search"></i>
@@ -185,6 +200,7 @@
                                         <th style="width: 10px">#</th>
                                         <th>نام جزئیات ویژگی</th>
                                         <th>نام ویژگی</th>
+                                        <th>الویت ویژگی</th>
                                         <th>عملیات</th>
                                     </tr>
                                     @foreach (var featuredatail in featuredetails)
@@ -193,24 +209,28 @@
                                             <th style="width: 10px">@featuredatail.Id</th>
                                             <th>@featuredatail.Title</th>
                                             <th>@featuredatail.Feature.Title</th>
+                                            <th>@featuredatail.Priority</th>
                                             <th>
                                                 <form>
-                                                    <button type="button" class="badge badge-warning editeFeatureDatails"
-                                                            data-toggle="modal" data-target="#exampleModal">
+                                                    <button type="button" class="badge badge-warning editFd"
+                                                            data-toggle="modal" data-target="#editeFeatureDatails">
                                                         ویرایش
                                                     </button>
-                                                    <input type="text" name="fdId" class="fdId" value="@featuredatail.Id"
-                                                           hidden="hidden" />
-                                                    <input type="text" name="fdName" class="fdName" value="@featuredatail.Title"
-                                                           hidden="hidden" />
-                                                    <input type="text" name="fdPriority" class="fdPriority" value="@featuredatail.Priority"
-                                                           hidden="hidden" />
-                                                    <input type="text" name="fFeatureId" class="fFeatureId"
-                                                           value="@featuredatail.FeatureId" hidden="hidden" />
+                                                    <input type="text" name="fdId" class="fdId"
+                                                           value="@featuredatail.Id"
+                                                           hidden="hidden"/>
+                                                    <input type="text" name="fdName" class="fdName"
+                                                           value="@featuredatail.Title"
+                                                           hidden="hidden"/>
+                                                    <input type="text" name="fdPriority" class="fdPriority"
+                                                           value="@featuredatail.Priority"
+                                                           hidden="hidden"/>
+                                                    <input type="text" name="fdFeatureId" class="fdFeatureId"
+                                                           value="@featuredatail.FeatureId" hidden="hidden"/>
                                                 </form>
 
                                                 <a class="badge badge-danger"
-                                                   href="@Url.Action("SoftDelete", "FeatureDatails", new { id = featuredatail.Id })">حذف</a>
+                                                   href="@Url.Action("SoftDelete", "FeatureDetails", new { id = featuredatail.Id })">حذف</a>
                                             </th>
                                         </tr>
                                     }
@@ -240,15 +260,22 @@
             </div>
             <div class="modal-body">
                 <form asp-action="Update" asp-controller="FeatureDetails" method="post">
-                    <input id="FeatureDatailsId" name="id" hidden="hidden" />
+                    <input id="FeatureDatailsId" name="id" hidden="hidden"/>
                     <div class="form-group">
                         <label for="exampleInputEmail1">نام جزئیات ویژگی</label>
-                        <input type="text" class="form-control" id="NameFeatureDatails" name="name" aria-describedby="emailHelp"
+                        <input type="text" class="form-control" id="NameFeatureDatails" name="name"
+                               aria-describedby="emailHelp"
+                               placeholder="نام جزئیات ویژگی را وارد کنید">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">الویت ویژگی</label>
+                        <input type="text" class="form-control" id="fdPriority" name="priority"
+                               aria-describedby="emailHelp"
                                placeholder="نام جزئیات ویژگی را وارد کنید">
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">ویژگی</label>
-                        <select class="form-control" id="featureId" name="priority">
+                        <select class="form-control" id="featureInsertId" name="featureId">
                             @foreach (var i in features)
                             {
                                 <option value="@i.Id">@i.Title</option>
@@ -266,7 +293,8 @@
 
 
 
-<div class="modal fade" id="editFeatureModal" tabindex="-1" role="dialog" aria-labelledby="editStateModalLabel" aria-hidden="true">
+<div class="modal fade" id="editFeatureModal" tabindex="-1" role="dialog" aria-labelledby="editStateModalLabel"
+     aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -277,14 +305,16 @@
             </div>
             <div class="modal-body">
                 <form asp-action="Update" asp-controller="Feature" method="post">
-                    <input id="FeatureId" name="id" hidden="hidden" />
+                    <input id="FeatureId" name="id" hidden="hidden"/>
                     <div class="form-group">
                         <label for="NameFeature">نام ویژگی</label>
-                        <input type="text" class="form-control" id="NameFeature" name="name" placeholder="نام ویژگی را وارد کنید">
+                        <input type="text" class="form-control" id="NameFeature" name="name"
+                               placeholder="نام ویژگی را وارد کنید">
                     </div>
                     <div class="form-group">
                         <label for="OrderFeature">اولویت ویژگی</label>
-                        <input type="number" class="form-control" id="OrderFeature" name="priority" placeholder="اولویت ویژگی را وارد کنید">
+                        <input type="number" class="form-control" id="OrderFeature" name="priority"
+                               placeholder="اولویت ویژگی را وارد کنید">
                     </div>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">بستن</button>
                     <button type="submit" class="btn btn-primary">ثبت</button>
@@ -295,25 +325,35 @@
 </div>
 
 @section script
+
+
+
 {
     <script>
         $(document).ready(function () {
-
-            $(".editeFeatureDatails").click(function () {
+            $(".editFd").click(function () {
                 var currentRow = $(this).closest("form")
                 $("#FeatureDatailsId").val(currentRow.find($("input.fdId[type=text]")).val());
                 $("#NameFeatureDatails").val(currentRow.find($("input.fdName[type=text]")).val());
-                $("#featureId").val(currentRow.find($("input.fdPriority[type=text]")).val());
-            })
-        })
+                $("#fdPriority").val(currentRow.find($("input.fdPriority[type=text]")).val());
+                $("#featureInsertId").val(currentRow.find($("input.fdFeatureId[type=text]")).val());
 
-        $(document).ready(function () {
+            })
+            
             $(".editeFeature").click(function () {
                 var currentRow = $(this).closest("form");
                 $("#FeatureId").val(currentRow.find($("input.fId[type=text]")).val());
                 $("#NameFeature").val(currentRow.find($("input.fName[type=text]")).val());
                 $("#OrderFeature").val(currentRow.find($("input.fPriority[type=text]")).val());
             });
-        });
+        })
+        if (@Html.Raw(isError).ToString().ToLower())
+        {
+            ShowErrorAlret()
+        }
+        if (@Html.Raw(isSuccess).ToString().ToLower())
+        {
+            ShowSuccessAlret()
+        }
     </script>
 }

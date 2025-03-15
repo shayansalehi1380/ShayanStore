@@ -1,4 +1,5 @@
-﻿using Application.Interface;
+﻿using Application.Common.ApiResult;
+using Application.Interface;
 using AutoMapper.Features;
 using Domain.Entity.Products.Categories;
 using Domain.Entity.Products.Features;
@@ -10,7 +11,8 @@ namespace AdminPanel.UI.Controllers
 {
     public class FeatureController(IUnitOfWork unitOfWork) : Controller
     {
-        public async Task<ActionResult<List<Feature>>> GetAllFeature(string? searchFeature, string? searchDetailsFeature, int tabs = 1)
+        public async Task<ActionResult<List<Feature>>> GetAllFeature(string? searchFeature,
+            string? searchDetailsFeature, int tabs = 1)
         {
             ViewBag.selectTab = tabs;
 
@@ -47,12 +49,13 @@ namespace AdminPanel.UI.Controllers
                 Priority = priority
             }, CancellationToken.None);
 
-            return RedirectToAction("ManageFeature", "Admin", new { tabs = 1 });
+            return RedirectToAction("ManageFeature", "Admin", new { tabs = 1, status = FunctionStatus.Success });
         }
 
         public async Task<ActionResult> Update(int id, string name, int priority)
         {
-            var feature = await unitOfWork.GenericRepository<Feature>().Table.FirstOrDefaultAsync(x => x.Id == id, CancellationToken.None);
+            var feature = await unitOfWork.GenericRepository<Feature>().Table
+                .FirstOrDefaultAsync(x => x.Id == id, CancellationToken.None);
             if (feature == null)
             {
                 return NotFound();

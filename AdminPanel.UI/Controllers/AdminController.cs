@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using Application.Common.ApiResult;
 using Application.Interface;
 using Application.Users.v1.Commands.LoginAdmin;
 using Application.Users.v1.Commands.LogOutAdmin;
@@ -18,7 +19,8 @@ namespace AdminPanel.UI.Controllers
     public class AdminController(
         UserManager<User> userManager,
         IMediator mediator,
-        RoleManager<Role> roleManager,IUnitOfWork unitOfWork)
+        RoleManager<Role> roleManager,
+        IUnitOfWork unitOfWork)
         : Controller
     {
         public IActionResult AdminLogin()
@@ -83,36 +85,36 @@ namespace AdminPanel.UI.Controllers
         {
             return View();
         }
-        
-       // _________________________________________________________________________________________________________________________________________________________________
-       
-       public async Task<ActionResult> ManageProvince(string? searchCity, string? searchState, int tabs = 1)
-       {
-           IQueryable<City> queryCity = unitOfWork.GenericRepository<City>()
-               .TableNoTracking
-               .Include(x => x.State)
-               .AsSplitQuery();
 
-           IQueryable<State> queryState = unitOfWork.GenericRepository<State>().TableNoTracking
-               .Include(x => x.Cities)
-               .AsSplitQuery();
+        // _________________________________________________________________________________________________________________________________________________________________
 
-           ViewBag.selectTab = tabs;
+        public async Task<ActionResult> ManageProvince(string? searchCity, string? searchState, int tabs = 1)
+        {
+            IQueryable<City> queryCity = unitOfWork.GenericRepository<City>()
+                .TableNoTracking
+                .Include(x => x.State)
+                .AsSplitQuery();
 
-           if (!string.IsNullOrEmpty(searchCity))
-           {
-               queryCity = queryCity.Where(x => x.Name.Contains(searchCity) || x.State.Name.Contains(searchCity));
-           }
+            IQueryable<State> queryState = unitOfWork.GenericRepository<State>().TableNoTracking
+                .Include(x => x.Cities)
+                .AsSplitQuery();
 
-           if (!string.IsNullOrEmpty(searchState))
-           {
-               queryState = queryState.Where(x => x.Name.Contains(searchState));
-           }
+            ViewBag.selectTab = tabs;
 
-           ViewBag.Cities = await queryCity.OrderByDescending(x=>x.Id).ToListAsync();
-           ViewBag.State = await queryState.OrderByDescending(x=>x.Id).ToListAsync();
-           return View();
-       }
+            if (!string.IsNullOrEmpty(searchCity))
+            {
+                queryCity = queryCity.Where(x => x.Name.Contains(searchCity) || x.State.Name.Contains(searchCity));
+            }
+
+            if (!string.IsNullOrEmpty(searchState))
+            {
+                queryState = queryState.Where(x => x.Name.Contains(searchState));
+            }
+
+            ViewBag.Cities = await queryCity.OrderByDescending(x => x.Id).ToListAsync();
+            ViewBag.State = await queryState.OrderByDescending(x => x.Id).ToListAsync();
+            return View();
+        }
 
 
         public async Task<IActionResult> ManageUser(string? search)
@@ -123,7 +125,8 @@ namespace AdminPanel.UI.Controllers
 
             if (!string.IsNullOrEmpty(search))
             {
-                query = query.Where(x => x.PhoneNumber.Contains(search) || x.Name.Contains(search) || x.UserName.Contains(search));
+                query = query.Where(x =>
+                    x.PhoneNumber.Contains(search) || x.Name.Contains(search) || x.UserName.Contains(search));
             }
 
             var entityUsers = await query.ToListAsync();
@@ -132,7 +135,6 @@ namespace AdminPanel.UI.Controllers
 
             foreach (var i in entityUsers)
             {
-
                 users.Add(new UserDto
                 {
                     City = i.City,
@@ -146,13 +148,15 @@ namespace AdminPanel.UI.Controllers
                     Id = i.Id
                 });
             }
+
             ViewBag.Users = users;
 
             return View();
         }
 
 
-        public async Task<ActionResult<List<MainCategory>>> ManageCategory(string? searchMainCategory, string? searchCategory, string? searchSubCategory, int tabs = 1)
+        public async Task<ActionResult<List<MainCategory>>> ManageCategory(string? searchMainCategory,
+            string? searchCategory, string? searchSubCategory, int tabs = 1)
         {
             ViewBag.selectTab = tabs;
 
@@ -177,7 +181,7 @@ namespace AdminPanel.UI.Controllers
                 queryCategory = queryCategory.Where(x => x.Name.Contains(searchCategory));
             }
 
-            ViewBag.Categories = await queryCategory.ToListAsync(); 
+            ViewBag.Categories = await queryCategory.ToListAsync();
 
 
             IQueryable<SubCategory> querySubCategory = unitOfWork.GenericRepository<SubCategory>()
@@ -193,10 +197,11 @@ namespace AdminPanel.UI.Controllers
             return View();
         }
 
-        public async Task<ActionResult> ManageFeature(string? searchFeature, string? searchDetailsFeature, int tabs = 1)
+        public async Task<ActionResult> ManageFeature(string? searchFeature, string? searchFeatureDetails,
+            FunctionStatus status = FunctionStatus.None, int tabs = 1)
         {
             ViewBag.selectTab = tabs;
-
+            ViewBag.Status = status;
             IQueryable<Feature> queryFeature = unitOfWork.GenericRepository<Feature>()
                 .TableNoTracking
                 .Include(x => x.Details);
@@ -212,9 +217,9 @@ namespace AdminPanel.UI.Controllers
                 .TableNoTracking
                 .Include(x => x.Feature);
 
-            if (!string.IsNullOrEmpty(searchDetailsFeature))
+            if (!string.IsNullOrEmpty(searchFeatureDetails))
             {
-                queryDetailsFeature = queryDetailsFeature.Where(x => x.Title.Contains(searchDetailsFeature));
+                queryDetailsFeature = queryDetailsFeature.Where(x => x.Title.Contains(searchFeatureDetails));
             }
 
             ViewBag.DetailsFeatures = await queryDetailsFeature.ToListAsync();
@@ -225,6 +230,5 @@ namespace AdminPanel.UI.Controllers
         {
             return View();
         }
-        
     }
 }

@@ -30,6 +30,10 @@
     <link rel="stylesheet" href="~/AdminDashboard/dist/css/custom-style.css">
     <link rel="stylesheet" href="~/AdminDashboard/plugins/select2/select2.min.css">
     <link rel="stylesheet" href="~/css/site.css">
+    <link href="
+https://cdn.jsdelivr.net/npm/sweetalert2@11.17.2/dist/sweetalert2.min.css
+" rel="stylesheet">
+    
     @await RenderSectionAsync("link",false)
 </head>
 <body class="hold-transition sidebar-mini">
@@ -114,16 +118,16 @@
                                 <ul class="nav nav-treeview">
                                     <li class="nav-item">
                                         <a href="@Url.Action("ManageCategory","Admin")" class="nav-link">
-                                            <i class="fa fa-tree nav-icon"></i>
-                                            <p>اضافه و ویرایش دسته بندی</p>
+                                            <i class="fa fa-amazon nav-icon"></i>
+                                            <p>دسته بندی</p>
                                         </a>
                                     </li>
                                 </ul>
                                 <ul class="nav nav-treeview">
                                     <li class="nav-item">
                                         <a href="@Url.Action("ManageFeature","Admin")" class="nav-link">
-                                            <i class="fa fa-tree nav-icon"></i>
-                                            <p>اضافه و ویرایش ویژگی ها</p>
+                                            <i class="fa fa-camera nav-icon"></i>
+                                            <p>ویژگی ها</p>
                                         </a>
                                     </li>
                                 </ul>
@@ -322,6 +326,9 @@
 <script src="~/AdminDashboard/dist/js/pages/dashboard.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="~/AdminDashboard/dist/js/demo.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.17.2/dist/sweetalert2.all.min.js"></script>
+<script src="~/js/site.js"></script>
+
 @await RenderSectionAsync("script",false)
 
 </body>
