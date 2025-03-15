@@ -130,62 +130,6 @@ namespace AdminPanel.UI.Controllers
             ViewBag.Roles = await roleManager.Roles.ToListAsync();
             ViewBag.Cities = await unitOfWork.GenericRepository<City>().TableNoTracking.ToListAsync();
 
-            //var newUser = new User
-            //{
-            //    UserName = "09015538133",
-            //    Family = string.Empty,
-            //    Email = string.Empty,
-            //    PhoneNumber = string.Empty,
-            //    Name = string.Empty,
-            //    CityId = 1,
-            //    Sheba = string.Empty,
-            //    ImageName = string.Empty,
-            //    InsertDate = DateTime.Now,
-            //    NationalCode = string.Empty,
-            //    ConcurrencyStamp = string.Empty,
-            //    SecurityStamp = string.Empty,
-            //    ConfirmCode = string.Empty,
-            //};
-            //await userManager.CreateAsync(newUser);
-            //var newUser1 = new User
-            //{
-            //    UserName = "0921129482",
-            //    Family = string.Empty,
-            //    Email = string.Empty,
-            //    PhoneNumber = string.Empty,
-            //    Name = string.Empty,
-            //    CityId = 1,
-            //    Sheba = string.Empty,
-            //    ImageName = string.Empty,
-            //    InsertDate = DateTime.Now,
-            //    NationalCode = string.Empty,
-            //    ConcurrencyStamp = string.Empty,
-            //    SecurityStamp = string.Empty,
-            //    ConfirmCode = string.Empty,
-            //};
-            //await userManager.CreateAsync(newUser1);
-
-            //if (!await roleManager.RoleExistsAsync("Admin"))
-            //{
-            //    await roleManager.CreateAsync(new Role
-            //    {
-            //        Name = "Admin",
-            //    });
-            //}
-            //if (!await roleManager.RoleExistsAsync("User"))
-            //{
-            //    await roleManager.CreateAsync(new Role
-            //    {
-            //        Name = "User",
-            //    });
-            //}
-            //await userManager.AddToRoleAsync(newUser, "Admin");
-            //await userManager.AddToRoleAsync(newUser1, "Admin");
-            //await userManager.AddToRoleAsync(newUser1, "User");
-            //await userManager.AddToRoleAsync(newUser, "User");
-
-
-
             foreach (var i in entityUsers)
             {
 
