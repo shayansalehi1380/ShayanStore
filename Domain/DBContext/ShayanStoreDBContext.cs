@@ -1,5 +1,6 @@
 ﻿using Domain.Entity.BasicInfo;
 using Domain.Entity.Products.Categories;
+using Domain.Entity.Products.Colors;
 using Domain.Entity.Products.Features;
 using Domain.Entity.Products.Guaranties;
 using Domain.Entity.Users;
@@ -18,6 +19,7 @@ namespace Domain.DBContext
         public DbSet<Feature> Features { get; set; }
         public DbSet<FeatureDetails> FeatureDetails { get; set; }
         public DbSet<Guarantee> Guarantees { get; set; }
+        public DbSet<Color> Colors { get; set; }
 
         public ShayanStoreDBContext(DbContextOptions<ShayanStoreDBContext> options) : base(options)
         {
@@ -48,6 +50,7 @@ namespace Domain.DBContext
             modelBuilder.Entity<Feature>().HasQueryFilter(x => !x.IsDelete);
             modelBuilder.Entity<FeatureDetails>().HasQueryFilter(x => !x.IsDelete);
             modelBuilder.Entity<Guarantee>().HasQueryFilter(x => !x.IsDelete);
+            modelBuilder.Entity<Color>().HasQueryFilter(x => !x.IsDelete);
 
             base.OnModelCreating(modelBuilder);
         }

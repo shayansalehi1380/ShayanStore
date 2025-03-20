@@ -1,18 +1,18 @@
 ﻿@using Application.Common.ApiResult
-@using Domain.Entity.Products.Guaranties
+@using Domain.Entity.Products.Colors
 @{
-    List<Guarantee> guarantees = ViewBag.Guarantee;
+    List<Color> colors = ViewBag.Color;
 
     int selectTab = ViewBag.selectTab;
-    string guaranteeTab = string.Empty;
+    string colorTab = string.Empty;
     FunctionStatus status = ViewBag.Status;
     if (selectTab == 1)
     {
-        guaranteeTab = "active";
+        colorTab = "active";
     }
     else
     {
-        guaranteeTab = "active";
+        colorTab = "active";
     }
 
     bool isError = status == FunctionStatus.Error ? true : false;
@@ -43,32 +43,36 @@
 
 <div class="row">
     <div class="col-12">
-        
+
         <div class="card" style="margin: 15px 15px 0px 15px;">
             <div class="card-header p-2">
                 <ul class="nav nav-pills">
-                    <li class="nav-item"><a class="nav-link @guaranteeTab" href="#activity" data-toggle="tab">گارانتی</a></li>
+                    <li class="nav-item"><a class="nav-link @colorTab" href="#activity" data-toggle="tab">رنگ</a></li>
                 </ul>
             </div><!-- /.card-body -->
             <div class="card-body">
                 <div class="tab-content">
 
-                    <div class="@guaranteeTab tab-pane" id="activity">
+                    <div class="@colorTab tab-pane" id="activity">
                         <div class="d-flex justify-content-between align-items-center">
-                            <form asp-controller="Guarantee" asp-action="Create" method="post"
+                            <form asp-controller="Color" asp-action="Create" method="post"
                                   class="d-flex justify-content-start align-items-center" style="gap: 10px">
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">نام گارانتی</label>
+                                    <label for="exampleInputEmail1">نام رنگ</label>
                                     <input type="text" class="form-control" name="name" id="exampleInputEmail1"
-                                           placeholder="نام گارانتی را وارد کنید">
+                                           placeholder="نام رنگ را وارد کنید">
+                                </div>
+                                <div class="form-group">
+                                    <label>انتخاب رنگ</label>
+                                    <input type="text" class="form-control my-colorpicker1" name="codecolor" id="exampleInputEmail2"
+                                           placeholder="کد رنگ را وارد کنید">
                                 </div>
                                 <div style="padding-top: 15px">
-                                    <button type="submit" class="btn btn-primary">ثبت گارانتی</button>
+                                    <button type="submit" class="btn btn-primary">ثبت رنگ</button>
                                 </div>
-
                             </form>
-                            <form class="input-group input-group-sm w-25 p-2" asp-action="ManageGuarantee" asp-controller="Admin" method="post">
-                                <input class="form-control form-control-navbar" id="searchUser" name="searchGuarantee" type="search" placeholder="جستجو" aria-label="Search">
+                            <form class="input-group input-group-sm w-25 p-2" asp-action="ManageColor" asp-controller="Admin" method="post">
+                                <input class="form-control form-control-navbar" id="searchUser" name="searchColor" type="search" placeholder="جستجو" aria-label="Search">
                                 <div class="input-group-append">
                                     <button class="btn btn-navbar" id="searchIcon" type="submit">
                                         <i class="fa fa-search"></i>
@@ -78,33 +82,36 @@
                         </div>
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title">گارانتی ها</h3>
+                                <h3 class="card-title">رنگ ها</h3>
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body p-0">
                                 <table class="table table-striped">
                                     <tr>
                                         <th style="width: 10px">#</th>
-                                        <th>نام گارانتی</th>
+                                        <th>نام رنگ</th>
+                                        <th>کد رنگ</th>
                                         <th>عملیات</th>
                                     </tr>
-                                    @foreach (var guarantee in guarantees)
+                                    @foreach (var color in colors)
                                     {
                                         <tr>
-                                            <th style="width: 10px">@guarantee.Id</th>
-                                            <th>@guarantee.Title</th>
+                                            <th style="width: 10px">@color.Id</th>
+                                            <th>@color.Title</th>
+                                            <th>@color.Code</th>
                                             <th>
                                                 <form>
-                                                    <button type="button" class="badge badge-warning editeGuarantee"
-                                                            data-toggle="modal" data-target="#editGuaranteeModal">
+                                                    <button type="button" class="badge badge-warning editeColor"
+                                                            data-toggle="modal" data-target="#editColorModal">
                                                         ویرایش
                                                     </button>
-                                                    <input type="text" name="gId" class="gId" value="@guarantee.Id" hidden="hidden" />
-                                                    <input type="text" name="gName" class="gName" value="@guarantee.Title" hidden="hidden" />
+                                                    <input type="text" name="cId" class="cId" value="@color.Id" hidden="hidden" />
+                                                    <input type="text" name="cName" class="cName" value="@color.Title" hidden="hidden" />
+                                                    <input type="text" name="cCode" class="cCode" value="@color.Code" hidden="hidden" />
                                                 </form>
 
                                                 <a class="badge badge-danger"
-                                                   href="@Url.Action("SoftDelete", "Guarantee", new { id = guarantee.Id })">حذف</a>
+                                                   href="@Url.Action("SoftDelete", "Color", new { id = color.Id })">حذف</a>
                                             </th>
                                         </tr>
                                     }
@@ -121,21 +128,25 @@
     </div>
 </div>
 
-<div class="modal fade" id="editGuaranteeModal" tabindex="-1" role="dialog" aria-labelledby="editGuaranteeModalLabel" aria-hidden="true">
+<div class="modal fade" id="editColorModal" tabindex="-1" role="dialog" aria-labelledby="editColorModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
-                <h5 class="modal-title" id="editGuaranteeModalLabel">ویرایش گارانتی</h5>
+                <h5 class="modal-title" id="editGuaranteeModalLabel">ویرایش رنگ</h5>
             </div>
             <div class="modal-body">
-                <form asp-action="Update" asp-controller="Guarantee" method="post">
-                    <input id="guaranteeId" name="id" hidden="hidden" />
+                <form asp-action="Update" asp-controller="Color" method="post">
+                    <input id="ColorId" name="id" hidden="hidden" />
                     <div class="form-group">
-                        <label for="guaranteeName">نام گارانتی</label>
-                        <input type="text" class="form-control" id="guaranteeName" name="name" placeholder="نام دسته بندی مادر را وارد کنید">
+                        <label for="ColorName">نام رنگ</label>
+                        <input type="text" class="form-control" id="ColorName" name="name" placeholder="نام رنگ را وارد کنید">
+                    </div>
+                    <div class="form-group">
+                        <label for="ColorCode">کد رنگ</label>
+                        <input type="text" class="form-control" id="ColorCode" name="codecolor" placeholder="کد رنگ را وارد کنید">
                     </div>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">بستن</button>
                     <button type="submit" class="btn btn-primary">ثبت</button>
@@ -149,10 +160,11 @@
 {
     <script>
         $(document).ready(function () {
-            $(".editeGuarantee").click(function () {
+            $(".editeColor").click(function () {
                 var currentRow = $(this).closest("form");
-                $("#guaranteeId").val(currentRow.find("input.gId[type=text]").val());
-                $("#guaranteeName").val(currentRow.find("input.gName[type=text]").val());
+                $("#ColorId").val(currentRow.find("input.cId[type=text]").val());
+                $("#ColorName").val(currentRow.find("input.cName[type=text]").val());
+                $("#ColorCode").val(currentRow.find("input.cCode[type=text]").val());
             });
         });
 

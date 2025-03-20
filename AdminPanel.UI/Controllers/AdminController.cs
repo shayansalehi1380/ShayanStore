@@ -14,6 +14,7 @@ using Domain.Entity.Products.Categories;
 using Domain.Entity.Users;
 using Domain.Entity.Products.Features;
 using Domain.Entity.Products.Guaranties;
+using Domain.Entity.Products.Colors;
 
 namespace AdminPanel.UI.Controllers
 {
@@ -130,7 +131,7 @@ namespace AdminPanel.UI.Controllers
                     x.PhoneNumber.Contains(search) || x.Name.Contains(search) || x.UserName.Contains(search));
             }
 
-            var entityUsers = await query.ToListAsync();
+            var entityUsers = await query.OrderByDescending(x => x.Id).ToListAsync();
             ViewBag.Roles = await roleManager.Roles.ToListAsync();
             ViewBag.Cities = await unitOfWork.GenericRepository<City>().TableNoTracking.ToListAsync();
 
@@ -170,7 +171,7 @@ namespace AdminPanel.UI.Controllers
                 queryMainCategory = queryMainCategory.Where(x => x.Title.Contains(searchMainCategory));
             }
 
-            ViewBag.MainCategories = await queryMainCategory.ToListAsync();
+            ViewBag.MainCategories = await queryMainCategory.OrderByDescending(x => x.Id).ToListAsync();
 
 
             IQueryable<Category> queryCategory = unitOfWork.GenericRepository<Category>()
@@ -182,7 +183,7 @@ namespace AdminPanel.UI.Controllers
                 queryCategory = queryCategory.Where(x => x.Name.Contains(searchCategory));
             }
 
-            ViewBag.Categories = await queryCategory.ToListAsync();
+            ViewBag.Categories = await queryCategory.OrderByDescending(x => x.Id).ToListAsync();
 
 
             IQueryable<SubCategory> querySubCategory = unitOfWork.GenericRepository<SubCategory>()
@@ -194,7 +195,7 @@ namespace AdminPanel.UI.Controllers
                 querySubCategory = querySubCategory.Where(x => x.Title.Contains(searchSubCategory));
             }
 
-            ViewBag.SubCategories = await querySubCategory.ToListAsync();
+            ViewBag.SubCategories = await querySubCategory.OrderByDescending(x => x.Id).ToListAsync();
             return View();
         }
 
@@ -212,7 +213,7 @@ namespace AdminPanel.UI.Controllers
                 queryFeature = queryFeature.Where(x => x.Title.Contains(searchFeature));
             }
 
-            ViewBag.Features = await queryFeature.ToListAsync();
+            ViewBag.Features = await queryFeature.OrderByDescending(x => x.Id).ToListAsync();
 
             IQueryable<FeatureDetails> queryDetailsFeature = unitOfWork.GenericRepository<FeatureDetails>()
                 .TableNoTracking
@@ -223,13 +224,14 @@ namespace AdminPanel.UI.Controllers
                 queryDetailsFeature = queryDetailsFeature.Where(x => x.Title.Contains(searchFeatureDetails));
             }
 
-            ViewBag.DetailsFeatures = await queryDetailsFeature.ToListAsync();
+            ViewBag.DetailsFeatures = await queryDetailsFeature.OrderByDescending(x => x.Id).ToListAsync();
             return View();
         }
 
-        public async Task<ActionResult<List<Guarantee>>> ManageGuarantee(string? searchGuarantee, int tabs = 1)
+        public async Task<ActionResult<List<Guarantee>>> ManageGuarantee(string? searchGuarantee, int tabs = 1, FunctionStatus status = FunctionStatus.None)
         {
             ViewBag.selectTab = tabs;
+            ViewBag.Status = status;
 
             IQueryable<Guarantee> queryGuarantee = unitOfWork.GenericRepository<Guarantee>()
                 .TableNoTracking
@@ -240,7 +242,25 @@ namespace AdminPanel.UI.Controllers
                 queryGuarantee = queryGuarantee.Where(x => x.Title.Contains(searchGuarantee));
             }
 
-            ViewBag.Guarantee = await queryGuarantee.ToListAsync();
+            ViewBag.Guarantee = await queryGuarantee.OrderByDescending(x => x.Id).ToListAsync();
+            return View();
+        }
+
+        public async Task<ActionResult<List<Color>>> ManageColor(string searchColor, int tabs = 1, FunctionStatus status = FunctionStatus.None)
+        {
+
+            ViewBag.selectTab = tabs;
+            ViewBag.Status = status;
+
+            IQueryable<Color> queryColor = unitOfWork.GenericRepository<Color>()
+                .TableNoTracking;
+
+            if (!string.IsNullOrEmpty(searchColor))
+            {
+                queryColor = queryColor.Where(x => x.Title.Contains(searchColor));
+            }
+
+            ViewBag.Color = await queryColor.OrderByDescending(x => x.Id).ToListAsync();
             return View();
         }
 

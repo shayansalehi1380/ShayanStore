@@ -1,4 +1,5 @@
-﻿using Application.Interface;
+﻿using Application.Common.ApiResult;
+using Application.Interface;
 using Domain.Entity.Products.Guaranties;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -32,7 +33,7 @@ namespace AdminPanel.UI.Controllers
             {
                 Title = name
             }, CancellationToken.None);
-            return RedirectToAction("ManageGuarantee", "Admin", new { tabs = 1 });
+            return RedirectToAction("ManageGuarantee", "Admin", new { tabs = 1, status = FunctionStatus.Success });
         }
 
         public async Task<ActionResult<Guarantee>> Update(int id, string name)
@@ -47,7 +48,7 @@ namespace AdminPanel.UI.Controllers
             guarantee.Title = name;
 
             await unitOfWork.GenericRepository<Guarantee>().UpdateAsync(guarantee, CancellationToken.None);
-            return RedirectToAction("ManageGuarantee", "Admin", new { tabs = 1 });
+            return RedirectToAction("ManageGuarantee", "Admin", new { tabs = 1, status = FunctionStatus.Success });
         }
 
         public async Task<ActionResult<Guarantee>> SoftDelete(int id)
@@ -62,7 +63,7 @@ namespace AdminPanel.UI.Controllers
             guarantee.IsDelete = true;
 
             await unitOfWork.GenericRepository<Guarantee>().UpdateAsync(guarantee, CancellationToken.None);
-            return RedirectToAction("ManageGuarantee", "Admin", new { tabs = 1 });
+            return RedirectToAction("ManageGuarantee", "Admin", new { tabs = 1, status = FunctionStatus.Success });
         }
 
         public async Task<ActionResult<Guarantee>> Delete(int id)
