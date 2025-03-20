@@ -13,6 +13,7 @@ using Domain.Entity.BasicInfo;
 using Domain.Entity.Products.Categories;
 using Domain.Entity.Users;
 using Domain.Entity.Products.Features;
+using Domain.Entity.Products.Guaranties;
 
 namespace AdminPanel.UI.Controllers
 {
@@ -223,6 +224,23 @@ namespace AdminPanel.UI.Controllers
             }
 
             ViewBag.DetailsFeatures = await queryDetailsFeature.ToListAsync();
+            return View();
+        }
+
+        public async Task<ActionResult<List<Guarantee>>> ManageGuarantee(string? searchGuarantee, int tabs = 1)
+        {
+            ViewBag.selectTab = tabs;
+
+            IQueryable<Guarantee> queryGuarantee = unitOfWork.GenericRepository<Guarantee>()
+                .TableNoTracking
+                .AsSplitQuery();
+
+            if (!string.IsNullOrEmpty(searchGuarantee))
+            {
+                queryGuarantee = queryGuarantee.Where(x => x.Title.Contains(searchGuarantee));
+            }
+
+            ViewBag.Guarantee = await queryGuarantee.ToListAsync();
             return View();
         }
 
