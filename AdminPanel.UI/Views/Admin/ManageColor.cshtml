@@ -91,6 +91,7 @@
                                         <th style="width: 10px">#</th>
                                         <th>نام رنگ</th>
                                         <th>کد رنگ</th>
+                                        <th> رنگ</th>
                                         <th>عملیات</th>
                                     </tr>
                                     @foreach (var color in colors)
@@ -99,6 +100,11 @@
                                             <th style="width: 10px">@color.Id</th>
                                             <th>@color.Title</th>
                                             <th>@color.Code</th>
+                                            <th>
+                                                <div>
+                                                    <span style="width: 1px;padding: 5px;background-color: @color.Code"></span>
+                                                </div>
+                                            </th>
                                             <th>
                                                 <form>
                                                     <button type="button" class="badge badge-warning editeColor"
