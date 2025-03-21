@@ -1,4 +1,5 @@
 ﻿using Domain.Entity.BasicInfo;
+using Domain.Entity.Products.Brands;
 using Domain.Entity.Products.Categories;
 using Domain.Entity.Products.Colors;
 using Domain.Entity.Products.Features;
@@ -20,6 +21,7 @@ namespace Domain.DBContext
         public DbSet<FeatureDetails> FeatureDetails { get; set; }
         public DbSet<Guarantee> Guarantees { get; set; }
         public DbSet<Color> Colors { get; set; }
+        public DbSet<Brand> Brands { get; set; }
 
         public ShayanStoreDBContext(DbContextOptions<ShayanStoreDBContext> options) : base(options)
         {
@@ -51,6 +53,7 @@ namespace Domain.DBContext
             modelBuilder.Entity<FeatureDetails>().HasQueryFilter(x => !x.IsDelete);
             modelBuilder.Entity<Guarantee>().HasQueryFilter(x => !x.IsDelete);
             modelBuilder.Entity<Color>().HasQueryFilter(x => !x.IsDelete);
+            modelBuilder.Entity<Brand>().HasQueryFilter(x => !x.IsDelete);
 
             base.OnModelCreating(modelBuilder);
         }

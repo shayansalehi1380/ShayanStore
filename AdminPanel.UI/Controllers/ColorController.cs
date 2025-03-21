@@ -76,7 +76,7 @@ namespace AdminPanel.UI.Controllers
             }
 
             await unitOfWork.GenericRepository<Color>().DeleteAsync(color, CancellationToken.None);
-            return RedirectToAction("ManageColor", "Admin", new { tabs = 1 });
+            return RedirectToAction("ManageColor", "Admin", new { tabs = 1, status = FunctionStatus.Success });
         }
     }
 }

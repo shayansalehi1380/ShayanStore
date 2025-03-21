@@ -1,0 +1,198 @@
+﻿@using Application.Common.ApiResult
+@using Domain.Entity.Products.Brands
+@{
+    List<Brand> brands = ViewBag.Brand;
+
+    int selectTab = ViewBag.selectTab;
+    string brandTab = string.Empty;
+    FunctionStatus status = ViewBag.Status;
+    if (selectTab == 1)
+    {
+        brandTab = "active";
+    }
+    else
+    {
+        brandTab = "active";
+    }
+
+    bool isError = status == FunctionStatus.Error ? true : false;
+    bool isSuccess = status == FunctionStatus.Success ? true : false;
+}
+
+@section link {
+    <style>
+        #searchUser {
+            border-top-right-radius: 5px;
+            border-bottom-right-radius: 5px;
+            border-top-left-radius: 0 !important;
+            border-bottom-left-radius: 0 !important;
+            border: none;
+            background-color: #f2f4f6;
+        }
+
+        #searchIcon {
+            border: none;
+            background-color: #f2f4f6;
+        }
+
+        .modal {
+            top: 5%;
+        }
+    </style>
+}
+
+<div class="row">
+    <div class="col-12">
+
+        <div class="card" style="margin: 15px 15px 0px 15px;">
+            <div class="card-header p-2">
+                <ul class="nav nav-pills">
+                    <li class="nav-item"><a class="nav-link @brandTab" href="#activity" data-toggle="tab">برند</a></li>
+                </ul>
+            </div><!-- /.card-body -->
+            <div class="card-body">
+                <div class="tab-content">
+
+                    <div class="@brandTab tab-pane" id="activity">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <form asp-controller="Brand" asp-action="Create" method="post" 
+                            enctype="multipart/form-data" class="d-flex justify-content-start align-items-center" style="gap: 10px">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">نام برند</label>
+                                    <input type="text" class="form-control" name="name" id="exampleInputEmail1"
+                                           placeholder="نام برند را وارد کنید">
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputFile">بارگذاری لوگو</label>
+                                    <div class="input-group">
+                                        <div class="custom-file">
+                                            <input type="file" class="custom-file-input" id="exampleInputFile" name="image">
+                                            <label class="custom-file-label" for="exampleInputFile">انتخاب عکس</label>
+                                        </div>
+                                        <div class="input-group-append">
+                                            <span class="input-group-text" id="">آپلود</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style="padding-top: 15px">
+                                    <button type="submit" class="btn btn-primary">ثبت لوگو</button>
+                                </div>
+                            </form>
+                            <form class="input-group input-group-sm w-25 p-2" asp-action="ManageBrand" asp-controller="Admin" method="post">
+                                <input class="form-control form-control-navbar" id="searchUser" name="searchBrand" type="search" placeholder="جستجو" aria-label="Search">
+                                <div class="input-group-append">
+                                    <button class="btn btn-navbar" id="searchIcon" type="submit">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">برند ها</h3>
+                            </div>
+                            <!-- /.card-header -->
+                            <div class="card-body p-0">
+                                <table class="table table-striped">
+                                    <tr>
+                                        <th style="width: 10px">#</th>
+                                        <th>نام برند</th>
+                                        <th>لوگوی برند</th>
+                                        <th>عملیات</th>
+                                    </tr>
+                                    @foreach (var brand in brands)
+                                    {
+                                        <tr>
+                                            <th style="width: 10px">@brand.Id</th>
+                                            <th>@brand.Title</th>
+                                            <th>
+                                                <img src="data:image/png;base64,@brand.ImageUri" alt="لوگوی برند" width="35" height="35" />
+                                            </th>
+                                            <th>
+                                                <form>
+                                                    <button type="button" class="badge badge-warning editeBrand"
+                                                            data-toggle="modal" data-target="#editBrandModal">
+                                                        ویرایش
+                                                    </button>
+                                                    <input type="text" name="bId" class="bId" value="@brand.Id" hidden="hidden" />
+                                                    <input type="text" name="bName" class="bName" value="@brand.Title" hidden="hidden" />
+                                                    <input type="text" name="bImage" class="bImage" value="@brand.ImageUri" hidden="hidden" />
+                                                </form>
+
+                                                <a class="badge badge-danger"
+                                                   href="@Url.Action("SoftDelete", "Brand", new { id = brand.Id })">حذف</a>
+                                            </th>
+                                        </tr>
+                                    }
+
+
+                                </table>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="editBrandModal" tabindex="-1" role="dialog" aria-labelledby="editBrandModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h5 class="modal-title" id="editGuaranteeModalLabel">ویرایش برند</h5>
+            </div>
+            <div class="modal-body">
+                <form asp-action="Update" asp-controller="Brand" method="post" enctype="multipart/form-data">
+                    <input id="BrandId" name="id" hidden="hidden" />
+                    <div class="form-group">
+                        <label for="BrandName">نام برند</label>
+                        <input type="text" class="form-control" id="BrandName" name="name" placeholder="نام برند را وارد کنید">
+                    </div>
+                    <div class="form-group">
+                        <label for="BrandImage">بارگذاری لوگو</label>
+                        <div class="input-group">
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" id="BrandImage" name="image">
+                                <label class="custom-file-label" for="exampleInputFile">انتخاب عکس</label>
+                            </div>
+                            <div class="input-group-append">
+                                <span class="input-group-text" id="">آپلود</span>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">بستن</button>
+                    <button type="submit" class="btn btn-primary">ثبت</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section script
+{
+    <script>
+        $(document).ready(function () {
+            $(".editeBrand").click(function () {
+                var currentRow = $(this).closest("form");
+                $("#BrandId").val(currentRow.find("input.bId[type=text]").val());
+                $("#BrandName").val(currentRow.find("input.bName[type=text]").val());
+                $("#BrandImage").val(currentRow.find("input.bImage[type=text]").val());
+            });
+        });
+
+        if (@Html.Raw(isError).ToString().ToLower())
+        {
+            ShowErrorAlret()
+        }
+        if (@Html.Raw(isSuccess).ToString().ToLower())
+        {
+            ShowSuccessAlret()
+        }
+    </script>
+}

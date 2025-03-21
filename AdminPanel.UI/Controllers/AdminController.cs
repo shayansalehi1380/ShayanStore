@@ -15,6 +15,7 @@ using Domain.Entity.Users;
 using Domain.Entity.Products.Features;
 using Domain.Entity.Products.Guaranties;
 using Domain.Entity.Products.Colors;
+using Domain.Entity.Products.Brands;
 
 namespace AdminPanel.UI.Controllers
 {
@@ -261,6 +262,24 @@ namespace AdminPanel.UI.Controllers
             }
 
             ViewBag.Color = await queryColor.OrderByDescending(x => x.Id).ToListAsync();
+            return View();
+        }
+
+        public async Task<ActionResult<List<Color>>> ManageBrand(string searchBrand, int tabs = 1, FunctionStatus status = FunctionStatus.None)
+        {
+            ViewBag.selectTab = tabs;
+            ViewBag.Status = status;
+
+            IQueryable<Brand> queryBrand = unitOfWork.GenericRepository<Brand>()
+                .TableNoTracking;
+
+            if (!string.IsNullOrEmpty(searchBrand))
+            {
+                queryBrand = queryBrand.Where(x => x.Title.Contains(searchBrand));
+            }
+
+            ViewBag.Brand = await queryBrand.OrderByDescending(x => x.Id).ToListAsync();
+
             return View();
         }
 
