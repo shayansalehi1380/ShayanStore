@@ -29,9 +29,9 @@ namespace AdminPanel.UI.Controllers
 
         public async Task<ActionResult<Brand>> Create(string name, IFormFile image)
         {
-            if (image != null)
+            if (image == null)
             {
-                return BadRequest("لطفا یک تصویر آپلود کنید.");
+                return RedirectToAction("ManageBrand", "Admin", new { tabs = 1, status = FunctionStatus.Error });
             }
 
             await unitOfWork.GenericRepository<Brand>().AddAsync(new Brand

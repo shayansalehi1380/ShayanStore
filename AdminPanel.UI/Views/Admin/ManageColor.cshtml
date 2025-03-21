@@ -166,6 +166,11 @@
                 $("#ColorName").val(currentRow.find("input.cName[type=text]").val());
                 $("#ColorCode").val(currentRow.find("input.cCode[type=text]").val());
             });
+
+             //Colorpicker
+             $('.my-colorpicker1').colorpicker()
+            //color picker with addon
+             $('.my-colorpicker2').colorpicker()
         });
 
         if (@Html.Raw(isError).ToString().ToLower())
