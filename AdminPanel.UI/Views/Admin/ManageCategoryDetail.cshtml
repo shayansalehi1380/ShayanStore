@@ -1,0 +1,220 @@
+﻿@using Application.Common.ApiResult
+@using Domain.Entity.Products.Categories
+@{
+    List<CategoryDetail> categorydetails = ViewBag.CategoryDetails;
+    List<SubCategory> subcategories = ViewBag.SubCategories;
+
+    int selectTab = ViewBag.selectTab;
+    string categorydetailsTab = string.Empty;
+    FunctionStatus status = ViewBag.Status;
+    if (selectTab == 1)
+    {
+        categorydetailsTab = "active";
+    }
+    else
+    {
+        categorydetailsTab = "active";
+    }
+
+    bool isError = status == FunctionStatus.Error ? true : false;
+    bool isSuccess = status == FunctionStatus.Success ? true : false;
+}
+
+@section link {
+    <style>
+        #searchUser {
+            border-top-right-radius: 5px;
+            border-bottom-right-radius: 5px;
+            border-top-left-radius: 0 !important;
+            border-bottom-left-radius: 0 !important;
+            border: none;
+            background-color: #f2f4f6;
+        }
+
+        #searchIcon {
+            border: none;
+            background-color: #f2f4f6;
+        }
+
+        .modal {
+            top: 5%;
+        }
+    </style>
+}
+
+
+<div class="row">
+    <div class="col-12">
+        <div class="card" style="margin: 15px 15px 0px 15px;">
+            <div class="card-header p-2">
+                <ul class="nav nav-pills">
+                    <li class="nav-item d-flex align-items-center">
+                        <a class="nav-link @categorydetailsTab" href="#activity" data-toggle="tab">
+                            زیر گروه محصولات
+                        </a>
+                        <span style="margin-right: 22px; color: black;">تعداد زیر گروه محصولات:</span> <!-- Apply left margin for spacing -->
+                        <span style="margin-right: 5px;" class="badge badge-info">@categorydetails.Count()</span> <!-- Keep badge style unchanged -->
+                    </li>
+                </ul>
+            </div><!-- /.card-header -->
+            <div class="card-body">
+                <div class="tab-content">
+                    
+                    <div class="@categorydetailsTab tab-pane" id="Catdta">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <form asp-controller="CategoryDetail" asp-action="Create" method="post"
+                                  class="d-flex justify-content-start align-items-center" style="gap: 15px">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">نام زیر گروه محصولات</label>
+                                    <input type="text" class="form-control" name="name" id="exampleInputEmail1"
+                                           placeholder="نام زیر گروه محصولات را وارد کنید">
+                                </div>
+                                <div class="form-group">
+                                    <label>نام زیر دسته</label>
+                                    <select class="form-control select2" name="subCategoryId" style="width: 100%;">
+                                        @{
+                                            var index = 0;
+                                            foreach (var subcategorie in subcategories)
+                                            {
+                                                if (index == 0)
+                                                {
+                                                    <option selected="selected" value="@subcategorie.Id">@subcategorie.Title</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="@subcategorie.Id">@subcategorie.Title</option>
+                                                }
+
+                                                index++;
+                                            }
+                                        }
+                                    </select>
+                                </div>
+                                <div style="padding-top: 15px">
+                                    <button type="submit" class="btn btn-primary">ثبت زیر گروه محصولات</button>
+                                </div>
+
+                            </form>
+                            <form class="input-group input-group-sm w-25 p-2" asp-action="ManageCategoryDetail" asp-controller="Admin" method="post">
+                                <input class="form-control form-control-navbar" id="searchUser" name="searchCategoryDetail" type="search" placeholder="جستجو" aria-label="Search">
+                                <input name="tabs" value="3" hidden="hidden" />
+                                <div class="input-group-append">
+                                    <button class="btn btn-navbar" id="searchIcon" type="submit">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">زیر گروه های محصولات</h3>
+                            </div>
+                            <!-- /.card-header -->
+                            <div class="card-body p-0">
+                                <table class="table table-striped">
+                                    <tr>
+                                        <th style="width: 10px">#</th>
+                                        <th>نام زیر گروه محصولات</th>
+                                        <th>نام زیر دسته</th>
+                                        <th>عملیات</th>
+                                    </tr>
+                                    @foreach (var categorydetail in categorydetails)
+                                    {
+                                        <tr>
+                                            <th style="width: 10px">@categorydetail.Id</th>
+                                            <th>@categorydetail.Title</th>
+                                            <th>@categorydetail.SubCategory.Title</th>
+                                            <th>
+                                                <form>
+                                                    <button type="button" class="badge badge-warning editeDetail"
+                                                            data-toggle="modal" data-target="#editeDetailModal">
+                                                        ویرایش
+                                                    </button>
+                                                    <input type="text" name="cdId" class="cdId" value="@categorydetail.Id"
+                                                           hidden="hidden" />
+                                                    <input type="text" name="cdName" class="cdName" value="@categorydetail.Title"
+                                                           hidden="hidden" />
+                                                    <input type="text" name="cdSubId" class="cdSubId"
+                                                           value="@categorydetail.SubCategoryId" hidden="hidden" />
+                                                </form>
+
+                                                <a class="badge badge-danger"
+                                                   href="@Url.Action("SoftDelete", "CategoryDetail", new { id = categorydetail.Id })">حذف</a>
+                                            </th>
+                                        </tr>
+                                    }
+
+                                </table>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+                    </div>
+
+                </div><!-- /.tab-content -->
+            </div><!-- /.card-body -->
+        </div><!-- /.card -->
+    </div><!-- /.col-12 -->
+</div><!-- /.row -->
+
+
+<div class="modal fade" id="editeDetailModal" tabindex="-1" role="dialog" aria-labelledby="editeDetailModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h5 class="modal-title" id="exampleModalLabel">ویرایش زیر گروه محصولات</h5>
+            </div>
+            <div class="modal-body">
+                <form asp-action="Update" asp-controller="CategoryDetail" method="post">
+                    <input id="CatDtaId" name="id" hidden="hidden" />
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">نام زیر گروه محصولات</label>
+                        <input type="text" class="form-control" id="NameCatDta" name="name" aria-describedby="emailHelp"
+                               placeholder="نام زیر گروه محصولات را وارد کنید">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">زیر دسته</label>
+                        <select class="form-control" id="SubCatId" name="subCategoryId">
+                            @foreach (var i in subcategories)
+                            {
+                                <option value="@i.Id">@i.Title</option>
+                            }
+                        </select>
+                    </div>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">بستن</button>
+                    <button type="submit" class="btn btn-primary">ثبت</button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section script
+{
+    <script>
+
+        $(document).ready(function () {
+
+            $(".editeDetail").click(function () {
+                var currentRow = $(this).closest("form");
+                $("#CatDtaId").val(currentRow.find($("input.cdId[type=text]")).val());
+                $("#SubCatId").val(currentRow.find($("input.cdSubId[type=text]")).val());
+                $("#NameCatDta").val(currentRow.find($("input.cdName[type=text]")).val());
+            });
+
+        })
+
+        if (@Html.Raw(isError).ToString().ToLower())
+        {
+            ShowErrorAlret()
+        }
+        if (@Html.Raw(isSuccess).ToString().ToLower())
+        {
+            ShowSuccessAlret()
+        }
+    </script>
+}

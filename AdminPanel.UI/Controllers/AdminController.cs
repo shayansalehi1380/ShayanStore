@@ -300,6 +300,35 @@ namespace AdminPanel.UI.Controllers
             return View();
         }
 
+        public async Task<ActionResult<List<CategoryDetail>>> ManageCategoryDetail(string? searchCategoryDetail, int tabs = 1, FunctionStatus status = FunctionStatus.None)
+        {
+            ViewBag.selectTab = tabs;
+            ViewBag.Status = status;
+
+            IQueryable<CategoryDetail> queryCategoryDetail = unitOfWork.GenericRepository<CategoryDetail>()
+                .TableNoTracking
+            .Include(x => x.SubCategory)
+            .AsSplitQuery();
+
+            IQueryable<SubCategory> querySubCategories = unitOfWork.GenericRepository<SubCategory>().TableNoTracking
+                .Include(x => x.CategoryDetails)
+                .AsSplitQuery();
+
+            if (!string.IsNullOrEmpty(searchCategoryDetail))
+            {
+                queryCategoryDetail = queryCategoryDetail.Where(x => x.Title.Contains(searchCategoryDetail));
+            }
+
+            if (!string.IsNullOrEmpty(searchCategoryDetail))
+            {
+                querySubCategories = querySubCategories.Where(x => x.Title.Contains(searchCategoryDetail));
+            }
+            ViewBag.CategoryDetails = await queryCategoryDetail.OrderByDescending(x => x.Id).ToListAsync();
+            ViewBag.SubCategories = await querySubCategories.OrderByDescending(x => x.Id).ToListAsync();
+
+            return View();
+        }
+
         public async Task<ActionResult> UploadImage()
         {
             return View();
