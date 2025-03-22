@@ -22,34 +22,6 @@ namespace AdminPanel.UI.Controllers
             return RedirectToAction("ManageProvince","Admin", new { tabs = 2 });
         }
 
-        public async Task<ActionResult> GetAllCity(string? searchCity, string? searchState, int tabs = 1)
-        {
-            IQueryable<City> queryCity = unitOfWork.GenericRepository<City>()
-                .TableNoTracking
-                .Include(x => x.State)
-                .AsSplitQuery();
-
-            IQueryable<State> queryState = unitOfWork.GenericRepository<State>().TableNoTracking
-                .Include(x => x.Cities)
-                .AsSplitQuery();
-
-            ViewBag.selectTab = tabs;
-
-            if (!string.IsNullOrEmpty(searchCity))
-            {
-                queryCity = queryCity.Where(x => x.Name.Contains(searchCity) || x.State.Name.Contains(searchCity));
-            }
-
-            if (!string.IsNullOrEmpty(searchState))
-            {
-                queryState = queryState.Where(x => x.Name.Contains(searchState));
-            }
-
-            ViewBag.Cities = await queryCity.ToListAsync();
-            ViewBag.State = await queryState.ToListAsync();
-            return View();
-        }
-
         public async Task<ActionResult> Update(int id, string name, int stateId)
         {
             var city = await unitOfWork.GenericRepository<City>().GetByIdAsync(id, CancellationToken.None);
@@ -74,7 +46,7 @@ namespace AdminPanel.UI.Controllers
             }
 
             await unitOfWork.GenericRepository<City>().DeleteAsync(city, CancellationToken.None);
-            return RedirectToAction("GetAllCity", new { tabs = 2 });
+            return RedirectToAction("ManageProvince", "Admin", new { tabs = 2 });
         }
 
         public async Task<ActionResult> SoftDelete(int id)
@@ -83,7 +55,7 @@ namespace AdminPanel.UI.Controllers
             {
                 Id = id
             },CancellationToken.None);
-            return RedirectToAction("GetAllCity", new { tabs = 2 });
+            return RedirectToAction("ManageProvince", "Admin", new { tabs = 2 });
         }
     }
 }

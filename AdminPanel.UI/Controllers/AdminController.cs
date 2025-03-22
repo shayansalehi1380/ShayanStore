@@ -283,6 +283,23 @@ namespace AdminPanel.UI.Controllers
             return View();
         }
 
+        public async Task<ActionResult<List<ShippingOption>>> ManageShippingOption(string searchShippingOption, int tabs = 1, FunctionStatus status = FunctionStatus.None)
+        {
+            ViewBag.selectTab = tabs;
+            ViewBag.Status = status;
+
+            IQueryable<ShippingOption> queryShippingOption = unitOfWork.GenericRepository<ShippingOption>()
+                .TableNoTracking;
+
+            if (!string.IsNullOrEmpty(searchShippingOption))
+            {
+                queryShippingOption = queryShippingOption.Where(x => x.Title.Contains(searchShippingOption) || x.Price.Contains(searchShippingOption));
+            }
+
+            ViewBag.ShippingOption = await queryShippingOption.OrderByDescending(x => x.Id).ToListAsync();
+            return View();
+        }
+
         public async Task<ActionResult> UploadImage()
         {
             return View();

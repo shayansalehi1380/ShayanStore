@@ -52,7 +52,7 @@ public class StateController(IUnitOfWork unitOfWork) : Controller
         }
 
         await unitOfWork.GenericRepository<State>().DeleteAsync(state, CancellationToken.None);
-        return RedirectToAction("GetAllCity","City", new { tabs = 1 });
+        return RedirectToAction("ManageProvince", "Admin", new { tabs = 1 });
     }
 
     public async Task<ActionResult> SoftDelete(int id)
@@ -65,6 +65,6 @@ public class StateController(IUnitOfWork unitOfWork) : Controller
 
         state.IsDelete = true;
         await unitOfWork.GenericRepository<State>().UpdateAsync(state, CancellationToken.None);
-        return RedirectToAction("GetAllCity", "City", new { tabs = 1 });
+        return RedirectToAction("ManageProvince", "Admin", new { tabs = 1 });
     }
 }
