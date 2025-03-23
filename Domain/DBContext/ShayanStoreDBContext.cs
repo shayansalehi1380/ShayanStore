@@ -24,6 +24,7 @@ namespace Domain.DBContext
         public DbSet<Brand> Brands { get; set; }
         public DbSet<ShippingOption> ShippingOptions { get; set; }
         public DbSet<CategoryDetail> CategoryDetails { get; set; }
+        public DbSet<Wallet> Wallets { get; set; }
 
         public ShayanStoreDBContext(DbContextOptions<ShayanStoreDBContext> options) : base(options)
         {
@@ -58,6 +59,7 @@ namespace Domain.DBContext
             modelBuilder.Entity<Brand>().HasQueryFilter(x => !x.IsDelete);
             modelBuilder.Entity<ShippingOption>().HasQueryFilter(x => !x.IsDelete);
             modelBuilder.Entity<CategoryDetail>().HasQueryFilter(x => !x.IsDelete);
+            modelBuilder.Entity<Wallet>().HasQueryFilter(x => !x.IsDelete);
 
             base.OnModelCreating(modelBuilder);
         }

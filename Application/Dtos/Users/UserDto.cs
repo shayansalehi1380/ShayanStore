@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Domain.Entity.BasicInfo;
+using Domain.Entity.Users;
 
 namespace Application.Dtos.Users
 {

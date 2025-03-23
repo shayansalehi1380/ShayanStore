@@ -17,5 +17,6 @@ namespace Domain.Entity.Users
         public DateTime ConfirmCodeExpireTime { get; set; } = DateTime.UtcNow.AddMinutes(3);
         [ForeignKey("CityId")] public int CityId { get; set; }
         public City City { get; set; } = default!;
+        public Wallet Wallet { get; set; } = default!;
     }
 }

@@ -1,0 +1,174 @@
+﻿@using Application.Common.ApiResult
+@using Domain.Entity.Products.Guaranties
+@using Domain.Entity.Users
+@{
+    List<Wallet> wallets = ViewBag.Wallet;
+
+    int selectTab = ViewBag.selectTab;
+    string walletTab = string.Empty;
+    FunctionStatus status = ViewBag.Status;
+    if (selectTab == 1)
+    {
+        walletTab = "active";
+    }
+    else
+    {
+        walletTab = "active";
+    }
+
+    bool isError = status == FunctionStatus.Error ? true : false;
+    bool isSuccess = status == FunctionStatus.Success ? true : false;
+}
+
+@section link {
+    <style>
+        #searchUser {
+            border-top-right-radius: 5px;
+            border-bottom-right-radius: 5px;
+            border-top-left-radius: 0 !important;
+            border-bottom-left-radius: 0 !important;
+            border: none;
+            background-color: #f2f4f6;
+        }
+
+        #searchIcon {
+            border: none;
+            background-color: #f2f4f6;
+        }
+
+        .modal {
+            top: 5%;
+        }
+    </style>
+}
+
+<div class="row">
+    <div class="col-12">
+        
+        <div class="card" style="margin: 15px 15px 0px 15px;">
+            <div class="card-header p-2">
+                <ul class="nav nav-pills">
+                    <li class="nav-item"><a class="nav-link @walletTab" href="#activity" data-toggle="tab">کیف پول</a></li>
+                </ul>
+            </div><!-- /.card-body -->
+            <div class="card-body">
+                <div class="tab-content">
+
+                    <div class="@walletTab tab-pane" id="activity">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <form class="input-group input-group-sm w-25 p-2" asp-action="ManageWallet" asp-controller="Admin" method="post">
+                                <input class="form-control form-control-navbar" id="searchUser" name="searchWallet" type="search" placeholder="جستجو" aria-label="Search">
+                                <div class="input-group-append">
+                                    <button class="btn btn-navbar" id="searchIcon" type="submit">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">کیف‌پول ها</h3>
+                            </div>
+                            <!-- /.card-header -->
+                            <div class="card-body p-0">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 10px">#</th>
+                                            <th class="text-center">نام کاربر</th>
+                                            <th class="text-center">تلفن کاربر</th>
+                                            <th class="text-center">موجودی کیف پول</th>
+                                            <th class="text-center">عملیات</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var wallet in wallets)
+                                        {
+                                            <tr>
+                                                <td>@wallet.Id</td> <!-- شماره ردیف -->
+                                                <td class="text-center">
+                                                    <span>@wallet.User.Name @wallet.User.Family</span>
+                                                </td>
+                                                <td class="text-center">@wallet.User.PhoneNumber</td> <!-- تلفن کاربر -->
+                                                <td class="text-center">@wallet.WalletBalance</td> <!-- موجودی کیف پول -->
+                                                <td class="text-center">
+                                                    <form>
+                                                        <button type="button" class="badge badge-warning editeWallet"
+                                                                data-toggle="modal" data-target="#editWalletModal">
+                                                            ویرایش
+                                                        </button>
+                                                        <input type="text" name="wId" class="wId" value="@wallet.Id" hidden="hidden" />
+                                                        <input type="text" name="wName" class="wName" value="@wallet.User.Name @wallet.User.Family" hidden="hidden" />
+                                                        <input type="text" name="wPhone" class="wPhone" value="@wallet.User.PhoneNumber" hidden="hidden" /> <!-- شماره همراه کاربر -->
+                                                        <input type="text" name="wBalance" class="wBalance" value="@wallet.WalletBalance" hidden="hidden" />
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="editWalletModal" tabindex="-1" role="dialog" aria-labelledby="editWalletModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h5 class="modal-title" id="editGuaranteeModalLabel">ویرایش کیف پول</h5>
+            </div>
+            <div class="modal-body">
+                <form asp-action="Update" asp-controller="Wallet" method="post">
+                    <input id="WalletId" name="id" hidden="hidden" />
+                    <div class="form-group">
+                        <label for="UserName">نام و نام خانوادگی کاربر</label>
+                        <input type="text" class="form-control" id="UserName" name="userName" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="UserPhone">شماره همراه کاربر</label>
+                        <input type="text" class="form-control" id="UserPhone" name="userPhone" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="Walletbalance">موجودی کیف پول</label>
+                        <input type="text" class="form-control" id="Walletbalance" name="name" placeholder="مبلغ کیف پول را وارد کنید">
+                    </div>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">بستن</button>
+                    <button type="submit" class="btn btn-primary">ثبت</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section script
+{
+    <script>
+        $(document).ready(function () {
+            $(".editeWallet").click(function () {
+                var currentRow = $(this).closest("form");
+                $("#WalletId").val(currentRow.find("input.wId[type=text]").val());
+                $("#UserName").val(currentRow.find("input.wName[type=text]").val());
+                $("#UserPhone").val(currentRow.find("input.wPhone[type=text]").val());
+                $("#Walletbalance").val(currentRow.find("input.wBalance[type=text]").val());
+            });
+        });
+
+        if (@Html.Raw(isError).ToString().ToLower())
+        {
+            ShowErrorAlret()
+        }
+        if (@Html.Raw(isSuccess).ToString().ToLower())
+        {
+            ShowSuccessAlret()
+        }
+    </script>
+}
