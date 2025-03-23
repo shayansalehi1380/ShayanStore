@@ -89,45 +89,47 @@
                             <!-- /.card-header -->
                             <div class="card-body p-0">
                                 <table class="table table-striped">
-                                    <tr>
-                                        <th style="width: 10px">#</th>
-                                        <th>نام روش ارسال</th>
-                                        <th>هزینه ارسال</th>
-                                        <th>عملیات</th>
-                                    </tr>
-                                    @foreach (var shippingOption in shippingOptions)
-                                    {
+                                    <thead>
                                         <tr>
-                                            <th style="width: 10px">@shippingOption.Id</th>
-                                            <th>@shippingOption.Title</th>
-                                            <th>
-                                                @if (shippingOption.Price == "0")
-                                                {
-                                                    <span>رایگان</span>
-                                                }
-                                                else
-                                                {
-                                                    @shippingOption.Price
-                                                }
-                                            </th>
-                                            <th>
-                                                <form>
-                                                    <button type="button" class="badge badge-warning editeShippingOption"
-                                                            data-toggle="modal" data-target="#editShippingOptionModal">
-                                                        ویرایش
-                                                    </button>
-                                                    <input type="text" name="shId" class="shId" value="@shippingOption.Id" hidden="hidden" />
-                                                    <input type="text" name="shName" class="shName" value="@shippingOption.Title" hidden="hidden" />
-                                                    <input type="text" name="shPrice" class="shPrice" value="@shippingOption.Price" hidden="hidden" />
-                                                </form>
-
-                                                <a class="badge badge-danger"
-                                                   href="@Url.Action("SoftDelete", "ShippingOption", new { id = shippingOption.Id })">حذف</a>
-                                            </th>
+                                            <th style="width: 10px">#</th>
+                                            <th class="text-center">نام روش ارسال</th>
+                                            <th class="text-center">هزینه ارسال</th>
+                                            <th class="text-center">عملیات</th>
                                         </tr>
-                                    }
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var shippingOption in shippingOptions)
+                                        {
+                                            <tr>
+                                                <td>@shippingOption.Id</td>
+                                                <td class="text-center">@shippingOption.Title</td>
+                                                <td class="text-center">
+                                                    @if (shippingOption.Price == "0")
+                                                    {
+                                                        <span>رایگان</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        @shippingOption.Price
+                                                    }
+                                                </td>
+                                                <td class="text-center">
+                                                    <form>
+                                                        <button type="button" class="badge badge-warning editeShippingOption"
+                                                                data-toggle="modal" data-target="#editShippingOptionModal">
+                                                            ویرایش
+                                                        </button>
+                                                        <input type="text" name="shId" class="shId" value="@shippingOption.Id" hidden="hidden" />
+                                                        <input type="text" name="shName" class="shName" value="@shippingOption.Title" hidden="hidden" />
+                                                        <input type="text" name="shPrice" class="shPrice" value="@shippingOption.Price" hidden="hidden" />
+                                                    </form>
 
-
+                                                    <a class="badge badge-danger"
+                                                       href="@Url.Action("SoftDelete", "ShippingOption", new { id = shippingOption.Id })">حذف</a>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
                                 </table>
                             </div>
                             <!-- /.card-body -->

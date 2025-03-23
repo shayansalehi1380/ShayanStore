@@ -76,24 +76,22 @@
                                 </div>
                             </form>
                         </div>
-                        <div class="card">
-                            <div class="card-header">
-                                <h3 class="card-title">گارانتی ها</h3>
-                            </div>
-                            <!-- /.card-header -->
-                            <div class="card-body p-0">
-                                <table class="table table-striped">
+                        <div class="card-body p-0">
+                            <table class="table table-striped">
+                                <thead>
                                     <tr>
                                         <th style="width: 10px">#</th>
-                                        <th>نام گارانتی</th>
-                                        <th>عملیات</th>
+                                        <th class="text-center">نام گارانتی</th>
+                                        <th class="text-center">عملیات</th>
                                     </tr>
+                                </thead>
+                                <tbody>
                                     @foreach (var guarantee in guarantees)
                                     {
                                         <tr>
-                                            <th style="width: 10px">@guarantee.Id</th>
-                                            <th>@guarantee.Title</th>
-                                            <th>
+                                            <td>@guarantee.Id</td>
+                                            <td class="text-center">@guarantee.Title</td>
+                                            <td class="text-center">
                                                 <form>
                                                     <button type="button" class="badge badge-warning editeGuarantee"
                                                             data-toggle="modal" data-target="#editGuaranteeModal">
@@ -105,13 +103,12 @@
 
                                                 <a class="badge badge-danger"
                                                    href="@Url.Action("SoftDelete", "Guarantee", new { id = guarantee.Id })">حذف</a>
-                                            </th>
+                                            </td>
                                         </tr>
                                     }
-
-
-                                </table>
-                            </div>
+                                </tbody>
+                            </table>
+                        </div>
                             <!-- /.card-body -->
                         </div>
                     </div>

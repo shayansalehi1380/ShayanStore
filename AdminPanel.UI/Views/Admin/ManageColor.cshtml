@@ -87,40 +87,42 @@
                             <!-- /.card-header -->
                             <div class="card-body p-0">
                                 <table class="table table-striped">
-                                    <tr>
-                                        <th style="width: 10px">#</th>
-                                        <th>نام رنگ</th>
-                                        <th>کد رنگ</th>
-                                        <th> رنگ</th>
-                                        <th>عملیات</th>
-                                    </tr>
-                                    @foreach (var color in colors)
-                                    {
+                                    <thead>
                                         <tr>
-                                            <th style="width: 10px">@color.Id</th>
-                                            <th>@color.Title</th>
-                                            <th>@color.Code</th>
-                                            <th>
-                                                <h2 style="background-color :@color.Code; border-radius: 30px; width:15%; padding:10px"></h2>
-                                            </th>
-                                            <th>
-                                                <form>
-                                                    <button type="button" class="badge badge-warning editeColor"
-                                                            data-toggle="modal" data-target="#editColorModal">
-                                                        ویرایش
-                                                    </button>
-                                                    <input type="text" name="cId" class="cId" value="@color.Id" hidden="hidden" />
-                                                    <input type="text" name="cName" class="cName" value="@color.Title" hidden="hidden" />
-                                                    <input type="text" name="cCode" class="cCode" value="@color.Code" hidden="hidden" />
-                                                </form>
-
-                                                <a class="badge badge-danger"
-                                                   href="@Url.Action("SoftDelete", "Color", new { id = color.Id })">حذف</a>
-                                            </th>
+                                            <th style="width: 10px">#</th>
+                                            <th class="text-center">نام رنگ</th>
+                                            <th class="text-center">کد رنگ</th>
+                                            <th class="text-center">رنگ</th>
+                                            <th class="text-center">عملیات</th>
                                         </tr>
-                                    }
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var color in colors)
+                                        {
+                                            <tr>
+                                                <td>@color.Id</td>
+                                                <td class="text-center">@color.Title</td>
+                                                <td class="text-center">@color.Code</td>
+                                                <td class="text-center">
+                                                    <div style="background-color: @color.Code; border-radius: 30px; width: 30px; height: 30px; margin: 0 auto;"></div>
+                                                </td>
+                                                <td class="text-center">
+                                                    <form>
+                                                        <button type="button" class="badge badge-warning editeColor"
+                                                                data-toggle="modal" data-target="#editColorModal">
+                                                            ویرایش
+                                                        </button>
+                                                        <input type="text" name="cId" class="cId" value="@color.Id" hidden="hidden" />
+                                                        <input type="text" name="cName" class="cName" value="@color.Title" hidden="hidden" />
+                                                        <input type="text" name="cCode" class="cCode" value="@color.Code" hidden="hidden" />
+                                                    </form>
 
-
+                                                    <a class="badge badge-danger"
+                                                       href="@Url.Action("SoftDelete", "Color", new { id = color.Id })">حذف</a>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
                                 </table>
                             </div>
                             <!-- /.card-body -->

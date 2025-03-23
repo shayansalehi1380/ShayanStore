@@ -112,38 +112,38 @@
                             <!-- /.card-header -->
                             <div class="card-body p-0">
                                 <table class="table table-striped">
-                                    <tr>
-                                        <th style="width: 10px">#</th>
-                                        <th>نام زیر گروه محصولات</th>
-                                        <th>نام زیر دسته</th>
-                                        <th>عملیات</th>
-                                    </tr>
-                                    @foreach (var categorydetail in categorydetails)
-                                    {
+                                    <thead>
                                         <tr>
-                                            <th style="width: 10px">@categorydetail.Id</th>
-                                            <th>@categorydetail.Title</th>
-                                            <th>@categorydetail.SubCategory.Title</th>
-                                            <th>
-                                                <form>
-                                                    <button type="button" class="badge badge-warning editeDetail"
-                                                            data-toggle="modal" data-target="#editeDetailModal">
-                                                        ویرایش
-                                                    </button>
-                                                    <input type="text" name="cdId" class="cdId" value="@categorydetail.Id"
-                                                           hidden="hidden" />
-                                                    <input type="text" name="cdName" class="cdName" value="@categorydetail.Title"
-                                                           hidden="hidden" />
-                                                    <input type="text" name="cdSubId" class="cdSubId"
-                                                           value="@categorydetail.SubCategoryId" hidden="hidden" />
-                                                </form>
-
-                                                <a class="badge badge-danger"
-                                                   href="@Url.Action("SoftDelete", "CategoryDetail", new { id = categorydetail.Id })">حذف</a>
-                                            </th>
+                                            <th style="width: 10px">#</th>
+                                            <th class="text-center">نام زیرگروه محصولات</th>
+                                            <th class="text-center">نام زیردسته</th>
+                                            <th class="text-center">عملیات</th>
                                         </tr>
-                                    }
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var categorydetail in categorydetails)
+                                        {
+                                            <tr>
+                                                <td>@categorydetail.Id</td>
+                                                <td class="text-center">@categorydetail.Title</td>
+                                                <td class="text-center">@categorydetail.SubCategory.Title</td>
+                                                <td class="text-center">
+                                                    <form>
+                                                        <button type="button" class="badge badge-warning editeDetail"
+                                                                data-toggle="modal" data-target="#editeDetailModal">
+                                                            ویرایش
+                                                        </button>
+                                                        <input type="text" name="cdId" class="cdId" value="@categorydetail.Id" hidden="hidden" />
+                                                        <input type="text" name="cdName" class="cdName" value="@categorydetail.Title" hidden="hidden" />
+                                                        <input type="text" name="cdSubId" class="cdSubId" value="@categorydetail.SubCategoryId" hidden="hidden" />
+                                                    </form>
 
+                                                    <a class="badge badge-danger"
+                                                       href="@Url.Action("SoftDelete", "CategoryDetail", new { id = categorydetail.Id })">حذف</a>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
                                 </table>
                             </div>
                             <!-- /.card-body -->

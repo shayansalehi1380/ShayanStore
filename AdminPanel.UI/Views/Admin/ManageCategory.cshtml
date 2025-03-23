@@ -88,35 +88,37 @@
                             <!-- /.card-header -->
                             <div class="card-body p-0">
                                 <table class="table table-striped">
-                                    <tr>
-                                        <th style="width: 10px">#</th>
-                                        <th>نام دسته بندی مادر</th>
-                                        <th>تعداد دسته بندی ها</th>
-                                        <th>عملیات</th>
-                                    </tr>
-                                    @foreach (var maincategory in maincategories)
-                                    {
+                                    <thead>
                                         <tr>
-                                            <th style="width: 10px">@maincategory.Id</th>
-                                            <th>@maincategory.Title</th>
-                                            <th>@maincategory.Categories.Count</th>
-                                            <th>
-                                                <form>
-                                                    <button type="button" class="badge badge-warning editeState"
-                                                            data-toggle="modal" data-target="#editStateModal">
-                                                        ویرایش
-                                                    </button>
-                                                    <input type="text" name="sId" class="sId" value="@maincategory.Id" hidden="hidden" />
-                                                    <input type="text" name="sName" class="sName" value="@maincategory.Title" hidden="hidden" />
-                                                </form>
-
-                                                <a class="badge badge-danger"
-                                                   href="@Url.Action("SoftDelete", "MainCategory", new { id = @maincategory.Id })">حذف</a>
-                                            </th>
+                                            <th style="width: 10px">#</th>
+                                            <th class="text-center">نام دسته‌بندی مادر</th>
+                                            <th class="text-center">تعداد دسته‌بندی‌ها</th>
+                                            <th class="text-center">عملیات</th>
                                         </tr>
-                                    }
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var maincategory in maincategories)
+                                        {
+                                            <tr>
+                                                <td>@maincategory.Id</td>
+                                                <td class="text-center">@maincategory.Title</td>
+                                                <td class="text-center">@maincategory.Categories.Count</td>
+                                                <td class="text-center">
+                                                    <form>
+                                                        <button type="button" class="badge badge-warning editeState"
+                                                                data-toggle="modal" data-target="#editStateModal">
+                                                            ویرایش
+                                                        </button>
+                                                        <input type="text" name="sId" class="sId" value="@maincategory.Id" hidden="hidden" />
+                                                        <input type="text" name="sName" class="sName" value="@maincategory.Title" hidden="hidden" />
+                                                    </form>
 
-
+                                                    <a class="badge badge-danger"
+                                                       href="@Url.Action("SoftDelete", "MainCategory", new { id = maincategory.Id })">حذف</a>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
                                 </table>
                             </div>
                             <!-- /.card-body -->
@@ -174,38 +176,38 @@
                             <!-- /.card-header -->
                             <div class="card-body p-0">
                                 <table class="table table-striped">
-                                    <tr>
-                                        <th style="width: 10px">#</th>
-                                        <th>نام دسته بندی</th>
-                                        <th>نام دسته بندی مادر</th>
-                                        <th>عملیات</th>
-                                    </tr>
-                                    @foreach (var category in categories)
-                                    {
+                                    <thead>
                                         <tr>
-                                            <th style="width: 10px">@category.Id</th>
-                                            <th>@category.Name</th>
-                                            <th>@category.MainCategory.Title</th>
-                                            <th>
-                                                <form>
-                                                    <button type="button" class="badge badge-warning editeCity"
-                                                            data-toggle="modal" data-target="#exampleModal">
-                                                        ویرایش
-                                                    </button>
-                                                    <input type="text" name="mId" class="mId" value="@category.Id"
-                                                           hidden="hidden" />
-                                                    <input type="text" name="mName" class="mName" value="@category.Name"
-                                                           hidden="hidden" />
-                                                    <input type="text" name="mStateId" class="mStateId"
-                                                           value="@category.MainCategoryId" hidden="hidden" />
-                                                </form>
-
-                                                <a class="badge badge-danger"
-                                                   href="@Url.Action("SoftDelete", "Category", new { id = category.Id })">حذف</a>
-                                            </th>
+                                            <th style="width: 10px">#</th>
+                                            <th class="text-center">نام دسته‌بندی</th>
+                                            <th class="text-center">نام دسته‌بندی مادر</th>
+                                            <th class="text-center">عملیات</th>
                                         </tr>
-                                    }
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var category in categories)
+                                        {
+                                            <tr>
+                                                <td>@category.Id</td>
+                                                <td class="text-center">@category.Name</td>
+                                                <td class="text-center">@category.MainCategory.Title</td>
+                                                <td class="text-center">
+                                                    <form>
+                                                        <button type="button" class="badge badge-warning editeCity"
+                                                                data-toggle="modal" data-target="#exampleModal">
+                                                            ویرایش
+                                                        </button>
+                                                        <input type="text" name="mId" class="mId" value="@category.Id" hidden="hidden" />
+                                                        <input type="text" name="mName" class="mName" value="@category.Name" hidden="hidden" />
+                                                        <input type="text" name="mStateId" class="mStateId" value="@category.MainCategoryId" hidden="hidden" />
+                                                    </form>
 
+                                                    <a class="badge badge-danger"
+                                                       href="@Url.Action("SoftDelete", "Category", new { id = category.Id })">حذف</a>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
                                 </table>
                             </div>
                             <!-- /.card-body -->
@@ -263,38 +265,38 @@
                             <!-- /.card-header -->
                             <div class="card-body p-0">
                                 <table class="table table-striped">
-                                    <tr>
-                                        <th style="width: 10px">#</th>
-                                        <th>نام زیر دسته</th>
-                                        <th>نام دسته بندی</th>
-                                        <th>عملیات</th>
-                                    </tr>
-                                    @foreach (var subcategory in subcategories)
-                                    {
+                                    <thead>
                                         <tr>
-                                            <th style="width: 10px">@subcategory.Id</th>
-                                            <th>@subcategory.Title</th>
-                                            <th>@subcategory.Category.Name</th>
-                                            <th>
-                                                <form>
-                                                    <button type="button" class="badge badge-warning sub-cat-button" 
-                                                            data-toggle="modal" data-target="#editeSubModal">
-                                                        ویرایش
-                                                    </button>
-                                                    <input type="text" name="mId" class="pId" value="@subcategory.Id"
-                                                           hidden="hidden" />
-                                                    <input type="text" name="mName" class="pName" value="@subcategory.Title"
-                                                           hidden="hidden" />
-                                                    <input type="text" name="mSubId" class="mSubId"
-                                                           value="@subcategory.CategoryId" hidden="hidden" />
-                                                </form>
-
-                                                <a class="badge badge-danger"
-                                                   href="@Url.Action("SoftDelete", "SubCategory", new { id = subcategory.Id })">حذف</a>
-                                            </th>
+                                            <th style="width: 10px">#</th>
+                                            <th class="text-center">نام زیردسته</th>
+                                            <th class="text-center">نام دسته‌بندی</th>
+                                            <th class="text-center">عملیات</th>
                                         </tr>
-                                    }
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var subcategory in subcategories)
+                                        {
+                                            <tr>
+                                                <td>@subcategory.Id</td>
+                                                <td class="text-center">@subcategory.Title</td>
+                                                <td class="text-center">@subcategory.Category.Name</td>
+                                                <td class="text-center">
+                                                    <form>
+                                                        <button type="button" class="badge badge-warning sub-cat-button"
+                                                                data-toggle="modal" data-target="#editeSubModal">
+                                                            ویرایش
+                                                        </button>
+                                                        <input type="text" name="mId" class="pId" value="@subcategory.Id" hidden="hidden" />
+                                                        <input type="text" name="mName" class="pName" value="@subcategory.Title" hidden="hidden" />
+                                                        <input type="text" name="mSubId" class="mSubId" value="@subcategory.CategoryId" hidden="hidden" />
+                                                    </form>
 
+                                                    <a class="badge badge-danger"
+                                                       href="@Url.Action("SoftDelete", "SubCategory", new { id = subcategory.Id })">حذف</a>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
                                 </table>
                             </div>
                             <!-- /.card-body -->

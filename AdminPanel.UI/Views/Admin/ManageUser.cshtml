@@ -62,58 +62,54 @@
                             <!-- /.card-header -->
                             <div class="card-body p-0">
                                 <table class="table table-striped">
-                                    <tr>
-                                        <th style="width: 10px">#</th>
-                                        <th>نام کاربر</th>
-                                        <th>نقش کاربر</th>
-                                        <th>عملیات</th>
-                                    </tr>
-                                    @foreach (var user in users)
-                                    {
+                                    <thead>
                                         <tr>
-                                            <th style="width: 10px">@user.Id</th>
-                                            <th>@user.Name @user.Family</th>
-                                            <th>
-                                                @foreach (var i in user.Roles)
-                                                {
-                                                    <span class="badge badge-info">@i</span>
-                                                }
-                                            </th>
-                                            <th>
-                                                <form>
-                                                    <button type="button" class="badge badge-warning editeUser"
-                                                            data-toggle="modal" data-target="#exampleModal">
-                                                        ویرایش
-                                                    </button>
-                                                    <input type="text" name="mId" class="mId" value="@user.Id"
-                                                           hidden="hidden" />
-                                                    <input type="text" name="mName" class="mName" value="@user.Name"
-                                                           hidden="hidden" />
-                                                    <input type="text" name="mFamily" class="mFamily"
-                                                           value="@user.Family" hidden="hidden" />
-                                                    <input type="text" name="mEmail" class="mEmail"
-                                                           value="@user.Email" hidden="hidden" />
-                                                    <input type="text" name="mPhoneNumber" class="mPhoneNumber"
-                                                           value="@user.PhoneNumber" hidden="hidden" />
-                                                    @{
-                                                        string combineRoles = string.Empty;
-                                                        foreach (var r in user.Roles)
-                                                        {
-                                                            combineRoles += r + ",";
-                                                        }
-                                                    }
-                                                    <input type="text" name="mRole" class="mRole"
-                                                           value="@combineRoles" hidden="hidden" />
-                                                    <input type="text" name="mCity" class="mCity"
-                                                           value="@user.City.Id" hidden="hidden" />
-
-                                                </form>
-                                                <a class="badge badge-danger"
-                                                   href="@Url.Action("Delete", "User", new { id = user.Id })">حذف</a>
-                                            </th>
+                                            <th style="width: 10px">#</th>
+                                            <th class="text-center">نام کاربر</th>
+                                            <th class="text-center">نقش کاربر</th>
+                                            <th class="text-center">عملیات</th>
                                         </tr>
-                                    }
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var user in users)
+                                        {
+                                            <tr>
+                                                <td>@user.Id</td> <!-- شماره ردیف -->
+                                                <td class="text-center">@user.Name @user.Family</td> <!-- نام کاربر -->
+                                                <td class="text-center">
+                                                    @foreach (var i in user.Roles)
+                                                    {
+                                                        <span class="badge badge-info">@i</span>
+                                                    }
+                                                </td> <!-- نقش کاربر -->
+                                                <td class="text-center">
+                                                    <form>
+                                                        <button type="button" class="badge badge-warning editeUser"
+                                                                data-toggle="modal" data-target="#exampleModal">
+                                                            ویرایش
+                                                        </button>
+                                                        <input type="text" name="mId" class="mId" value="@user.Id" hidden="hidden" />
+                                                        <input type="text" name="mName" class="mName" value="@user.Name" hidden="hidden" />
+                                                        <input type="text" name="mFamily" class="mFamily" value="@user.Family" hidden="hidden" />
+                                                        <input type="text" name="mEmail" class="mEmail" value="@user.Email" hidden="hidden" />
+                                                        <input type="text" name="mPhoneNumber" class="mPhoneNumber" value="@user.PhoneNumber" hidden="hidden" />
+                                                        @{
+                                                            string combineRoles = string.Empty;
+                                                            foreach (var r in user.Roles)
+                                                            {
+                                                                combineRoles += r + ",";
+                                                            }
+                                                        }
+                                                        <input type="text" name="mRole" class="mRole" value="@combineRoles" hidden="hidden" />
+                                                        <input type="text" name="mCity" class="mCity" value="@user.City.Id" hidden="hidden" />
+                                                    </form>
 
+                                                    <a class="badge badge-danger"
+                                                       href="@Url.Action("Delete", "User", new { id = user.Id })">حذف</a>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
                                 </table>
                             </div>
                             <!-- /.card-body -->

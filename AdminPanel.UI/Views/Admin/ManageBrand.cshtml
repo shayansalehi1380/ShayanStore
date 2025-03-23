@@ -97,52 +97,43 @@
                                 </div>
                             </form>
                         </div>
-                        <div class="card">
-                            <div class="card-header">
-                                <h3 class="card-title">برند ها</h3>
-                            </div>
-                            <!-- /.card-header -->
-                            <div class="card-body p-0">
-                                <table class="table table-striped">
+                        <div class="card-body p-0">
+                            <table class="table table-striped">
+                                <thead>
                                     <tr>
                                         <th style="width: 10px">#</th>
-                                        <th>نام برند</th>
-                                        <th>لوگوی برند</th>
-                                        <th>عملیات</th>
+                                        <th class="text-center">نام برند</th>
+                                        <th class="text-center">لوگوی برند</th>
+                                        <th class="text-center">عملیات</th>
                                     </tr>
+                                </thead>
+                                <tbody>
                                     @foreach (var brand in brands)
                                     {
                                         <tr>
-                                            <th style="width: 10px">@brand.Id</th>
-                                            <th>@brand.Title</th>
-                                            <th>
-                                                <img src="/Images/Brands/@brand.ImageUri" alt="لوگوی برند" width="35"
-                                                     height="35"/>
-                                            </th>
-                                            <th>
+                                            <td>@brand.Id</td>
+                                            <td class="text-center">@brand.Title</td>
+                                            <td class="text-center">
+                                                <img src="/Images/Brands/@brand.ImageUri" alt="لوگوی برند" width="35" height="35" />
+                                            </td>
+                                            <td class="text-center">
                                                 <form>
                                                     <button type="button" class="badge badge-warning editeBrand"
                                                             data-toggle="modal" data-target="#editBrandModal">
                                                         ویرایش
                                                     </button>
-                                                    <input type="text" name="bId" class="bId" value="@brand.Id"
-                                                           hidden="hidden"/>
-                                                    <input type="text" name="bName" class="bName" value="@brand.Title"
-                                                           hidden="hidden"/>
-                                                    <input type="text" name="bImage" class="bImage"
-                                                           value="@brand.ImageUri" hidden="hidden"/>
+                                                    <input type="text" name="bId" class="bId" value="@brand.Id" hidden="hidden" />
+                                                    <input type="text" name="bName" class="bName" value="@brand.Title" hidden="hidden" />
+                                                    <input type="text" name="bImage" class="bImage" value="@brand.ImageUri" hidden="hidden" />
                                                 </form>
 
                                                 <a class="badge badge-danger"
                                                    href="@Url.Action("SoftDelete", "Brand", new { id = brand.Id })">حذف</a>
-                                            </th>
+                                            </td>
                                         </tr>
                                     }
-
-
-                                </table>
-                            </div>
-                            <!-- /.card-body -->
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>

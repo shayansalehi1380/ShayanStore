@@ -95,39 +95,38 @@
                             <!-- /.card-header -->
                             <div class="card-body p-0">
                                 <table class="table table-striped">
-                                    <tr>
-                                        <th style="width: 10px">#</th>
-                                        <th>نام ویژگی</th>
-                                        <th>اولویت ویژگی</th>
-                                        <th>عملیات</th>
-                                    </tr>
-                                    @foreach (var feature in features)
-                                    {
+                                    <thead>
                                         <tr>
-                                            <th style="width: 10px">@feature.Id</th>
-                                            <th>@feature.Title</th>
-                                            <th>@feature.Priority</th>
-                                            <th>
-                                                <form>
-                                                    <button type="button" class="badge badge-warning editeFeature"
-                                                            data-toggle="modal" data-target="#editFeatureModal">
-                                                        ویرایش
-                                                    </button>
-                                                    <input type="text" name="fId" class="fId" value="@feature.Id"
-                                                           hidden="hidden"/>
-                                                    <input type="text" name="fName" class="fName" value="@feature.Title"
-                                                           hidden="hidden"/>
-                                                    <input type="text" name="fPriority" class="fPriority"
-                                                           value="@feature.Priority" hidden="hidden"/>
-                                                </form>
-
-                                                <a class="badge badge-danger"
-                                                   href="@Url.Action("SoftDelete", "Feature", new { id = feature.Id })">حذف</a>
-                                            </th>
+                                            <th style="width: 10px">#</th>
+                                            <th class="text-center">نام ویژگی</th>
+                                            <th class="text-center">اولویت ویژگی</th>
+                                            <th class="text-center">عملیات</th>
                                         </tr>
-                                    }
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var feature in features)
+                                        {
+                                            <tr>
+                                                <td>@feature.Id</td>
+                                                <td class="text-center">@feature.Title</td>
+                                                <td class="text-center">@feature.Priority</td>
+                                                <td class="text-center">
+                                                    <form>
+                                                        <button type="button" class="badge badge-warning editeFeature"
+                                                                data-toggle="modal" data-target="#editFeatureModal">
+                                                            ویرایش
+                                                        </button>
+                                                        <input type="text" name="fId" class="fId" value="@feature.Id" hidden="hidden" />
+                                                        <input type="text" name="fName" class="fName" value="@feature.Title" hidden="hidden" />
+                                                        <input type="text" name="fPriority" class="fPriority" value="@feature.Priority" hidden="hidden" />
+                                                    </form>
 
-
+                                                    <a class="badge badge-danger"
+                                                       href="@Url.Action("SoftDelete", "Feature", new { id = feature.Id })">حذف</a>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
                                 </table>
                             </div>
                             <!-- /.card-body -->
@@ -195,45 +194,41 @@
                             <!-- /.card-header -->
                             <div class="card-body p-0">
                                 <table class="table table-striped">
-                                    <tr>
-                                        <th style="width: 10px">#</th>
-                                        <th>نام جزئیات ویژگی</th>
-                                        <th>نام ویژگی</th>
-                                        <th>الویت ویژگی</th>
-                                        <th>عملیات</th>
-                                    </tr>
-                                    @foreach (var featuredatail in featuredetails)
-                                    {
+                                    <thead>
                                         <tr>
-                                            <th style="width: 10px">@featuredatail.Id</th>
-                                            <th>@featuredatail.Title</th>
-                                            <th>@featuredatail.Feature.Title</th>
-                                            <th>@featuredatail.Priority</th>
-                                            <th>
-                                                <form>
-                                                    <button type="button" class="badge badge-warning editFd"
-                                                            data-toggle="modal" data-target="#editeFeatureDatails">
-                                                        ویرایش
-                                                    </button>
-                                                    <input type="text" name="fdId" class="fdId"
-                                                           value="@featuredatail.Id"
-                                                           hidden="hidden"/>
-                                                    <input type="text" name="fdName" class="fdName"
-                                                           value="@featuredatail.Title"
-                                                           hidden="hidden"/>
-                                                    <input type="text" name="fdPriority" class="fdPriority"
-                                                           value="@featuredatail.Priority"
-                                                           hidden="hidden"/>
-                                                    <input type="text" name="fdFeatureId" class="fdFeatureId"
-                                                           value="@featuredatail.FeatureId" hidden="hidden"/>
-                                                </form>
-
-                                                <a class="badge badge-danger"
-                                                   href="@Url.Action("SoftDelete", "FeatureDetails", new { id = featuredatail.Id })">حذف</a>
-                                            </th>
+                                            <th style="width: 10px">#</th>
+                                            <th class="text-center">نام جزئیات ویژگی</th>
+                                            <th class="text-center">نام ویژگی</th>
+                                            <th class="text-center">الویت ویژگی</th>
+                                            <th class="text-center">عملیات</th>
                                         </tr>
-                                    }
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var featuredetail in featuredetails)
+                                        {
+                                            <tr>
+                                                <td>@featuredetail.Id</td>
+                                                <td class="text-center">@featuredetail.Title</td>
+                                                <td class="text-center">@featuredetail.Feature.Title</td>
+                                                <td class="text-center">@featuredetail.Priority</td>
+                                                <td class="text-center">
+                                                    <form>
+                                                        <button type="button" class="badge badge-warning editFd"
+                                                                data-toggle="modal" data-target="#editeFeatureDatails">
+                                                            ویرایش
+                                                        </button>
+                                                        <input type="text" name="fdId" class="fdId" value="@featuredetail.Id" hidden="hidden" />
+                                                        <input type="text" name="fdName" class="fdName" value="@featuredetail.Title" hidden="hidden" />
+                                                        <input type="text" name="fdPriority" class="fdPriority" value="@featuredetail.Priority" hidden="hidden" />
+                                                        <input type="text" name="fdFeatureId" class="fdFeatureId" value="@featuredetail.FeatureId" hidden="hidden" />
+                                                    </form>
 
+                                                    <a class="badge badge-danger"
+                                                       href="@Url.Action("SoftDelete", "FeatureDetails", new { id = featuredetail.Id })">حذف</a>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
                                 </table>
                             </div>
                             <!-- /.card-body -->
