@@ -38,7 +38,33 @@
         .modal {
             top: 5%;
         }
+
+        /* اضافه کردن استایل برای دیت پیکر */
+        .ui-datepicker {
+            font-size: 12px;
+            width: 250px;
+        }
+
+        .ui-timepicker-div .ui-widget-header {
+            font-size: 12px;
+        }
+
+        .ui-timepicker-div dl {
+            font-size: 12px;
+        }
+
+            .ui-timepicker-div dl dt {
+                height: 25px;
+            }
+
+            .ui-timepicker-div dl dd {
+                margin: -25px 0 10px 65px;
+            }
+
     </style>
+
+    <!-- لینک فایل CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.css" />
 }
 
 <div class="row">
@@ -65,10 +91,10 @@
                                     <input type="text" class="form-control" name="code" id="exampleInputEmail1"
                                            placeholder="کد تخفیف را وارد کنید">
                                     <label for="exampleInputEmail1">شروع کد تخفیف</label>
-                                    <input type="text" class="form-control" name="startdate" id="startdate" placeholder="شروع کد تخفیف را وارد کنید">
+                                    <input type="text" class="form-control" name="startdate" id="startdate" placeholder="تاریخ شروع..." autocomplete="off">
 
                                     <label for="exampleInputEmail1">پایان کد تخفیف</label>
-                                    <input type="text" class="form-control" name="enddate" id="enddate" placeholder="پایان کد تخفیف را وارد کنید">
+                                    <input type="text" class="form-control" name="enddate" id="enddate" placeholder="تاریخ پایان..." autocomplete="off">
                                 </div>
                                 <div style="padding-top: 15px">
                                     <button type="submit" class="btn btn-primary">ثبت کد تخفیف</button>
@@ -102,7 +128,7 @@
                                         <tr>
                                             <td>@discountcode.Id</td>
                                             <td class="text-center">@discountcode.Title</td>
-                                            <td class="text-center">@discountcode.Code</td>
+                                            <th class="text-center">@discountcode.Code</th>
                                             <td class="text-center">@discountcode.StartDate</td>
                                             <td class="text-center">@discountcode.EndDate</td>
                                             <td class="text-center">
@@ -153,9 +179,9 @@
                         <label for="discountcodeCode">کد تخفیف</label>
                         <input type="text" class="form-control" id="discountcodeCode" name="code" placeholder="کد تخفیف را وارد کنید">
                         <label for="discountcodeStart">شروع کد تخفیف</label>
-                        <input type="text" class="form-control" id="discountcodeStart" name="startdate" placeholder="شروع کد تخفیف را وارد کنید">
+                        <input type="text" class="form-control" id="discountcodeStart" name="startdate" placeholder="تاریخ شروع..." autocomplete="off">
                         <label for="discountcodeEnd">پایان کد تخفیف</label>
-                        <input type="text" class="form-control" id="discountcodeEnd" name="enddate" placeholder="پایان کد تخفیف را وارد کنید">
+                        <input type="text" class="form-control" id="discountcodeEnd" name="enddate" placeholder="تاریخ شروع..." autocomplete="off">
                     </div>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">بستن</button>
                     <button type="submit" class="btn btn-primary">ثبت</button>
@@ -167,35 +193,77 @@
 
 @section script
 {
+    <!-- ابتدا مطمئن شوید این کتابخانه‌ها وجود دارند -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
+
+    <!-- کتابخانه timepicker -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.css" />
+
     <script>
         $(document).ready(function () {
-            
-            $("input[name='startdate'], input[name='enddate']").datepicker({
+            // تغییر از datepicker به datetimepicker برای فیلدهای اصلی
+            $("input[name='startdate'], input[name='enddate']").datetimepicker({
                 dateFormat: "yy-mm-dd",
-                changeMonth: true,      
-                changeYear: true,       
-                yearRange: "1900:2100"  
-            });
-
-            
-            $("#discountcodeStart, #discountcodeEnd").datepicker({
-                dateFormat: "yy-mm-dd",
+                timeFormat: "HH:mm",
+                controlType: 'select',
+                oneLine: true,
+                showButtonPanel: false,
                 changeMonth: true,
                 changeYear: true,
-                yearRange: "1900:2100"
+                yearRange: "1900:2100",
+                beforeShow: function(input, inst) {
+                    inst.dpDiv.css({
+                        'font-size': '12px',
+                        'width': '250px'
+                    });
+                }
             });
 
-            
-            $(".editeDiscountCode").click(function () {
-                var currentRow = $(this).closest("form");
-                $("#discountcodeId").val(currentRow.find("input.dcId[type=text]").val());
-                $("#discountcodeName").val(currentRow.find("input.dcName[type=text]").val());
-                $("#discountcodeCode").val(currentRow.find("input.dcCode[type=text]").val());
-                $("#discountcodeStart").val(currentRow.find("input.dcStart[type=text]").val());
-                $("#discountcodeEnd").val(currentRow.find("input.dcEnd[type=text]").val());
-            });
+            // تغییر از datepicker به datetimepicker برای مودال ویرایش
+        $("#discountcodeStart, #discountcodeEnd").datetimepicker({
+            dateFormat: "yy-mm-dd",
+            timeFormat: "HH:mm",
+            controlType: 'select',
+            oneLine: true,
+            showButtonPanel: true,
+            changeMonth: true,
+            changeYear: true,
+            yearRange: "1900:2100",
+            beforeShow: function(input, inst) {
+                // تنظیم مقدار فعلی اگر وجود دارد
+                if ($(input).val()) {
+                    $(this).datetimepicker("setDate", $(input).val());
+                }
+                inst.dpDiv.css({
+                    'font-size': '12px',
+                    'width': '300px',
+                    'z-index': '99999999'
+                });
+            }
+        });
 
-            
+        $(".editeDiscountCode").click(function () {
+            var currentRow = $(this).closest("form");
+            var discountId = currentRow.find("input.dcId").val();
+            var discountName = currentRow.find("input.dcName").val();
+            var discountCode = currentRow.find("input.dcCode").val();
+            var startDate = currentRow.find("input.dcStart").val();
+            var endDate = currentRow.find("input.dcEnd").val();
+
+            $("#discountcodeId").val(discountId);
+            $("#discountcodeName").val(discountName);
+            $("#discountcodeCode").val(discountCode);
+            $("#discountcodeStart").val(startDate);
+            $("#discountcodeEnd").val(endDate);
+
+            // تنظیم مجدد datetimepicker با مقادیر جدید
+            $("#discountcodeStart").datetimepicker("setDate", new Date(startDate));
+            $("#discountcodeEnd").datetimepicker("setDate", new Date(endDate));
+        });
+
             if (@Html.Raw(isError).ToString().ToLower()) {
                 ShowErrorAlret();
             }

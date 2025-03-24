@@ -363,10 +363,10 @@ namespace AdminPanel.UI.Controllers
 
             if (!string.IsNullOrEmpty(searchDiscountCode))
             {
-                queryDiscountCode = queryDiscountCode.Where(x => x.Title.Contains(searchDiscountCode));
+                queryDiscountCode = queryDiscountCode.Where(x => x.Title.Contains(searchDiscountCode) || x.Code.Contains(searchDiscountCode));
             }
 
-            ViewBag.DiscountCode = await queryDiscountCode.ToListAsync();
+            ViewBag.DiscountCode = await queryDiscountCode.OrderByDescending(x => x.Id).ToListAsync();
             return View();
         }
 
