@@ -16,6 +16,7 @@ using Domain.Entity.Products.Features;
 using Domain.Entity.Products.Guaranties;
 using Domain.Entity.Products.Colors;
 using Domain.Entity.Products.Brands;
+using Domain.Entity.DiscountCodes;
 
 namespace AdminPanel.UI.Controllers
 {
@@ -349,6 +350,23 @@ namespace AdminPanel.UI.Controllers
 
 
             ViewBag.Wallet = await queryhWallet.OrderByDescending(x => x.Id).ToListAsync();
+            return View();
+        }
+
+        public async Task<ActionResult<List<Wallet>>> ManageDiscountCode(string searchDiscountCode, int tabs = 1, FunctionStatus status = FunctionStatus.None)
+        {
+            ViewBag.selectTab = tabs;
+            ViewBag.Status = status;
+
+            IQueryable<DiscountCode> queryDiscountCode = unitOfWork.GenericRepository<DiscountCode>()
+                .TableNoTracking;
+
+            if (!string.IsNullOrEmpty(searchDiscountCode))
+            {
+                queryDiscountCode = queryDiscountCode.Where(x => x.Title.Contains(searchDiscountCode));
+            }
+
+            ViewBag.DiscountCode = await queryDiscountCode.ToListAsync();
             return View();
         }
 

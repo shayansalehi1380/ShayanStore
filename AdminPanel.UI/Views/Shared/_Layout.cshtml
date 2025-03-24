@@ -35,6 +35,8 @@
     <link href="
 https://cdn.jsdelivr.net/npm/sweetalert2@11.17.2/dist/sweetalert2.min.css
 " rel="stylesheet">
+    <!-- jQuery UI -->
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     
     @await RenderSectionAsync("link",false)
 </head>
@@ -228,6 +230,13 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.17.2/dist/sweetalert2.min.css
                                     کیف پول
                                 </p>
                             </a>
+                            <li class="nav-item">
+                                <a href="@Url.Action("ManageDiscountCode", "Admin")" class="nav-link">
+                                    <i class="nav-icon fa fa-percent"></i>
+                                    <p>
+                                        کد تخفیف
+                                    </p>
+                                </a>
                         <li class="nav-item has-treeview">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fa fa-car"></i>
@@ -249,22 +258,6 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.17.2/dist/sweetalert2.min.css
                                     <a href="@Url.Action("ManageProvince", "Admin")" class="nav-link">
                                         <i class="fa fa-road  nav-icon"></i>
                                         <p>شهر و استان</p>
-                                    </a>
-                                </li>
-                            </ul>
-                        <li class="nav-item has-treeview">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fa fa-percent"></i>
-                                <p>
-                                    کد تخفیف
-                                    <i class="right fa fa-angle-left"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="pages/charts/chartjs.html" class="nav-link">
-                                        <i class="fa fa-circle-o nav-icon"></i>
-                                        <p>اضافه و ویرایش کد تخفیف</p>
                                     </a>
                                 </li>
                             </ul>
@@ -330,6 +323,11 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.17.2/dist/sweetalert2.min.css
 <script>
     $.widget.bridge('uibutton', $.ui.button)
 </script>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- jQuery UI -->
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
 <!-- Bootstrap 4 -->
 <script src="~/AdminDashboard/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- Morris.js charts -->

@@ -1,4 +1,5 @@
 ﻿using Domain.Entity.BasicInfo;
+using Domain.Entity.DiscountCodes;
 using Domain.Entity.Products.Brands;
 using Domain.Entity.Products.Categories;
 using Domain.Entity.Products.Colors;
@@ -25,6 +26,7 @@ namespace Domain.DBContext
         public DbSet<ShippingOption> ShippingOptions { get; set; }
         public DbSet<CategoryDetail> CategoryDetails { get; set; }
         public DbSet<Wallet> Wallets { get; set; }
+        public DbSet<DiscountCode> DiscountCodes { get; set; }
 
         public ShayanStoreDBContext(DbContextOptions<ShayanStoreDBContext> options) : base(options)
         {
@@ -60,6 +62,7 @@ namespace Domain.DBContext
             modelBuilder.Entity<ShippingOption>().HasQueryFilter(x => !x.IsDelete);
             modelBuilder.Entity<CategoryDetail>().HasQueryFilter(x => !x.IsDelete);
             modelBuilder.Entity<Wallet>().HasQueryFilter(x => !x.IsDelete);
+            modelBuilder.Entity<DiscountCode>().HasQueryFilter(x => !x.IsDelete);
 
             base.OnModelCreating(modelBuilder);
         }
