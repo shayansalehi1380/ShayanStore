@@ -90,6 +90,9 @@
                                     <label for="exampleInputEmail1">کد تخفیف</label>
                                     <input type="text" class="form-control" name="code" id="exampleInputEmail1"
                                            placeholder="کد تخفیف را وارد کنید">
+                                    <label for="exampleInputEmail1">مبلغ تخفیف</label>
+                                    <input type="text" class="form-control" name="amount" id="exampleInputEmail1"
+                                           placeholder="مبلغ تخفیف را وارد کنید">
                                     <label for="exampleInputEmail1">شروع کد تخفیف</label>
                                     <input type="text" class="form-control" name="startdate" id="startdate" placeholder="تاریخ شروع..." autocomplete="off">
 
@@ -117,6 +120,7 @@
                                         <th style="width: 10px">#</th>
                                         <th class="text-center">نام کد تخفیف</th>
                                         <th class="text-center">کد تخفیف</th>
+                                        <th class="text-center">مبلغ تخفیف</th>
                                         <th class="text-center">تاریخ شروع</th>
                                         <th class="text-center">تاریخ پایان</th>
                                         <th class="text-center">عملیات</th>
@@ -129,6 +133,7 @@
                                             <td>@discountcode.Id</td>
                                             <td class="text-center">@discountcode.Title</td>
                                             <th class="text-center">@discountcode.Code</th>
+                                            <td class="text-center">@discountcode.Amount</td>
                                             <td class="text-center">@discountcode.StartDate</td>
                                             <td class="text-center">@discountcode.EndDate</td>
                                             <td class="text-center">
@@ -140,6 +145,7 @@
                                                     <input type="text" name="dcId" class="dcId" value="@discountcode.Id" hidden="hidden" />
                                                     <input type="text" name="dcName" class="dcName" value="@discountcode.Title" hidden="hidden" />
                                                     <input type="text" name="dcName" class="dcCode" value="@discountcode.Code" hidden="hidden" />
+                                                    <input type="text" name="dcAmount" class="dcAmount" value="@discountcode.Amount" hidden="hidden" />
                                                     <input type="text" name="dcStart" class="dcStart" value="@discountcode.StartDate" hidden="hidden"/>
                                                     <input type="text" name="dcEnd" class="dcEnd" value="@discountcode.EndDate" hidden="hidden" />
                                                 </form>
@@ -178,6 +184,8 @@
                         <input type="text" class="form-control" id="discountcodeName" name="name" placeholder="نام کد تخفیف را وارد کنید">
                         <label for="discountcodeCode">کد تخفیف</label>
                         <input type="text" class="form-control" id="discountcodeCode" name="code" placeholder="کد تخفیف را وارد کنید">
+                        <label for="discountcodeAmount">مبلغ تخفیف</label>
+                        <input type="text" class="form-control" name="amount" id="discountcodeAmount" placeholder="مبلغ تخفیف را وارد کنید">
                         <label for="discountcodeStart">شروع کد تخفیف</label>
                         <input type="text" class="form-control" id="discountcodeStart" name="startdate" placeholder="تاریخ شروع..." autocomplete="off">
                         <label for="discountcodeEnd">پایان کد تخفیف</label>
@@ -250,12 +258,14 @@
             var discountId = currentRow.find("input.dcId").val();
             var discountName = currentRow.find("input.dcName").val();
             var discountCode = currentRow.find("input.dcCode").val();
+            var discountAmount = currentRow.find("input.dcAmount").val();
             var startDate = currentRow.find("input.dcStart").val();
             var endDate = currentRow.find("input.dcEnd").val();
 
             $("#discountcodeId").val(discountId);
             $("#discountcodeName").val(discountName);
             $("#discountcodeCode").val(discountCode);
+            $("#discountcodeAmount").val(discountAmount);
             $("#discountcodeStart").val(startDate);
             $("#discountcodeEnd").val(endDate);
 

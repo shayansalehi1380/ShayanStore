@@ -28,19 +28,20 @@ namespace AdminPanel.UI.Controllers
             return View("ManageDiscountCode", "Admin");
         }
 
-        public async Task<ActionResult<DiscountCode>> Create(string name, string code, DateTime startdate, DateTime enddate)
+        public async Task<ActionResult<DiscountCode>> Create(string name, string code, string amount, DateTime startdate, DateTime enddate)
         {
             await unitOfWork.GenericRepository<DiscountCode>().AddAsync(new DiscountCode
             {
                 Title = name,
                 Code = code,
+                Amount = amount,
                 StartDate = startdate,
                 EndDate = enddate,
             }, CancellationToken.None);
             return RedirectToAction("ManageDiscountCode", "Admin", new { tabs = 1, status = FunctionStatus.Success });
         }
 
-        public async Task<ActionResult<DiscountCode>> Update(int id, string name, string code, DateTime startdate, DateTime enddate)
+        public async Task<ActionResult<DiscountCode>> Update(int id, string name, string amount, string code, DateTime startdate, DateTime enddate)
         {
             var discountCode = await unitOfWork.GenericRepository<DiscountCode>().Table.FirstOrDefaultAsync(x => x.Id == id, CancellationToken.None);
             if (discountCode == null)
@@ -50,6 +51,7 @@ namespace AdminPanel.UI.Controllers
 
             discountCode.Title = name;
             discountCode.Code = code;
+            discountCode.Amount = amount;
             discountCode.StartDate = startdate;
             discountCode.EndDate = enddate;
 
