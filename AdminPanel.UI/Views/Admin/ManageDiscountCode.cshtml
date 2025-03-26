@@ -1,4 +1,5 @@
 ﻿@using Application.Common.ApiResult
+@using Application.Common.Utilities
 @using Domain.Entity.DiscountCodes
 @{
     List<DiscountCode> discountcodes = ViewBag.DiscountCode;
@@ -20,6 +21,10 @@
 }
 
 @section link {
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.css"/>
+
     <style>
         #searchUser {
             border-top-right-radius: 5px;
@@ -44,36 +49,37 @@
             font-size: 12px;
             width: 250px;
         }
-
+        
         .ui-timepicker-div .ui-widget-header {
             font-size: 12px;
         }
-
+        
         .ui-timepicker-div dl {
             font-size: 12px;
         }
-
-            .ui-timepicker-div dl dt {
-                height: 25px;
-            }
-
-            .ui-timepicker-div dl dd {
-                margin: -25px 0 10px 65px;
-            }
+        
+        .ui-timepicker-div dl dt {
+            height: 25px;
+        }
+        
+        .ui-timepicker-div dl dd {
+            margin: -25px 0 10px 65px;
+        }
 
     </style>
 
     <!-- لینک فایل CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.css" />
+  
 }
 
 <div class="row">
     <div class="col-12">
 
         <div class="card" style="margin: 15px 15px 0px 15px;">
-            <div class="card-header p-2"">
+            <div class="card-header p-2">
                 <ul class="nav nav-pills">
-                    <li class="nav-item"><a class="nav-link @discountcodeTab" href="#activity" data-toggle="tab">کد تخفیف</a></li>
+                    <li class="nav-item"><a class="nav-link @discountcodeTab" href="#activity" data-toggle="tab">کد
+                            تخفیف</a></li>
                 </ul>
             </div><!-- /.card-body -->
             <div class="card-body">
@@ -83,12 +89,15 @@
                         <div class="d-flex justify-content-between align-items-center mb-2">
                             <div class="d-flex align-items-center">
                                 <!-- دکمه ایجاد جدید -->
-                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createDiscountCodeModal">
+                                <button type="button" class="btn btn-primary" data-toggle="modal"
+                                        data-target="#createDiscountCodeModal">
                                     ایجاد کد تخفیف جدید
                                 </button>
                             </div>
-                            <form class="input-group input-group-sm w-25 p-2" asp-action="ManageDiscountCode" asp-controller="Admin" method="post">
-                                <input class="form-control form-control-navbar" id="searchUser" name="searchDiscountCode" type="search" placeholder="جستجو" aria-label="Search">
+                            <form class="input-group input-group-sm w-25 p-2" asp-action="ManageDiscountCode"
+                                  asp-controller="Admin" method="post">
+                                <input class="form-control form-control-navbar" id="searchUser"
+                                       name="searchDiscountCode" type="search" placeholder="جستجو" aria-label="Search">
                                 <div class="input-group-append">
                                     <button class="btn btn-navbar" id="searchIcon" type="submit">
                                         <i class="fa fa-search"></i>
@@ -105,48 +114,55 @@
                             <div class="card-body p-0">
                                 <table class="table table-striped">
                                     <thead>
-                                        <tr>
-                                            <th style="width: 10px">#</th>
-                                            <th class="text-center">نام کد تخفیف</th>
-                                            <th class="text-center">کد تخفیف</th>
-                                            <th class="text-center">مبلغ تخفیف</th>
-                                            <th class="text-center">تعداد استفاده مجاز</th>
-                                            <th class="text-center">تاریخ شروع</th>
-                                            <th class="text-center">تاریخ پایان</th>
-                                            <th class="text-center">عملیات</th>
-                                        </tr>
+                                    <tr>
+                                        <th style="width: 10px">#</th>
+                                        <th class="text-center">نام کد تخفیف</th>
+                                        <th class="text-center">کد تخفیف</th>
+                                        <th class="text-center">مبلغ تخفیف</th>
+                                        <th class="text-center">تعداد استفاده مجاز</th>
+                                        <th class="text-center">تاریخ شروع</th>
+                                        <th class="text-center">تاریخ پایان</th>
+                                        <th class="text-center">عملیات</th>
+                                    </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach (var discountcode in discountcodes)
-                                        {
-                                            <tr>
-                                                <td>@discountcode.Id</td>
-                                                <td class="text-center">@discountcode.Title</td>
-                                                <th class="text-center">@discountcode.Code</th>
-                                                <td class="text-center">@discountcode.Amount.ToString("N0") تومان</td>
-                                                <td class="text-center">@discountcode.UsageLimit</td>
-                                                <td class="text-center">@discountcode.StartDate</td>
-                                                <td class="text-center">@discountcode.EndDate</td>
-                                                <td class="text-center">
-                                                    <form>
-                                                        <button type="button" class="badge badge-warning editeDiscountCode"
-                                                                data-toggle="modal" data-target="#editDiscountCodeModal">
-                                                            ویرایش
-                                                        </button>
-                                                        <input type="text" name="dcId" class="dcId" value="@discountcode.Id" hidden="hidden" />
-                                                        <input type="text" name="dcName" class="dcName" value="@discountcode.Title" hidden="hidden" />
-                                                        <input type="text" name="dcName" class="dcCode" value="@discountcode.Code" hidden="hidden" />
-                                                        <input type="text" name="dcAmount" class="dcAmount" value="@discountcode.Amount" hidden="hidden" />
-                                                        <input type="text" name="dcUsageLimit" class="dcUsageLimit" value="@discountcode.UsageLimit" hidden="hidden" />
-                                                        <input type="text" name="dcStart" class="dcStart" value="@discountcode.StartDate" hidden="hidden" />
-                                                        <input type="text" name="dcEnd" class="dcEnd" value="@discountcode.EndDate" hidden="hidden" />
-                                                    </form>
+                                    @foreach (var discountcode in discountcodes)
+                                    {
+                                        <tr>
+                                            <td>@discountcode.Id</td>
+                                            <td class="text-center">@discountcode.Title</td>
+                                            <th class="text-center">@discountcode.Code</th>
+                                            <td class="text-center">@discountcode.Amount.ToString("N0") تومان</td>
+                                            <td class="text-center">@discountcode.UsageLimit</td>
+                                            <td class="text-center">@discountcode.StartDate.Hour.ToString().PadLeft(2, '0'):@discountcode.StartDate.Minute.ToString().PadLeft(2, '0') @discountcode.StartDate.ToPersianTime()</td>
+                                            <td class="text-center">@discountcode.EndDate.Hour.ToString().PadLeft(2, '0'):@discountcode.EndDate.Minute.ToString().PadLeft(2, '0') @discountcode.EndDate.ToPersianTime()</td>
+                                            <td class="text-center">
+                                                <form>
+                                                    <button type="button" class="badge badge-warning editeDiscountCode"
+                                                            data-toggle="modal" data-target="#editDiscountCodeModal">
+                                                        ویرایش
+                                                    </button>
+                                                    <input type="text" name="dcId" class="dcId" value="@discountcode.Id"
+                                                           hidden="hidden"/>
+                                                    <input type="text" name="dcName" class="dcName"
+                                                           value="@discountcode.Title" hidden="hidden"/>
+                                                    <input type="text" name="dcName" class="dcCode"
+                                                           value="@discountcode.Code" hidden="hidden"/>
+                                                    <input type="text" name="dcAmount" class="dcAmount"
+                                                           value="@discountcode.Amount" hidden="hidden"/>
+                                                    <input type="text" name="dcUsageLimit" class="dcUsageLimit"
+                                                           value="@discountcode.UsageLimit" hidden="hidden"/>
+                                                    <input type="text" name="dcStart" class="dcStart"
+                                                           value="@discountcode.StartDate" hidden="hidden"/>
+                                                    <input type="text" name="dcEnd" class="dcEnd"
+                                                           value="@discountcode.EndDate" hidden="hidden"/>
+                                                </form>
 
-                                                    <a class="badge badge-danger"
-                                                       href="@Url.Action("SoftDelete", "DiscountCode", new { id = discountcode.Id })">حذف</a>
-                                                </td>
-                                            </tr>
-                                        }
+                                                <a class="badge badge-danger"
+                                                   href="@Url.Action("SoftDelete", "DiscountCode", new { id = discountcode.Id })">حذف</a>
+                                            </td>
+                                        </tr>
+                                    }
                                     </tbody>
                                 </table>
                             </div>
@@ -158,10 +174,11 @@
         </div>
     </div>
 </div>
-</div>
+
 
 <!-- مودال ایجاد کد تخفیف -->
-<div class="modal fade" id="createDiscountCodeModal" tabindex="-1" role="dialog" aria-labelledby="createDiscountCodeModalLabel" aria-hidden="true">
+<div class="modal fade" id="createDiscountCodeModal" tabindex="-1" role="dialog"
+     aria-labelledby="createDiscountCodeModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -174,17 +191,23 @@
                 <form asp-controller="DiscountCode" asp-action="Create" method="post">
                     <div class="form-group">
                         <label for="createDiscountcodeName">نام کد تخفیف</label>
-                        <input type="text" class="form-control" id="createDiscountcodeName" name="name" placeholder="نام کد تخفیف را وارد کنید">
+                        <input type="text" class="form-control" id="createDiscountcodeName" name="name"
+                               placeholder="نام کد تخفیف را وارد کنید">
                         <label for="createDiscountcodeCode">کد تخفیف</label>
-                        <input type="text" class="form-control" id="createDiscountcodeCode" name="code" placeholder="کد تخفیف را وارد کنید">
+                        <input type="text" class="form-control" id="createDiscountcodeCode" name="code"
+                               placeholder="کد تخفیف را وارد کنید">
                         <label for="createDiscountcodeAmount">مبلغ تخفیف</label>
-                        <input type="text" class="form-control" id="createDiscountcodeAmount" name="amount" placeholder="مبلغ تخفیف را وارد کنید">
+                        <input type="text" class="form-control" id="createDiscountcodeAmount" name="amount"
+                               placeholder="مبلغ تخفیف را وارد کنید">
                         <label for="createDiscountcodeUsageLimit">تعداد استفاده مجاز</label>
-                        <input type="number" class="form-control" id="createDiscountcodeUsageLimit" name="usagelimit" placeholder="تعداد استفاده مجاز برای هر کاربر را وارد کنید">
+                        <input type="number" class="form-control" id="createDiscountcodeUsageLimit" name="usagelimit"
+                               placeholder="تعداد استفاده مجاز برای هر کاربر را وارد کنید">
                         <label for="createDiscountcodeStart">شروع کد تخفیف</label>
-                        <input type="text" class="form-control" id="createDiscountcodeStart" name="startdate" placeholder="تاریخ شروع..." autocomplete="off">
+                        <input type="text" class="form-control" id="createDiscountcodeStart" name="startdate"
+                               placeholder="تاریخ شروع..." autocomplete="off">
                         <label for="createDiscountcodeEnd">پایان کد تخفیف</label>
-                        <input type="text" class="form-control" id="createDiscountcodeEnd" name="enddate" placeholder="تاریخ پایان..." autocomplete="off">
+                        <input type="text" class="form-control " id="createDiscountcodeEnd" name="enddate"
+                               placeholder="تاریخ پایان..." autocomplete="off">
                     </div>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">بستن</button>
                     <button type="submit" class="btn btn-primary">ثبت</button>
@@ -194,7 +217,8 @@
     </div>
 </div>
 
-<div class="modal fade" id="editDiscountCodeModal" tabindex="-1" role="dialog" aria-labelledby="editDiscountCodeModalLabel" aria-hidden="true">
+<div class="modal fade" id="editDiscountCodeModal" tabindex="-1" role="dialog"
+     aria-labelledby="editDiscountCodeModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -205,20 +229,26 @@
             </div>
             <div class="modal-body">
                 <form asp-action="Update" asp-controller="DiscountCode" method="post">
-                    <input id="discountcodeId" name="id" hidden="hidden" />
+                    <input id="discountcodeId" name="id" hidden="hidden"/>
                     <div class="form-group">
                         <label for="discountcodeName">نام کد تخفیف</label>
-                        <input type="text" class="form-control" id="discountcodeName" name="name" placeholder="نام کد تخفیف را وارد کنید">
+                        <input type="text" class="form-control" id="discountcodeName" name="name"
+                               placeholder="نام کد تخفیف را وارد کنید">
                         <label for="discountcodeCode">کد تخفیف</label>
-                        <input type="text" class="form-control" id="discountcodeCode" name="code" placeholder="کد تخفیف را وارد کنید">
+                        <input type="text" class="form-control" id="discountcodeCode" name="code"
+                               placeholder="کد تخفیف را وارد کنید">
                         <label for="discountcodeAmount">مبلغ تخفیف</label>
-                        <input type="text" class="form-control" name="amount" id="discountcodeAmount" placeholder="مبلغ تخفیف را وارد کنید">
+                        <input type="text" class="form-control" name="amount" id="discountcodeAmount"
+                               placeholder="مبلغ تخفیف را وارد کنید">
                         <label for="discountcodeUsageLimit">تعداد استفاده مجاز</label>
-                        <input type="number" class="form-control" id="discountcodeUsageLimit" name="usagelimit" placeholder="تعداد استفاده مجاز برای هر کاربر را وارد کنید">
+                        <input type="number" class="form-control" id="discountcodeUsageLimit" name="usagelimit"
+                               placeholder="تعداد استفاده مجاز برای هر کاربر را وارد کنید">
                         <label for="discountcodeStart">شروع کد تخفیف</label>
-                        <input type="text" class="form-control" id="discountcodeStart" name="startdate" placeholder="تاریخ شروع..." autocomplete="off">
+                        <input type="text" class="form-control" id="discountcodeStart" name="startdate"
+                               placeholder="تاریخ شروع..." autocomplete="off">
                         <label for="discountcodeEnd">پایان کد تخفیف</label>
-                        <input type="text" class="form-control" id="discountcodeEnd" name="enddate" placeholder="تاریخ شروع..." autocomplete="off">
+                        <input type="text" class="form-control" id="discountcodeEnd" name="enddate"
+                               placeholder="تاریخ شروع..." autocomplete="off">
                     </div>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">بستن</button>
                     <button type="submit" class="btn btn-primary">ویرایش</button>
@@ -233,11 +263,11 @@
     <!-- ابتدا مطمئن شوید این کتابخانه‌ها وجود دارند -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.min.js"></script>
-    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
 
     <!-- کتابخانه timepicker -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.css" />
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.js"></script>
+
 
     <script>
         $(document).ready(function () {
@@ -251,7 +281,7 @@
                 changeMonth: true,
                 changeYear: true,
                 yearRange: "1900:2100",
-                beforeShow: function(input, inst) {
+                beforeShow: function (input, inst) {
                     inst.dpDiv.css({
                         'font-size': '12px',
                         'width': '250px'
@@ -260,69 +290,69 @@
             });
 
             // تغییر از datepicker به datetimepicker برای مودال ویرایش
-        $("#discountcodeStart, #discountcodeEnd").datetimepicker({
-            dateFormat: "yy-mm-dd",
-            timeFormat: "HH:mm",
-            controlType: 'select',
-            oneLine: true,
-            showButtonPanel: true,
-            changeMonth: true,
-            changeYear: true,
-            yearRange: "1900:2100",
-            beforeShow: function(input, inst) {
-                // تنظیم مقدار فعلی اگر وجود دارد
-                if ($(input).val()) {
-                    $(this).datetimepicker("setDate", $(input).val());
+            $("#discountcodeStart, #discountcodeEnd").datetimepicker({
+                dateFormat: "yy-mm-dd",
+                timeFormat: "HH:mm",
+                controlType: 'select',
+                oneLine: true,
+                showButtonPanel: true,
+                changeMonth: true,
+                changeYear: true,
+                yearRange: "1900:2100",
+                beforeShow: function (input, inst) {
+                    // تنظیم مقدار فعلی اگر وجود دارد
+                    if ($(input).val()) {
+                        $(this).datetimepicker("setDate", $(input).val());
+                    }
+                    inst.dpDiv.css({
+                        'font-size': '12px',
+                        'width': '300px',
+                        'z-index': '99999999'
+                    });
                 }
-                inst.dpDiv.css({
-                    'font-size': '12px',
-                    'width': '300px',
-                    'z-index': '99999999'
-                });
-            }
-        });
+            });
 
-        $(".editeDiscountCode").click(function () {
-            var currentRow = $(this).closest("form");
-            var discountId = currentRow.find("input.dcId").val();
-            var discountName = currentRow.find("input.dcName").val();
-            var discountCode = currentRow.find("input.dcCode").val();
-            var discountAmount = currentRow.find("input.dcAmount").val();
-            var discountUsageLimit = currentRow.find("input.dcUsageLimit").val();
-            var startDate = currentRow.find("input.dcStart").val();
-            var endDate = currentRow.find("input.dcEnd").val();
+            $(".editeDiscountCode").click(function () {
+                var currentRow = $(this).closest("form");
+                var discountId = currentRow.find("input.dcId").val();
+                var discountName = currentRow.find("input.dcName").val();
+                var discountCode = currentRow.find("input.dcCode").val();
+                var discountAmount = currentRow.find("input.dcAmount").val();
+                var discountUsageLimit = currentRow.find("input.dcUsageLimit").val();
+                var startDate = currentRow.find("input.dcStart").val();
+                var endDate = currentRow.find("input.dcEnd").val();
 
-            $("#discountcodeId").val(discountId);
-            $("#discountcodeName").val(discountName);
-            $("#discountcodeCode").val(discountCode);
-            $("#discountcodeAmount").val(discountAmount);
-            $("#discountcodeUsageLimit").val(discountUsageLimit);
-            $("#discountcodeStart").val(startDate);
-            $("#discountcodeEnd").val(endDate);
+                $("#discountcodeId").val(discountId);
+                $("#discountcodeName").val(discountName);
+                $("#discountcodeCode").val(discountCode);
+                $("#discountcodeAmount").val(discountAmount);
+                $("#discountcodeUsageLimit").val(discountUsageLimit);
+                $("#discountcodeStart").val(startDate);
+                $("#discountcodeEnd").val(endDate);
 
-            // تنظیم مجدد datetimepicker با مقادیر جدید
-            $("#discountcodeStart").datetimepicker("setDate", new Date(startDate));
-            $("#discountcodeEnd").datetimepicker("setDate", new Date(endDate));
-        });
+                // تنظیم مجدد datetimepicker با مقادیر جدید
+                $("#discountcodeStart").datetimepicker("setDate", new Date(startDate));
+                $("#discountcodeEnd").datetimepicker("setDate", new Date(endDate));
+            });
 
-                // فعال کردن datetimepicker برای مودال ایجاد
-        $("#createDiscountcodeStart, #createDiscountcodeEnd").datetimepicker({
-            dateFormat: "yy-mm-dd",
-            timeFormat: "HH:mm",
-            controlType: 'select',
-            oneLine: true,
-            showButtonPanel: true,
-            changeMonth: true,
-            changeYear: true,
-            yearRange: "1900:2100",
-            beforeShow: function(input, inst) {
-                inst.dpDiv.css({
-                    'font-size': '12px',
-                    'width': '300px',
-                    'z-index': '99999999'
-                });
-            }
-        });
+            // فعال کردن datetimepicker برای مودال ایجاد
+            $("#createDiscountcodeStart, #createDiscountcodeEnd").datetimepicker({
+                dateFormat: "yy-mm-dd",
+                timeFormat: "HH:mm",
+                controlType: 'select',
+                oneLine: true,
+                showButtonPanel: true,
+                changeMonth: true,
+                changeYear: true,
+                yearRange: "1900:2100",
+                beforeShow: function (input, inst) {
+                    inst.dpDiv.css({
+                        'font-size': '12px',
+                        'width': '300px',
+                        'z-index': '99999999'
+                    });
+                }
+            });
 
             if (@Html.Raw(isError).ToString().ToLower()) {
                 ShowErrorAlret();
@@ -330,6 +360,11 @@
             if (@Html.Raw(isSuccess).ToString().ToLower()) {
                 ShowSuccessAlret();
             }
+
+            $('.datepicker').datepicker({
+                format: 'mm/dd/yyyy',
+            });
+
         });
     </script>
 }

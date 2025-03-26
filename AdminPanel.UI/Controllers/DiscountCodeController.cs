@@ -25,7 +25,7 @@ namespace AdminPanel.UI.Controllers
             }
 
             ViewBag.DiscountCode = await queryDiscountCode.ToListAsync();
-            return View("ManageDiscountCode", "Admin");
+            return RedirectToAction("ManageDiscountCode", "Admin");
         }
 
         public async Task<ActionResult<DiscountCode>> Create(string name, string code, int amount, int usagelimit, DateTime startdate, DateTime enddate)

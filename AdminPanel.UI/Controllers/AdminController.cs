@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using Application.Common;
 using Application.Common.ApiResult;
+using Application.Common.Utilities;
 using Application.Interface;
 using Application.Users.v1.Commands.LoginAdmin;
 using Application.Users.v1.Commands.LogOutAdmin;
@@ -230,7 +232,8 @@ namespace AdminPanel.UI.Controllers
             return View();
         }
 
-        public async Task<ActionResult<List<Guarantee>>> ManageGuarantee(string? searchGuarantee, int tabs = 1, FunctionStatus status = FunctionStatus.None)
+        public async Task<ActionResult<List<Guarantee>>> ManageGuarantee(string? searchGuarantee, int tabs = 1,
+            FunctionStatus status = FunctionStatus.None)
         {
             ViewBag.selectTab = tabs;
             ViewBag.Status = status;
@@ -248,9 +251,9 @@ namespace AdminPanel.UI.Controllers
             return View();
         }
 
-        public async Task<ActionResult<List<Color>>> ManageColor(string searchColor, int tabs = 1, FunctionStatus status = FunctionStatus.None)
+        public async Task<ActionResult<List<Color>>> ManageColor(string searchColor, int tabs = 1,
+            FunctionStatus status = FunctionStatus.None)
         {
-
             ViewBag.selectTab = tabs;
             ViewBag.Status = status;
 
@@ -266,7 +269,8 @@ namespace AdminPanel.UI.Controllers
             return View();
         }
 
-        public async Task<ActionResult<List<Color>>> ManageBrand(string searchBrand, int tabs = 1, FunctionStatus status = FunctionStatus.None)
+        public async Task<ActionResult<List<Color>>> ManageBrand(string searchBrand, int tabs = 1,
+            FunctionStatus status = FunctionStatus.None)
         {
             ViewBag.selectTab = tabs;
             ViewBag.Status = status;
@@ -284,7 +288,8 @@ namespace AdminPanel.UI.Controllers
             return View();
         }
 
-        public async Task<ActionResult<List<ShippingOption>>> ManageShippingOption(string searchShippingOption, int tabs = 1, FunctionStatus status = FunctionStatus.None)
+        public async Task<ActionResult<List<ShippingOption>>> ManageShippingOption(string searchShippingOption,
+            int tabs = 1, FunctionStatus status = FunctionStatus.None)
         {
             ViewBag.selectTab = tabs;
             ViewBag.Status = status;
@@ -301,15 +306,16 @@ namespace AdminPanel.UI.Controllers
             return View();
         }
 
-        public async Task<ActionResult<List<CategoryDetail>>> ManageCategoryDetail(string? searchCategoryDetail, int tabs = 1, FunctionStatus status = FunctionStatus.None)
+        public async Task<ActionResult<List<CategoryDetail>>> ManageCategoryDetail(string? searchCategoryDetail,
+            int tabs = 1, FunctionStatus status = FunctionStatus.None)
         {
             ViewBag.selectTab = tabs;
             ViewBag.Status = status;
 
             IQueryable<CategoryDetail> queryCategoryDetail = unitOfWork.GenericRepository<CategoryDetail>()
                 .TableNoTracking
-            .Include(x => x.SubCategory)
-            .AsSplitQuery();
+                .Include(x => x.SubCategory)
+                .AsSplitQuery();
 
             IQueryable<SubCategory> querySubCategories = unitOfWork.GenericRepository<SubCategory>().TableNoTracking
                 .Include(x => x.CategoryDetails)
@@ -324,13 +330,15 @@ namespace AdminPanel.UI.Controllers
             {
                 querySubCategories = querySubCategories.Where(x => x.Title.Contains(searchCategoryDetail));
             }
+
             ViewBag.CategoryDetails = await queryCategoryDetail.OrderByDescending(x => x.Id).ToListAsync();
             ViewBag.SubCategories = await querySubCategories.OrderByDescending(x => x.Id).ToListAsync();
 
             return View();
         }
 
-        public async Task<ActionResult<List<Wallet>>> ManageWallet(string searchWallet, int tabs = 1, FunctionStatus status = FunctionStatus.None)
+        public async Task<ActionResult<List<Wallet>>> ManageWallet(string searchWallet, int tabs = 1,
+            FunctionStatus status = FunctionStatus.None)
         {
             ViewBag.selectTab = tabs;
             ViewBag.Status = status;
@@ -352,7 +360,8 @@ namespace AdminPanel.UI.Controllers
             return View();
         }
 
-        public async Task<ActionResult<List<Wallet>>> ManageDiscountCode(string searchDiscountCode, int tabs = 1, FunctionStatus status = FunctionStatus.None)
+        public async Task<ActionResult<List<Wallet>>> ManageDiscountCode(string searchDiscountCode, int tabs = 1,
+            FunctionStatus status = FunctionStatus.None)
         {
             ViewBag.selectTab = tabs;
             ViewBag.Status = status;
@@ -362,7 +371,8 @@ namespace AdminPanel.UI.Controllers
 
             if (!string.IsNullOrEmpty(searchDiscountCode))
             {
-                queryDiscountCode = queryDiscountCode.Where(x => x.Title.Contains(searchDiscountCode) || x.Code.Contains(searchDiscountCode));
+                queryDiscountCode = queryDiscountCode.Where(x =>
+                    x.Title.Contains(searchDiscountCode) || x.Code.Contains(searchDiscountCode));
             }
 
             ViewBag.DiscountCode = await queryDiscountCode.OrderByDescending(x => x.Id).ToListAsync();

@@ -64,15 +64,18 @@
                                 </div>
                                 <div class="form-group">
                                     <label>انتخاب رنگ</label>
-                                    <input type="text" class="form-control my-colorpicker1" name="codecolor" id="exampleInputEmail2"
+                                    <input type="text" class="form-control my-colorpicker1" name="codecolor"
+                                           id="exampleInputEmail2"
                                            placeholder="کد رنگ..." autocomplete="off">
                                 </div>
                                 <div style="padding-top: 15px">
                                     <button type="submit" class="btn btn-primary">ثبت رنگ</button>
                                 </div>
                             </form>
-                            <form class="input-group input-group-sm w-25 p-2" asp-action="ManageColor" asp-controller="Admin" method="post">
-                                <input class="form-control form-control-navbar" id="searchUser" name="searchColor" type="search" placeholder="جستجو" aria-label="Search">
+                            <form class="input-group input-group-sm w-25 p-2" asp-action="ManageColor"
+                                  asp-controller="Admin" method="post">
+                                <input class="form-control form-control-navbar" id="searchUser" name="searchColor"
+                                       type="search" placeholder="جستجو" aria-label="Search">
                                 <div class="input-group-append">
                                     <button class="btn btn-navbar" id="searchIcon" type="submit">
                                         <i class="fa fa-search"></i>
@@ -88,40 +91,44 @@
                             <div class="card-body p-0">
                                 <table class="table table-striped">
                                     <thead>
-                                        <tr>
-                                            <th style="width: 10px">#</th>
-                                            <th class="text-center">نام رنگ</th>
-                                            <th class="text-center">کد رنگ</th>
-                                            <th class="text-center">رنگ</th>
-                                            <th class="text-center">عملیات</th>
-                                        </tr>
+                                    <tr>
+                                        <th style="width: 10px">#</th>
+                                        <th class="text-center">نام رنگ</th>
+                                        <th class="text-center">کد رنگ</th>
+                                        <th class="text-center">رنگ</th>
+                                        <th class="text-center">عملیات</th>
+                                    </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach (var color in colors)
-                                        {
-                                            <tr>
-                                                <td>@color.Id</td>
-                                                <td class="text-center">@color.Title</td>
-                                                <td class="text-center">@color.Code</td>
-                                                <td class="text-center">
-                                                    <div style="background-color: @color.Code; border-radius: 30px; width: 30px; height: 30px; margin: 0 auto;"></div>
-                                                </td>
-                                                <td class="text-center">
-                                                    <form>
-                                                        <button type="button" class="badge badge-warning editeColor"
-                                                                data-toggle="modal" data-target="#editColorModal">
-                                                            ویرایش
-                                                        </button>
-                                                        <input type="text" name="cId" class="cId" value="@color.Id" hidden="hidden" />
-                                                        <input type="text" name="cName" class="cName" value="@color.Title" hidden="hidden" />
-                                                        <input type="text" name="cCode" class="cCode" value="@color.Code" hidden="hidden" />
-                                                    </form>
+                                    @foreach (var color in colors)
+                                    {
+                                        <tr>
+                                            <td>@color.Id</td>
+                                            <td class="text-center">@color.Title</td>
+                                            <td class="text-center">@color.Code</td>
+                                            <td class="text-center">
+                                                <div
+                                                    style="background-color: @color.Code; border-radius: 30px; width: 30px; height: 30px; margin: 0 auto;"></div>
+                                            </td>
+                                            <td class="text-center">
+                                                <form>
+                                                    <button type="button" class="badge badge-warning editeColor"
+                                                            data-toggle="modal" data-target="#editColorModal">
+                                                        ویرایش
+                                                    </button>
+                                                    <input type="text" name="cId" class="cId" value="@color.Id"
+                                                           hidden="hidden"/>
+                                                    <input type="text" name="cName" class="cName" value="@color.Title"
+                                                           hidden="hidden"/>
+                                                    <input type="text" name="cCode" class="cCode" value="@color.Code"
+                                                           hidden="hidden"/>
+                                                </form>
 
-                                                    <a class="badge badge-danger"
-                                                       href="@Url.Action("SoftDelete", "Color", new { id = color.Id })">حذف</a>
-                                                </td>
-                                            </tr>
-                                        }
+                                                <a class="badge badge-danger"
+                                                   href="@Url.Action("SoftDelete", "Color", new { id = color.Id })">حذف</a>
+                                            </td>
+                                        </tr>
+                                    }
                                     </tbody>
                                 </table>
                             </div>
@@ -134,7 +141,8 @@
     </div>
 </div>
 
-<div class="modal fade" id="editColorModal" tabindex="-1" role="dialog" aria-labelledby="editColorModalLabel" aria-hidden="true">
+<div class="modal fade" id="editColorModal" tabindex="-1" role="dialog" aria-labelledby="editColorModalLabel"
+     aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -145,14 +153,16 @@
             </div>
             <div class="modal-body">
                 <form asp-action="Update" asp-controller="Color" method="post">
-                    <input id="ColorId" name="id" hidden="hidden" />
+                    <input id="ColorId" name="id" hidden="hidden"/>
                     <div class="form-group">
                         <label for="ColorName">نام رنگ</label>
-                        <input type="text" class="form-control" id="ColorName" name="name" placeholder="نام رنگ را وارد کنید">
+                        <input type="text" class="form-control" id="ColorName" name="name"
+                               placeholder="نام رنگ را وارد کنید">
                     </div>
                     <div class="form-group">
                         <label for="ColorCode">کد رنگ</label>
-                        <input type="text" class="form-control" id="ColorCode" name="codecolor" placeholder="کد رنگ..." autocomplete="off>
+                        <input type="text" class="form-control" id="ColorCode" name="codecolor" placeholder="کد رنگ..."
+                               autocomplete="off">
                     </div>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">بستن</button>
                     <button type="submit" class="btn btn-primary">ثبت</button>
@@ -163,6 +173,7 @@
 </div>
 
 @section script
+
 {
     <script>
         $(document).ready(function () {
@@ -173,10 +184,10 @@
                 $("#ColorCode").val(currentRow.find("input.cCode[type=text]").val());
             });
 
-             //Colorpicker
-             $('.my-colorpicker1').colorpicker()
+            //Colorpicker
+            $('.my-colorpicker1').colorpicker()
             //color picker with addon
-             $('.my-colorpicker2').colorpicker()
+            $('.my-colorpicker2').colorpicker()
         });
 
         if (@Html.Raw(isError).ToString().ToLower())

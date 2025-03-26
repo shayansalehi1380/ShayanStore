@@ -6,6 +6,7 @@
         confirmButtonText: "بستن",
     });
 }
+
 function ShowErrorAlret() {
     Swal.fire({
         title: "خطا",

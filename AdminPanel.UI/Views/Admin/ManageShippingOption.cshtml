@@ -20,25 +20,25 @@
 }
 
 @section link {
-<style>
-    #searchUser {
-    border-top-right-radius: 5px;
-    border-bottom-right-radius: 5px;
-    border-top-left-radius: 0 !important;
-    border-bottom-left-radius: 0 !important;
-    border: none;
-    background-color: #f2f4f6;
-    }
+    <style>
+        #searchUser {
+            border-top-right-radius: 5px;
+            border-bottom-right-radius: 5px;
+            border-top-left-radius: 0 !important;
+            border-bottom-left-radius: 0 !important;
+            border: none;
+            background-color: #f2f4f6;
+        }
 
-    #searchIcon {
-    border: none;
-    background-color: #f2f4f6;
-    }
+        #searchIcon {
+            border: none;
+            background-color: #f2f4f6;
+        }
 
-    .modal {
-    top: 5%;
-    }
-</style>
+        .modal {
+            top: 5%;
+        }
+    </style>
 }
 
 <div class="row">
@@ -47,7 +47,8 @@
         <div class="card" style="margin: 15px 15px 0px 15px;">
             <div class="card-header p-2">
                 <ul class="nav nav-pills">
-                    <li class="nav-item"><a class="nav-link @shippingOptionTab" href="#activity" data-toggle="tab">روش ارسال</a></li>
+                    <li class="nav-item"><a class="nav-link @shippingOptionTab" href="#activity" data-toggle="tab">روش
+                            ارسال</a></li>
                 </ul>
             </div><!-- /.card-body -->
             <div class="card-body">
@@ -56,25 +57,31 @@
                     <div class="@shippingOptionTab tab-pane" id="activity">
                         <div class="d-flex justify-content-between align-items-center">
                             <form asp-controller="ShippingOption" asp-action="Create" method="post"
-                            class="d-flex justify-content-start align-items-center" style="gap: 10px">
+                                  class="d-flex justify-content-start align-items-center" style="gap: 10px">
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">نام روش ارسال</label>
                                     <input type="text" class="form-control" name="name" id="exampleInputEmail1"
-                                    placeholder="نام روش ارسال را وارد کنید">
+                                           placeholder="نام روش ارسال را وارد کنید">
                                 </div>
-                                <div class="form-group">
-                                    <label for="priceInput">هزینه ارسال</label>
-                                    <input type="text" class="form-control" name="price" id="priceInput"
-                                    placeholder="هزینه ارسال را وارد کنید" required>
-                                    <p style="color: orange; margin-top: 5px; font-size: 0.7em;">*برای ارسال رایگان عدد صفر لاتین را وارد نمایید</p>
+                                <div class="d-flex flex-column justify-content-center align-items-center">
+                                    <div class="form-group">
+                                        <label for="priceInput">هزینه ارسال</label>
+                                        <input type="text" class="form-control" name="price" id="priceInput"
+                                               placeholder="هزینه ارسال را وارد کنید" required>
+                                    </div>
+                                    <span style="color: orange; margin-top: -15px; font-size: 0.7em;">*برای ارسال رایگان عدد صفر لاتین را وارد نمایید</span>
                                 </div>
+
                                 <div style="padding-top: 15px">
                                     <button type="submit" class="btn btn-primary">ثبت روش ارسال</button>
                                 </div>
 
                             </form>
-                            <form class="input-group input-group-sm w-25 p-2" asp-action="ManageShippingOption" asp-controller="Admin" method="post">
-                                <input class="form-control form-control-navbar" id="searchUser" name="searchShippingOption" type="search" placeholder="جستجو" aria-label="Search">
+                            <form class="input-group input-group-sm w-25 p-2" asp-action="ManageShippingOption"
+                                  asp-controller="Admin" method="post">
+                                <input class="form-control form-control-navbar" id="searchUser"
+                                       name="searchShippingOption" type="search" placeholder="جستجو"
+                                       aria-label="Search">
                                 <div class="input-group-append">
                                     <button class="btn btn-navbar" id="searchIcon" type="submit">
                                         <i class="fa fa-search"></i>
@@ -90,45 +97,49 @@
                             <div class="card-body p-0">
                                 <table class="table table-striped">
                                     <thead>
-                                        <tr>
-                                            <th style="width: 10px">#</th>
-                                            <th class="text-center">نام روش ارسال</th>
-                                            <th class="text-center">هزینه ارسال</th>
-                                            <th class="text-center">عملیات</th>
-                                        </tr>
+                                    <tr>
+                                        <th style="width: 10px">#</th>
+                                        <th class="text-center">نام روش ارسال</th>
+                                        <th class="text-center">هزینه ارسال</th>
+                                        <th class="text-center">عملیات</th>
+                                    </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach (var shippingOption in shippingOptions)
-                                        {
-                                            <tr>
-                                                <td>@shippingOption.Id</td>
-                                                <td class="text-center">@shippingOption.Title</td>
-                                                <td class="text-center">
-                                                    @if (shippingOption.Price == 0)
-                                                    {
-                                                        <span>رایگان</span>
-                                                    }
-                                                    else
-                                                    {
-                                                        @($"{shippingOption.Price.ToString("N0")} تومان")
-                                                    }
-                                                </td>
-                                                <td class="text-center">
-                                                    <form>
-                                                        <button type="button" class="badge badge-warning editeShippingOption"
-                                                                data-toggle="modal" data-target="#editShippingOptionModal">
-                                                            ویرایش
-                                                        </button>
-                                                        <input type="text" name="shId" class="shId" value="@shippingOption.Id" hidden="hidden" />
-                                                        <input type="text" name="shName" class="shName" value="@shippingOption.Title" hidden="hidden" />
-                                                        <input type="text" name="shPrice" class="shPrice" value="@shippingOption.Price" hidden="hidden" />
-                                                    </form>
+                                    @foreach (var shippingOption in shippingOptions)
+                                    {
+                                        <tr>
+                                            <td>@shippingOption.Id</td>
+                                            <td class="text-center">@shippingOption.Title</td>
+                                            <td class="text-center">
+                                                @if (shippingOption.Price == 0)
+                                                {
+                                                    <span>رایگان</span>
+                                                }
+                                                else
+                                                {
+                                                    @($"{shippingOption.Price.ToString("N0")} تومان")
+                                                }
+                                            </td>
+                                            <td class="text-center">
+                                                <form>
+                                                    <button type="button"
+                                                            class="badge badge-warning editeShippingOption"
+                                                            data-toggle="modal" data-target="#editShippingOptionModal">
+                                                        ویرایش
+                                                    </button>
+                                                    <input type="text" name="shId" class="shId"
+                                                           value="@shippingOption.Id" hidden="hidden"/>
+                                                    <input type="text" name="shName" class="shName"
+                                                           value="@shippingOption.Title" hidden="hidden"/>
+                                                    <input type="text" name="shPrice" class="shPrice"
+                                                           value="@shippingOption.Price" hidden="hidden"/>
+                                                </form>
 
-                                                    <a class="badge badge-danger"
-                                                       href="@Url.Action("SoftDelete", "ShippingOption", new { id = shippingOption.Id })">حذف</a>
-                                                </td>
-                                            </tr>
-                                        }
+                                                <a class="badge badge-danger"
+                                                   href="@Url.Action("SoftDelete", "ShippingOption", new { id = shippingOption.Id })">حذف</a>
+                                            </td>
+                                        </tr>
+                                    }
                                     </tbody>
                                 </table>
                             </div>
@@ -141,7 +152,8 @@
     </div>
 </div>
 
-<div class="modal fade" id="editShippingOptionModal" tabindex="-1" role="dialog" aria-labelledby="editShippingOptionModalLabel" aria-hidden="true">
+<div class="modal fade" id="editShippingOptionModal" tabindex="-1" role="dialog"
+     aria-labelledby="editShippingOptionModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -152,15 +164,18 @@
             </div>
             <div class="modal-body">
                 <form asp-action="Update" asp-controller="ShippingOption" method="post">
-                    <input id="shippingOptionId" name="id" hidden="hidden" />
+                    <input id="shippingOptionId" name="id" hidden="hidden"/>
                     <div class="form-group">
                         <label for="shippingOptionName">نام روش ارسال</label>
-                        <input type="text" class="form-control" id="shippingOptionName" name="name" placeholder="نام روش ارسال را وارد کنید">
+                        <input type="text" class="form-control" id="shippingOptionName" name="name"
+                               placeholder="نام روش ارسال را وارد کنید">
                     </div>
                     <div class="form-group">
                         <label for="shippingOptionPrice">هزینه ارسال</label>
-                        <input type="text" class="form-control" id="shippingOptionPrice" name="price" placeholder="هزینه ارسال را وارد کنید">
-                        <p style="color: orange; margin-top: 5px; font-size: 0.7em;">*برای ارسال رایگان عدد صفر لاتین را وارد نمایید</p>
+                        <input type="text" class="form-control" id="shippingOptionPrice" name="price"
+                               placeholder="هزینه ارسال را وارد کنید">
+                        <p style="color: orange; margin-top: 5px; font-size: 0.7em;">*برای ارسال رایگان عدد صفر لاتین را
+                            وارد نمایید</p>
                     </div>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">بستن</button>
                     <button type="submit" class="btn btn-primary">ثبت</button>
@@ -171,6 +186,9 @@
 </div>
 
 @section script
+
+
+
 {
     <script>
         $(document).ready(function () {
