@@ -269,6 +269,46 @@ namespace Domain.Migrations
                     b.ToTable("Colors");
                 });
 
+            modelBuilder.Entity("Domain.Entity.Products.Colors.ProductColor", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("ColorId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("GuaranteeId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Inventory")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsDelete")
+                        .HasColumnType("bit");
+
+                    b.Property<double>("Price")
+                        .HasColumnType("float");
+
+                    b.Property<int>("Priority")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ColorId");
+
+                    b.HasIndex("GuaranteeId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("ProductColors");
+                });
+
             modelBuilder.Entity("Domain.Entity.Products.Features.Feature", b =>
                 {
                     b.Property<int>("Id")
@@ -320,6 +360,35 @@ namespace Domain.Migrations
                     b.ToTable("FeatureDetails");
                 });
 
+            modelBuilder.Entity("Domain.Entity.Products.Features.ProductFeature", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("FeatureDetailsId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsDelete")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Value")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FeatureDetailsId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("ProductFeatures");
+                });
+
             modelBuilder.Entity("Domain.Entity.Products.Guaranties.Guarantee", b =>
                 {
                     b.Property<int>("Id")
@@ -338,6 +407,176 @@ namespace Domain.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Guarantees");
+                });
+
+            modelBuilder.Entity("Domain.Entity.Products.ImageAttachments.ImageGallery", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ImageUri")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDelete")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("ImageGalleries");
+                });
+
+            modelBuilder.Entity("Domain.Entity.Products.Offers.Offer", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("ColorId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Hours")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsDelete")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("Minutes")
+                        .HasColumnType("int");
+
+                    b.Property<double>("OfferAmount")
+                        .HasColumnType("float");
+
+                    b.Property<int?>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ColorId");
+
+                    b.ToTable("Offers");
+                });
+
+            modelBuilder.Entity("Domain.Entity.Products.Product", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("BrandId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("CategoryDetailId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("CreatorId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Detail")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("DiscountAmount")
+                        .HasColumnType("float");
+
+                    b.Property<string>("EnTitle")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FaTitle")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FullDetail")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImageUri")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("InsertDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<double>("InterestRate")
+                        .HasColumnType("float");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDelete")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsOffer")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("OfferId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("OnClick")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ProductGift")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SeoCanonical")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SeoDesc")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SeoTitle")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Strengths")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UniqueCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("UserUpdateId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("WeakPoints")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BrandId");
+
+                    b.HasIndex("CategoryDetailId");
+
+                    b.HasIndex("CreatorId");
+
+                    b.HasIndex("OfferId");
+
+                    b.HasIndex("UserUpdateId");
+
+                    b.ToTable("Products");
                 });
 
             modelBuilder.Entity("Domain.Entity.Users.Role", b =>
@@ -648,6 +887,33 @@ namespace Domain.Migrations
                     b.Navigation("Category");
                 });
 
+            modelBuilder.Entity("Domain.Entity.Products.Colors.ProductColor", b =>
+                {
+                    b.HasOne("Domain.Entity.Products.Colors.Color", "Color")
+                        .WithMany()
+                        .HasForeignKey("ColorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entity.Products.Guaranties.Guarantee", "Guarantee")
+                        .WithMany()
+                        .HasForeignKey("GuaranteeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entity.Products.Product", "Product")
+                        .WithMany("ProductColors")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Color");
+
+                    b.Navigation("Guarantee");
+
+                    b.Navigation("Product");
+                });
+
             modelBuilder.Entity("Domain.Entity.Products.Features.FeatureDetails", b =>
                 {
                     b.HasOne("Domain.Entity.Products.Features.Feature", "Feature")
@@ -657,6 +923,78 @@ namespace Domain.Migrations
                         .IsRequired();
 
                     b.Navigation("Feature");
+                });
+
+            modelBuilder.Entity("Domain.Entity.Products.Features.ProductFeature", b =>
+                {
+                    b.HasOne("Domain.Entity.Products.Features.FeatureDetails", "FeatureDetails")
+                        .WithMany()
+                        .HasForeignKey("FeatureDetailsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entity.Products.Product", null)
+                        .WithMany("ProductFeatures")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("FeatureDetails");
+                });
+
+            modelBuilder.Entity("Domain.Entity.Products.ImageAttachments.ImageGallery", b =>
+                {
+                    b.HasOne("Domain.Entity.Products.Product", null)
+                        .WithMany("ImageGalleries")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Domain.Entity.Products.Offers.Offer", b =>
+                {
+                    b.HasOne("Domain.Entity.Products.Colors.Color", "Color")
+                        .WithMany()
+                        .HasForeignKey("ColorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Color");
+                });
+
+            modelBuilder.Entity("Domain.Entity.Products.Product", b =>
+                {
+                    b.HasOne("Domain.Entity.Products.Brands.Brand", "Brand")
+                        .WithMany()
+                        .HasForeignKey("BrandId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entity.Products.Categories.CategoryDetail", "CategoryDetail")
+                        .WithMany()
+                        .HasForeignKey("CategoryDetailId");
+
+                    b.HasOne("Domain.Entity.Users.User", "Creator")
+                        .WithMany()
+                        .HasForeignKey("CreatorId");
+
+                    b.HasOne("Domain.Entity.Products.Offers.Offer", "Offer")
+                        .WithMany()
+                        .HasForeignKey("OfferId");
+
+                    b.HasOne("Domain.Entity.Users.User", "UserUpdate")
+                        .WithMany()
+                        .HasForeignKey("UserUpdateId");
+
+                    b.Navigation("Brand");
+
+                    b.Navigation("CategoryDetail");
+
+                    b.Navigation("Creator");
+
+                    b.Navigation("Offer");
+
+                    b.Navigation("UserUpdate");
                 });
 
             modelBuilder.Entity("Domain.Entity.Users.User", b =>
@@ -755,6 +1093,15 @@ namespace Domain.Migrations
             modelBuilder.Entity("Domain.Entity.Products.Features.Feature", b =>
                 {
                     b.Navigation("Details");
+                });
+
+            modelBuilder.Entity("Domain.Entity.Products.Product", b =>
+                {
+                    b.Navigation("ImageGalleries");
+
+                    b.Navigation("ProductColors");
+
+                    b.Navigation("ProductFeatures");
                 });
 
             modelBuilder.Entity("Domain.Entity.Users.User", b =>

@@ -1,9 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using Domain.Common;
 using Domain.Entity.Products.Guaranties;
 
 namespace Domain.Entity.Products.Colors;
 
-public class ProductColor
+public class ProductColor:BaseEntity
 {
     public double Price { get; set; }//RIT
     public int Priority { get; set; }

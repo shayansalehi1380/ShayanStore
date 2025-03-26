@@ -1,10 +1,13 @@
 ﻿using Domain.Entity.BasicInfo;
 using Domain.Entity.DiscountCodes;
+using Domain.Entity.Products;
 using Domain.Entity.Products.Brands;
 using Domain.Entity.Products.Categories;
 using Domain.Entity.Products.Colors;
 using Domain.Entity.Products.Features;
 using Domain.Entity.Products.Guaranties;
+using Domain.Entity.Products.ImageAttachments;
+using Domain.Entity.Products.Offers;
 using Domain.Entity.Users;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -27,6 +30,12 @@ namespace Domain.DBContext
         public DbSet<CategoryDetail> CategoryDetails { get; set; }
         public DbSet<Wallet> Wallets { get; set; }
         public DbSet<DiscountCode> DiscountCodes { get; set; }
+        
+        public DbSet<ProductColor> ProductColors { get; set; }
+        public DbSet<ProductFeature> ProductFeatures { get; set; }
+        public DbSet<ImageGallery> ImageGalleries { get; set; }
+        public DbSet<Product> Products { get; set; }
+        public DbSet<Offer> Offers { get; set; }
 
         public ShayanStoreDBContext(DbContextOptions<ShayanStoreDBContext> options) : base(options)
         {
