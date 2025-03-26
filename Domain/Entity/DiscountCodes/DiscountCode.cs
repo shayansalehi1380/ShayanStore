@@ -11,7 +11,8 @@ namespace Domain.Entity.DiscountCodes
     {
         public string Title { get; set; } = string.Empty;
         public string Code { get; set; } = string.Empty;
-        public string Amount { get; set; } = string.Empty;
+        public int Amount { get; set; }
+        public int UsageLimit { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
 

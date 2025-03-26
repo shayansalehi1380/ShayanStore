@@ -110,6 +110,7 @@
                                             <th class="text-center">نام کد تخفیف</th>
                                             <th class="text-center">کد تخفیف</th>
                                             <th class="text-center">مبلغ تخفیف</th>
+                                            <th class="text-center">تعداد استفاده مجاز</th>
                                             <th class="text-center">تاریخ شروع</th>
                                             <th class="text-center">تاریخ پایان</th>
                                             <th class="text-center">عملیات</th>
@@ -121,8 +122,9 @@
                                             <tr>
                                                 <td>@discountcode.Id</td>
                                                 <td class="text-center">@discountcode.Title</td>
-                                                <td class="text-center">@discountcode.Code</td>
-                                                <td class="text-center">@discountcode.Amount</td>
+                                                <th class="text-center">@discountcode.Code</th>
+                                                <td class="text-center">@discountcode.Amount.ToString("N0") تومان</td>
+                                                <td class="text-center">@discountcode.UsageLimit</td>
                                                 <td class="text-center">@discountcode.StartDate</td>
                                                 <td class="text-center">@discountcode.EndDate</td>
                                                 <td class="text-center">
@@ -135,6 +137,7 @@
                                                         <input type="text" name="dcName" class="dcName" value="@discountcode.Title" hidden="hidden" />
                                                         <input type="text" name="dcName" class="dcCode" value="@discountcode.Code" hidden="hidden" />
                                                         <input type="text" name="dcAmount" class="dcAmount" value="@discountcode.Amount" hidden="hidden" />
+                                                        <input type="text" name="dcUsageLimit" class="dcUsageLimit" value="@discountcode.UsageLimit" hidden="hidden" />
                                                         <input type="text" name="dcStart" class="dcStart" value="@discountcode.StartDate" hidden="hidden" />
                                                         <input type="text" name="dcEnd" class="dcEnd" value="@discountcode.EndDate" hidden="hidden" />
                                                     </form>
@@ -180,7 +183,9 @@
                         <label for="createDiscountcodeCode">کد تخفیف</label>
                         <input type="text" class="form-control" id="createDiscountcodeCode" name="code" placeholder="کد تخفیف را وارد کنید">
                         <label for="createDiscountcodeAmount">مبلغ تخفیف</label>
-                        <input type="text" class="form-control" name="amount" id="createDiscountcodeAmount" placeholder="مبلغ تخفیف را وارد کنید">
+                        <input type="text" class="form-control" id="createDiscountcodeAmount" name="amount" placeholder="مبلغ تخفیف را وارد کنید">
+                        <label for="createDiscountcodeUsageLimit">تعداد استفاده مجاز</label>
+                        <input type="text" class="form-control" id="createDiscountcodeUsageLimit" name="usagelimit" placeholder="تعداد استفاده مجاز را وارد کنید">
                         <label for="createDiscountcodeStart">شروع کد تخفیف</label>
                         <input type="text" class="form-control" id="createDiscountcodeStart" name="startdate" placeholder="تاریخ شروع..." autocomplete="off">
                         <label for="createDiscountcodeEnd">پایان کد تخفیف</label>
@@ -213,6 +218,8 @@
                         <input type="text" class="form-control" id="discountcodeCode" name="code" placeholder="کد تخفیف را وارد کنید">
                         <label for="discountcodeAmount">مبلغ تخفیف</label>
                         <input type="text" class="form-control" name="amount" id="discountcodeAmount" placeholder="مبلغ تخفیف را وارد کنید">
+                        <label for="discountcodeUsageLimit">تعداد استفاده مجاز</label>
+                        <input type="text" class="form-control" id="discountcodeUsageLimit" name="usagelimit" placeholder="تعداد استفاده مجاز را وارد کنید">
                         <label for="discountcodeStart">شروع کد تخفیف</label>
                         <input type="text" class="form-control" id="discountcodeStart" name="startdate" placeholder="تاریخ شروع..." autocomplete="off">
                         <label for="discountcodeEnd">پایان کد تخفیف</label>
@@ -286,6 +293,7 @@
             var discountName = currentRow.find("input.dcName").val();
             var discountCode = currentRow.find("input.dcCode").val();
             var discountAmount = currentRow.find("input.dcAmount").val();
+            var discountUsageLimit = currentRow.find("input.dcUsageLimit").val();
             var startDate = currentRow.find("input.dcStart").val();
             var endDate = currentRow.find("input.dcEnd").val();
 
@@ -293,6 +301,7 @@
             $("#discountcodeName").val(discountName);
             $("#discountcodeCode").val(discountCode);
             $("#discountcodeAmount").val(discountAmount);
+            $("#discountcodeUsageLimit").val(discountUsageLimit);
             $("#discountcodeStart").val(startDate);
             $("#discountcodeEnd").val(endDate);
 

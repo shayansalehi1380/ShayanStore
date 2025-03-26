@@ -10,7 +10,7 @@ namespace AdminPanel.UI.Controllers
     public class ShippingOptionController(IUnitOfWork unitOfWork) : Controller
     {
 
-        public async Task<ActionResult<ShippingOption>> Create(string name, string price)
+        public async Task<ActionResult<ShippingOption>> Create(string name, int price)
         {
             await unitOfWork.GenericRepository<ShippingOption>().AddAsync(new ShippingOption
             {
@@ -20,7 +20,7 @@ namespace AdminPanel.UI.Controllers
             return RedirectToAction("ManageShippingOption", "Admin", new { tabs = 1, status = FunctionStatus.Success });
         }
 
-        public async Task<ActionResult<ShippingOption>> Update(int id, string name, string price)
+        public async Task<ActionResult<ShippingOption>> Update(int id, string name, int price)
         {
             var shippingOption = await unitOfWork.GenericRepository<ShippingOption>().Table.FirstOrDefaultAsync(x => x.Id == id, CancellationToken.None);
 

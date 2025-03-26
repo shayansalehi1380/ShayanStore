@@ -10,6 +10,6 @@ namespace Domain.Entity.BasicInfo
     public class ShippingOption : BaseEntity
     {
         public string Title { get; set; } = string.Empty;
-        public string Price { get; set; } = string.Empty;
+        public int Price { get; set; }
     }
 }

@@ -104,13 +104,13 @@
                                                 <td>@shippingOption.Id</td>
                                                 <td class="text-center">@shippingOption.Title</td>
                                                 <td class="text-center">
-                                                    @if (shippingOption.Price == "0")
+                                                    @if (shippingOption.Price == 0)
                                                     {
                                                         <span>رایگان</span>
                                                     }
                                                     else
                                                     {
-                                                        @shippingOption.Price
+                                                        @($"{shippingOption.Price.ToString("N0")} تومان")
                                                     }
                                                 </td>
                                                 <td class="text-center">

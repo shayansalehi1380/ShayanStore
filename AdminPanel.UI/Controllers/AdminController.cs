@@ -294,7 +294,7 @@ namespace AdminPanel.UI.Controllers
 
             if (!string.IsNullOrEmpty(searchShippingOption))
             {
-                queryShippingOption = queryShippingOption.Where(x => x.Title.Contains(searchShippingOption) || x.Price.Contains(searchShippingOption));
+                queryShippingOption = queryShippingOption.Where(x => x.Title.Contains(searchShippingOption));
             }
 
             ViewBag.ShippingOption = await queryShippingOption.OrderByDescending(x => x.Id).ToListAsync();
@@ -344,8 +344,7 @@ namespace AdminPanel.UI.Controllers
                 queryhWallet = queryhWallet.Where(x =>
                     x.User.UserName.Contains(searchWallet) ||
                     x.User.Name.Contains(searchWallet) ||
-                    x.User.Family.Contains(searchWallet) ||
-                    x.WalletBalance.Contains(searchWallet));
+                    x.User.Family.Contains(searchWallet));
             }
 
 

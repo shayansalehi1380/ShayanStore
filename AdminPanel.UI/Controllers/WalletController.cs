@@ -32,7 +32,7 @@ namespace AdminPanel.UI.Controllers
             return RedirectToAction("ManageWallet", "Admin");
         }
 
-        public async Task<ActionResult<Wallet>> Update(int id, string name)
+        public async Task<ActionResult<Wallet>> Update(int id, int name)
         {
             var wallet = await unitOfWork.GenericRepository<Wallet>().Table.FirstOrDefaultAsync(x => x.Id == id, CancellationToken.None);
             if (wallet == null)
