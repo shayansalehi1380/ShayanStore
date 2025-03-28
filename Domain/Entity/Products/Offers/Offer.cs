@@ -12,5 +12,5 @@ public class Offer:BaseEntity
     public int ColorId { get; set; }
     [ForeignKey(nameof(ColorId))] public Color? Color { get; set; }
     public int? ProductId { get; set; }
-    public double OfferAmount { get; set; }
+    public long OfferAmount { get; set; }
 }

@@ -34,7 +34,7 @@ public class Product : BaseEntity
     public DateTime InsertDate { get; set; }
     public DateTime UpdateTime { get; set; }
     public ProductStatus Status { get; set; }
-
+   
     public int? CategoryDetailId { get; set; }
     [ForeignKey(nameof(CategoryDetailId))] public CategoryDetail? CategoryDetail { get; set; }
     public int BrandId { get; set; }
@@ -45,6 +45,7 @@ public class Product : BaseEntity
     [ForeignKey(nameof(UserUpdateId))] public User? UserUpdate { get; set; }
     public int? OfferId { get; set; }
     [ForeignKey(nameof(OfferId))] public Offer? Offer { get; set; }
+
     
 
     public ICollection<ImageGallery> ImageGalleries { get; set; } = default!;

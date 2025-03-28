@@ -1,6 +1,7 @@
 ﻿using Domain.DBContext;
 using Domain.Entity.Users;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 
 namespace AdminPanel.UI;
 
@@ -42,7 +43,21 @@ public static class ConfigureServices
         {
             options.ValidationInterval = TimeSpan.FromHours(3); // بررسی کوکی هر 3 ساعت یک بار
         });
+        services.AddHttpContextAccessor();
+        
+        services.AddApiVersioning(options =>
+        {
+            options.AssumeDefaultVersionWhenUnspecified = true;
+            options.DefaultApiVersion = new ApiVersion(1, 0);
+            options.ReportApiVersions = true;
+        });
 
+        services.AddVersionedApiExplorer(options =>
+        {
+            options.GroupNameFormat = "'v'VVV";
+            options.SubstituteApiVersionInUrl = true;
+        });
+        services.AddEndpointsApiExplorer();
         return services;
     }
 }

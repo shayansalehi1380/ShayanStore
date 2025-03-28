@@ -6,7 +6,7 @@ namespace Domain.Entity.Products.Colors;
 
 public class ProductColor:BaseEntity
 {
-    public double Price { get; set; }//RIT
+    public long Price { get; set; }//RIT
     public int Priority { get; set; }
     public int ProductId { get; set; }
     [ForeignKey(nameof(ProductId))] public Product? Product { get; set; } 

@@ -17,4 +17,17 @@ public static class Helpers
             return string.Empty;
         }
     }
+    
+    public static int ToInt(this string? val)
+    {
+        return string.IsNullOrEmpty(val) ? 0 : Convert.ToInt32(val);
+    }
+    public static long ToLong(this string? val)
+    {
+        return string.IsNullOrEmpty(val) ? 0 : Convert.ToInt64(val);
+    }
+    public static double ToDouble(this string? val)
+    {
+        return string.IsNullOrEmpty(val) ? 0 : Convert.ToDouble(val);
+    }
 }

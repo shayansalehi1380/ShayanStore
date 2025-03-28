@@ -29,4 +29,28 @@ public  class Upload(IWebHostEnvironment environment)
 
         return file.FileName;
     }
+    public string AddImage(string imageFile, string path, string imageName)
+    {
+        if (string.IsNullOrEmpty(imageFile))
+            return "";
+
+        var base64EncodedBytes = Convert.FromBase64String(imageFile);
+
+        string filePath = Path.Combine("wwwroot", path);
+
+        if (!Directory.Exists(filePath))
+        {
+            Directory.CreateDirectory(filePath);
+        }
+
+        string fileName = imageName + ".jpg";
+
+        var address = Path.Combine(filePath, fileName);
+
+        File.WriteAllBytes(address, base64EncodedBytes);
+
+        return fileName;
+
+    }
+
 }
