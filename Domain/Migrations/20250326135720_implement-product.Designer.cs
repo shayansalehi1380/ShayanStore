@@ -4,6 +4,7 @@ using Domain.DBContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Domain.Migrations
 {
     [DbContext(typeof(ShayanStoreDBContext))]
-    partial class ShayanStoreDBContextModelSnapshot : ModelSnapshot
+    [Migration("20250326135720_implement-product")]
+    partial class implementproduct
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -289,8 +292,8 @@ namespace Domain.Migrations
                     b.Property<bool>("IsDelete")
                         .HasColumnType("bit");
 
-                    b.Property<long>("Price")
-                        .HasColumnType("bigint");
+                    b.Property<double>("Price")
+                        .HasColumnType("float");
 
                     b.Property<int>("Priority")
                         .HasColumnType("int");
@@ -454,8 +457,8 @@ namespace Domain.Migrations
                     b.Property<int>("Minutes")
                         .HasColumnType("int");
 
-                    b.Property<long>("OfferAmount")
-                        .HasColumnType("bigint");
+                    b.Property<double>("OfferAmount")
+                        .HasColumnType("float");
 
                     b.Property<int?>("ProductId")
                         .HasColumnType("int");
