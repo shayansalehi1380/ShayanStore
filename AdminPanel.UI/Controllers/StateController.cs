@@ -1,5 +1,10 @@
 ﻿using Application.Interface;
+using Application.States.v1.Commands.CreateState;
+using Application.States.v1.Commands.DeleteState;
+using Application.States.v1.Commands.SoftDeleteState;
+using Application.States.v1.Commands.UpdateState;
 using Domain.Entity.BasicInfo;
+using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -7,64 +12,42 @@ using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace AdminPanel.UI.Controllers;
 
-public class StateController(IUnitOfWork unitOfWork) : Controller
+public class StateController(IMediator mediator) : Controller
 {
     public async Task<ActionResult> Create(string name)
     {
-        await unitOfWork.GenericRepository<State>().AddAsync(new State
+        var result = await mediator.Send(new CreateStateCommand
         {
-            Name = name,
+            Name = name
         }, CancellationToken.None);
         return RedirectToAction("ManageProvince","Admin",new { tabs = 1 });
     }
 
-    public async Task<ActionResult<List<State>>> GetAllState(string? search)
-    {
-        IQueryable<State> query = unitOfWork.GenericRepository<State>().TableNoTracking;
-
-        if (!string.IsNullOrEmpty(search))
-        {
-            query = query.Where(x => x.Name.Contains(search));
-        }
-        return await query.ToListAsync();
-    }
-
     public async Task<ActionResult> Update(int id, string name)
     {
-        var state = await unitOfWork.GenericRepository<State>().Table.FirstOrDefaultAsync(x => x.Id == id, CancellationToken.None);
-        if (state == null)
+        var result = await mediator.Send(new UpdateStateCommand
         {
-            return NotFound();
-        }
-
-        state.Name = name;
-
-        await unitOfWork.GenericRepository<State>().UpdateAsync(state, CancellationToken.None);
+            Id = id,
+            Name = name
+        }, CancellationToken.None);
         return RedirectToAction("ManageProvince", "Admin", new { tabs = 1 });
     }
 
     public async Task<ActionResult> Delete(int id)
     {
-        var state = await unitOfWork.GenericRepository<State>().GetByIdAsync(id, CancellationToken.None);
-        if (state == null)
+        var result = await mediator.Send(new DeleteStateCommand
         {
-            return NotFound();
-        }
-
-        await unitOfWork.GenericRepository<State>().DeleteAsync(state, CancellationToken.None);
+            Id = id
+        }, CancellationToken.None);
         return RedirectToAction("ManageProvince", "Admin", new { tabs = 1 });
     }
 
     public async Task<ActionResult> SoftDelete(int id)
     {
-        var state = await unitOfWork.GenericRepository<State>().GetByIdAsync(id, CancellationToken.None);
-        if (state == null)
+        var result = await mediator.Send(new SoftDeleteStateCommand
         {
-            return NotFound();
-        }
-
-        state.IsDelete = true;
-        await unitOfWork.GenericRepository<State>().UpdateAsync(state, CancellationToken.None);
+            Id = id
+        },CancellationToken.None);
         return RedirectToAction("ManageProvince", "Admin", new { tabs = 1 });
     }
 }

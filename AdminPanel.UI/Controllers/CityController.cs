@@ -7,45 +7,41 @@ using Application.Cities.v1.Commands.SoftDeleteCity;
 using Domain.Entity.BasicInfo;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
+using Application.Cities.v1.Commands.DeleteCity;
+using Application.Cities.v1.Commands.UpdateCity;
+using Application.Cities.v1.Commands.CreateCity;
 
 namespace AdminPanel.UI.Controllers
 {
-    public class CityController(IUnitOfWork unitOfWork,IMediator mediator) : Controller
+    public class CityController(IMediator mediator) : Controller
     {
         public async Task<ActionResult> Create(string name, int stateId)
         {
-            await unitOfWork.GenericRepository<City>().AddAsync(new City
+            var result = await mediator.Send(new CreateCityCommand
             {
                 Name = name,
-                StateId = stateId,
+                StateId = stateId
             }, CancellationToken.None);
             return RedirectToAction("ManageProvince","Admin", new { tabs = 2 });
         }
 
         public async Task<ActionResult> Update(int id, string name, int stateId)
         {
-            var city = await unitOfWork.GenericRepository<City>().GetByIdAsync(id, CancellationToken.None);
-            if (city == null)
+            var result = await mediator.Send(new UpdateCityCommand
             {
-                return NotFound();
-            }
-
-            city.Name = name;
-            city.StateId = stateId;
-
-            await unitOfWork.GenericRepository<City>().UpdateAsync(city, CancellationToken.None);
+                Id = id,
+                Name = name,
+                StateId = stateId
+            },CancellationToken.None);
             return RedirectToAction("ManageProvince", "Admin",new { tabs = 2 });
         }
 
         public async Task<ActionResult> Delete(int id)
         {
-            var city = await unitOfWork.GenericRepository<City>().GetByIdAsync(id, CancellationToken.None);
-            if (city == null)
+            var result = await mediator.Send(new DeleteCityCommand
             {
-                return NotFound();
-            }
-
-            await unitOfWork.GenericRepository<City>().DeleteAsync(city, CancellationToken.None);
+                Id = id
+            }, CancellationToken.None);
             return RedirectToAction("ManageProvince", "Admin", new { tabs = 2 });
         }
 
