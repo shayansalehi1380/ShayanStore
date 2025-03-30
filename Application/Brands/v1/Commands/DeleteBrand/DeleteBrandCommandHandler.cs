@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Application.Brands.v1.Commands.DeleteBrand
 {
-    public class DeleteBrandCommandHandler(IUnitOfWork unitOfWork, IWebHostEnvironment environment) : IRequestHandler<DeleteBrandCommand, bool>
+    public class DeleteBrandCommandHandler(IUnitOfWork unitOfWork) : IRequestHandler<DeleteBrandCommand, bool>
     {
         public async Task<bool> Handle(DeleteBrandCommand request, CancellationToken cancellationToken)
         {

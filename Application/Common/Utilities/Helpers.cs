@@ -12,7 +12,7 @@ public static class Helpers
             return string.Format("{0}/{1}/{2}", pc.GetYear(calendar), pc.GetMonth(calendar),
                 pc.GetDayOfMonth(calendar));
         }
-        catch (Exception e)
+        catch (Exception)
         {
             return string.Empty;
         }

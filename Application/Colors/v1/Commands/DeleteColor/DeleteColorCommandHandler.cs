@@ -2,7 +2,6 @@
 using Domain.Entity.Products.Colors;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Domain.Entity.Products.Colors;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
