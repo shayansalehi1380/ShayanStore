@@ -19,6 +19,7 @@ using Domain.Entity.Products.Guaranties;
 using Domain.Entity.Products.Colors;
 using Domain.Entity.Products.Brands;
 using Domain.Entity.DiscountCodes;
+using Domain.Entity.Products;
 
 namespace AdminPanel.UI.Controllers
 {
@@ -93,6 +94,31 @@ namespace AdminPanel.UI.Controllers
         }
 
         // _________________________________________________________________________________________________________________________________________________________________
+        public async Task<IActionResult> ManageProducts(string? search)
+        {
+            var query = unitOfWork.GenericRepository<Product>().TableNoTracking
+                .Include(x => x.Brand)
+                .Include(x => x.CategoryDetail).ThenInclude(q => q!.SubCategory)
+                .Include(x => x.ProductColors).ThenInclude(x => x.Color)
+                .AsSplitQuery();
+            if (!string.IsNullOrEmpty(search))
+            {
+                query = query.Where(x =>
+                    x.FaTitle.Contains(search) || x.EnTitle.Contains(search) || x.UniqueCode.Contains(search));
+            }
+
+            var products = await query.ToListAsync();
+            ViewBag.Products = products;
+            return View();
+        }
+
+        public async Task<IActionResult> AddProduct()
+        {
+            ViewBag.Colors = await unitOfWork.GenericRepository<Color>().TableNoTracking.ToListAsync();
+            ViewBag.Guarantees = await unitOfWork.GenericRepository<Guarantee>().TableNoTracking.ToListAsync();
+            return View();
+        }
+
 
         public async Task<ActionResult> ManageProvince(string? searchCity, string? searchState, int tabs = 1)
         {

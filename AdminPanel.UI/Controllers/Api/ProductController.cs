@@ -29,6 +29,7 @@ public class ProductController(IMediator mediator, UserManager<User> userManager
             UserId = user.Id
         }, CancellationToken.None);
 
+        
         //create gallery
         await mediator.Send(new UploadImageCommand
         {

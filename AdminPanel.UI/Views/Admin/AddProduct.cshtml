@@ -1,0 +1,310 @@
+﻿@using Application.Common.Utilities
+@using Domain.Entity.Products.Colors
+@using Domain.Entity.Products.Guaranties
+@using Domain.Enums
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+  List<Color> colors = ViewBag.Colors;
+  List<Guarantee> guarantees = ViewBag.Guarantees;
+}
+<div class="row">
+  <div class="col-12">
+
+    <div class="card" style="margin: 15px 15px 0px 15px;">
+      <div class="card-header p-2">
+        <ul class="nav nav-pills">
+          <li class="nav-item"><a class="nav-link active" href="#activity" data-toggle="tab">افزودن کالا</a></li>
+          <li class="nav-item d-flex justify-content-center align-items-center" style="margin-right: 16px"><h6
+              class="card-title p-1" style="font-weight: 400;font-size: 16px">اخرین کد کالا : 3213</h6></li>
+        </ul>
+      </div><!-- /.card-body -->
+      <div class="card-body">
+        <div class="tab-content">
+          <div class="active tab-pane" id="activity">
+            <div class="card">
+              <div class="card-header">
+                <div class="d-flex flex-column align-items-start justify-content-center">
+                  <h3 class="card-title p-1" style="font-weight: bold;font-size: 20px">مشخصات کلی</h3>
+
+                </div>
+
+                <div class="card-tools">
+                  <button type="button" class="btn btn-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                  </button>
+                  <button type="button" class="btn btn-tool" data-widget="remove"><i class="fa fa-times"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="card-body" style="background-color:	rgb(220,220,220,0.4)">
+                <div class="d-flex justify-content-between flex-nowrap gap-3 align-items-center ">
+                  <div class="form-group w-50 p-3">
+                    <label>عنوان</label>
+                    <input id="Title" type="text" class="form-control" required="required">
+                  </div>
+                  <div class="form-group w-50 p-3">
+                    <label>عنوان فارسی</label>
+                    <input id="PersianTitle" type="text" class="form-control"
+                           required="required">
+                  </div>
+                </div>
+                <div class="d-flex justify-content-between flex-nowrap gap-3 align-items-center">
+                  <div class="form-group w-50 p-3">
+                    <label>معرفی</label>
+                    <textarea id="Detail" class="form-control" required="required"></textarea>
+                  </div>
+                  <div class="form-group w-50 p-3">
+                    <label>کد محصول</label>
+                    <input id="UnicCode" type="text" class="form-control">
+                  </div>
+                </div>
+                <div class="d-flex justify-content-between flex-nowrap gap-3 align-items-center">
+                  <div class="form-group w-50 p-3">
+                    <label>تگ ها</label>
+                    <input id="MetaKeyword" type="text" class="form-control"
+                           required="required">
+                  </div>
+                  <div class="form-group w-50 p-3">
+                    <label>هـدایا</label>
+                    <input id="ProductGift" type="text" class="form-control">
+                  </div>
+                </div>
+                <div class="d-flex justify-content-between flex-nowrap gap-3 align-items-center">
+                  <div class="form-group w-50 p-3">
+                    <label>نقاط قوت</label>
+                    <textarea id="Strengths" class="form-control"
+                              required="required"></textarea>
+                  </div>
+                  <div class="form-group w-50 p-3">
+                    <label>نقاط ضعف</label>
+                    <textarea id="WeakPoints" class="form-control"
+                              required="required"></textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-header">
+                <div class="d-flex flex-column align-items-start justify-content-center">
+                  <h3 class="card-title p-1" style="font-weight: bold;font-size: 20px">قیمت و موجودی</h3>
+                </div>
+                <div class="card-tools">
+                  <button type="button" class="btn btn-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                  </button>
+                  <button type="button" class="btn btn-tool" data-widget="remove"><i class="fa fa-times"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="card-body" style="background-color:	rgb(220,220,220,0.4)">
+                <div class="d-flex justify-content-between flex-nowrap gap-3 align-items-center ">
+                  <div class="form-group w-50 p-3">
+                    <label>وضعیت کالا
+                    </label>
+                    <select class="form-control">
+                      @foreach (var status in Enum.GetValues(typeof(ProductStatus)).Cast<ProductStatus>())
+                      {
+                        <option value="@((int)status)">@status.ToDisplay()</option>
+                      }
+                    </select>
+                  </div>
+                  <div class="form-group w-50 p-3">
+                    <label>مبلغ تخفیف</label>
+                    <input id="PersianTitle" type="text" class="form-control"
+                           required="required">
+                  </div>
+                  <div class="form-group w-50 p-3">
+                    <label>درصد سود</label>
+                    <input id="PersianTitle" type="text" class="form-control"
+                           required="required">
+                  </div>
+                </div>
+                <div class="d-flex justify-content-start align-items-center" style="margin-right: 15px">
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">انتخاب رنگ بندی</label>
+                    <select class="form-control select2" id="SelectColor" name="color" multiple="multiple"
+                            data-placeholder="رنگ بندی"
+                            style="width: 100%;text-align: right">
+                      @foreach (var c in colors)
+                      {
+                        <option value="@c.Id" data-color-code="@c.Code">@c.Title</option>
+                      }
+                    </select>
+                  </div>
+                </div>
+                <div class="d-flex flex-column justify-content-center align-items-start " style="gap: 15px"
+                     id="ProductColors">
+
+                </div>
+                <div class="d-flex justify-content-start align-items-center p-2 mt-2"
+                     style="gap: 35px;margin-right: 15px">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="option1">
+                    <label class="form-check-label" style="font-size: 16px;font-weight: bold;">پیشنهاد لحظه ای</label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="isOffer" value="option1">
+                    <label class="form-check-label" style="font-size: 16px;font-weight: bold;">پیشنهاد ویژه</label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="option1">
+                    <label class="form-check-label" style="font-size: 16px;font-weight: bold;">نمایش در کالای
+                      پیشنهادی</label>
+                  </div>
+                </div>
+                <div style="display: none !important" id="OfferForm">
+                  <div class="d-flex justify-content-center p-3" style="gap: 20px">
+                    <div class="form-group w-50  d-flex flex-column">
+                      <label for="exampleInputPassword1">رنگ مورد نظر</label>
+                      <select id="OfferColor" class="form-control "
+                              aria-label="Default select example" required="required">
+
+                      </select>
+                    </div>
+                    <div class="d-flex flex-column w-25">
+                      <label>مبلغ تخفیف</label>
+                      <input id="OfferAmount" type="text" class="form-control">
+                    </div>
+                    <div class="form-group align-items-center w-50">
+                      <label>از تاریخ</label>
+                      <div class="input-group date" style="border-radius: 7px"
+                           data-provide="datepicker">
+                        <input id="datePicker" type="text" class="form-control">
+                        <div class="input-group-addon">
+                          <span class="glyphicon glyphicon-th"></span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="d-flex justify-content-start w-75" style="gap: 10px">
+
+                      <div class="d-flex flex-column">
+                        <label for="hours">ساعت</label>
+                        <input type="number" id="hours" name="hours" min="0" max="24"
+                               value="0" class="form-control"><br><br>
+                      </div>
+                      <div class="d-flex flex-column">
+                        <label for="minutes">دقیقه</label>
+                        <input type="number" id="minutes" name="minutes" min="0"
+                               max="60" value="0" class="form-control"><br><br>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+@section script
+
+
+
+{
+  <script>
+    $(document).ready(function () {
+      $('#SelectColor').select2({
+        placeholder: "رنگ بندی",
+        dir: "rtl"
+      });
+
+      $('#SelectColor').on('change', function () {
+        let selectedColors = $(this).val();
+        let htmlInputs = '';
+
+        if (selectedColors && selectedColors.length > 0) {
+          selectedColors.forEach(function (colorId) {
+            // پیدا کردن گزینه مربوطه در سلکت
+            let option = $('#SelectColor option[value="' + colorId + '"]');
+            let colorTitle = option.text();
+            let colorCode = option.data('color-code') || '#000000'; // مقدار پیش‌فرض سیاه اگه کد رنگ نبود
+
+            htmlInputs += `
+                    <div class="color-input-group d-flex justify-content-center align-items-center " 
+                         style="gap: 10px;margin-right: 15px" data-color-id="${colorId}">
+                        <label style="min-width: 90px; background-color: ${colorCode}; color: #fff; padding: 8px;margin-top: 8px" 
+                               class="badge">${colorTitle}</label>
+                        <input type="number" name="quantity_${colorId}" class="form-control" 
+                               placeholder="تعداد برای ${colorTitle}" min="0">
+                        <input type="text" name="price_${colorId}" class="form-control" 
+                               placeholder="قیمت برای ${colorTitle}">
+                       <select class="form-control">
+                         <option value="0" selected> انتخاب کنید</option>
+                               @foreach (var i in guarantees)
+            {
+              <option value="@i.Id">@i.Title</option>
+            }
+                         </select>
+                                    <button type="button" class="btn btn-danger btn-sm" 
+                                            onclick="removeColor(${colorId})">حذف</button>
+                    </div>
+                `;
+          });
+        }
+
+        $('#ProductColors').html(htmlInputs);
+        $('.select2').select2();
+      });
+      $('#SelectColor').on('change', function() {
+        // گرفتن سلکت‌باکس دوم
+        const offerColor = document.getElementById('OfferColor');
+        // پاک کردن گزینه‌های قبلی در سلکت‌باکس دوم
+        offerColor.innerHTML = '<option value="">لطفاً یک رنگ انتخاب کنید</option>';
+
+        // گرفتن گزینه‌های انتخاب‌شده از سلکت‌باکس اول
+        const selectedOptions = $(this).find(':selected');
+
+        // اضافه کردن گزینه‌های انتخاب‌شده به سلکت‌باکس دوم
+        selectedOptions.each(function() {
+          const optionValue = $(this).val();
+          const optionText = $(this).text();
+          const optionColorCode = $(this).data('color-code'); // گرفتن data-color-code
+
+          // ساخت گزینه جدید
+          const newOption = document.createElement('option');
+          newOption.value = optionValue;
+          newOption.text = optionText;
+          // اگه بخواید data-color-code رو هم منتقل کنید
+          newOption.setAttribute('data-color-code', optionColorCode);
+
+          // اضافه کردن به سلکت‌باکس دوم
+          offerColor.appendChild(newOption);
+        });
+      });
+      
+      
+    });
+
+    function removeColor(colorId) {
+      $(`div[data-color-id="${colorId}"]`).remove();
+      let currentValues = $('#SelectColor').val();
+      let newValues = currentValues.filter(id => id != colorId);
+      $('#SelectColor').val(newValues).trigger('change');
+    }
+
+    // گرفتن المنت‌های چک‌باکس و div
+    const checkbox = document.getElementById('isOffer');
+    const offerForm = document.getElementById('OfferForm');
+
+    // اضافه کردن رویداد به چک‌باکس
+    checkbox.addEventListener('change', function() {
+      if (this.checked) {
+        // وقتی چک‌باکس تیک خورده، display رو تغییر بده
+        offerForm.style.display = 'block';
+      } else {
+        // وقتی تیک برداشته شد، دوباره مخفی کن
+        offerForm.style.display = 'none';
+      }
+    });
+  </script>
+}
+
+
+
+
+
