@@ -96,6 +96,8 @@ namespace AdminPanel.UI.Controllers
         // _________________________________________________________________________________________________________________________________________________________________
         public async Task<IActionResult> ManageProducts(string? search)
         {
+            ViewData["Title"] = "پنل مدیریت | محصولات";
+
             var query = unitOfWork.GenericRepository<Product>().TableNoTracking
                 .Include(x => x.Brand)
                 .Include(x => x.CategoryDetail).ThenInclude(q => q!.SubCategory)
@@ -114,6 +116,8 @@ namespace AdminPanel.UI.Controllers
 
         public async Task<IActionResult> AddProduct()
         {
+            ViewData["Title"] = "پنل مدیریت | افزودن کالا";
+
             ViewBag.Colors = await unitOfWork.GenericRepository<Color>().TableNoTracking.ToListAsync();
             ViewBag.Guarantees = await unitOfWork.GenericRepository<Guarantee>().TableNoTracking.ToListAsync();
             return View();
@@ -122,6 +126,8 @@ namespace AdminPanel.UI.Controllers
 
         public async Task<ActionResult> ManageProvince(string? searchCity, string? searchState, int tabs = 1)
         {
+            ViewData["Title"] = "پنل مدیریت | شهر و اُستان";
+
             IQueryable<City> queryCity = unitOfWork.GenericRepository<City>()
                 .TableNoTracking
                 .Include(x => x.State)
@@ -151,6 +157,8 @@ namespace AdminPanel.UI.Controllers
 
         public async Task<IActionResult> ManageUser(string? search)
         {
+            ViewData["Title"] = "پنل مدیریت | کاربران";
+
             var users = new List<UserDto>();
             var query = userManager.Users.AsTracking()
                 .Include(c => c.City).AsQueryable();
@@ -190,6 +198,8 @@ namespace AdminPanel.UI.Controllers
         public async Task<ActionResult<List<MainCategory>>> ManageCategory(string? searchMainCategory,
             string? searchCategory, string? searchSubCategory, int tabs = 1)
         {
+            ViewData["Title"] = "پنل مدیریت | دسته بندی";
+
             ViewBag.selectTab = tabs;
 
             IQueryable<MainCategory> queryMainCategory = unitOfWork.GenericRepository<MainCategory>()
@@ -232,6 +242,8 @@ namespace AdminPanel.UI.Controllers
         public async Task<ActionResult> ManageFeature(string? searchFeature, string? searchFeatureDetails,
             FunctionStatus status = FunctionStatus.None, int tabs = 1)
         {
+            ViewData["Title"] = "پنل مدیریت | ویژگی";
+
             ViewBag.selectTab = tabs;
             ViewBag.Status = status;
             IQueryable<Feature> queryFeature = unitOfWork.GenericRepository<Feature>()
@@ -261,6 +273,8 @@ namespace AdminPanel.UI.Controllers
         public async Task<ActionResult<List<Guarantee>>> ManageGuarantee(string? searchGuarantee, int tabs = 1,
             FunctionStatus status = FunctionStatus.None)
         {
+            ViewData["Title"] = "پنل مدیریت | گارانتی";
+
             ViewBag.selectTab = tabs;
             ViewBag.Status = status;
 
@@ -280,6 +294,8 @@ namespace AdminPanel.UI.Controllers
         public async Task<ActionResult<List<Color>>> ManageColor(string searchColor, int tabs = 1,
             FunctionStatus status = FunctionStatus.None)
         {
+            ViewData["Title"] = "پنل مدیریت | رنگ";
+
             ViewBag.selectTab = tabs;
             ViewBag.Status = status;
 
@@ -298,6 +314,8 @@ namespace AdminPanel.UI.Controllers
         public async Task<ActionResult<List<Color>>> ManageBrand(string searchBrand, int tabs = 1,
             FunctionStatus status = FunctionStatus.None)
         {
+            ViewData["Title"] = "پنل مدیریت | برند";
+
             ViewBag.selectTab = tabs;
             ViewBag.Status = status;
 
@@ -317,6 +335,8 @@ namespace AdminPanel.UI.Controllers
         public async Task<ActionResult<List<ShippingOption>>> ManageShippingOption(string searchShippingOption,
             int tabs = 1, FunctionStatus status = FunctionStatus.None)
         {
+            ViewData["Title"] = "پنل مدیریت | روش ارسال";
+
             ViewBag.selectTab = tabs;
             ViewBag.Status = status;
 
@@ -335,6 +355,8 @@ namespace AdminPanel.UI.Controllers
         public async Task<ActionResult<List<CategoryDetail>>> ManageCategoryDetail(string? searchCategoryDetail,
             int tabs = 1, FunctionStatus status = FunctionStatus.None)
         {
+            ViewData["Title"] = "پنل مدیریت | زیرگروه محصولات";
+
             ViewBag.selectTab = tabs;
             ViewBag.Status = status;
 
@@ -366,6 +388,8 @@ namespace AdminPanel.UI.Controllers
         public async Task<ActionResult<List<Wallet>>> ManageWallet(string searchWallet, int tabs = 1,
             FunctionStatus status = FunctionStatus.None)
         {
+            ViewData["Title"] = "پنل مدیریت | کیف پول";
+
             ViewBag.selectTab = tabs;
             ViewBag.Status = status;
 
@@ -389,6 +413,8 @@ namespace AdminPanel.UI.Controllers
         public async Task<ActionResult<List<Wallet>>> ManageDiscountCode(string searchDiscountCode, int tabs = 1,
             FunctionStatus status = FunctionStatus.None)
         {
+            ViewData["Title"] = "پنل مدیریت | کد تخفیف";
+
             ViewBag.selectTab = tabs;
             ViewBag.Status = status;
 
