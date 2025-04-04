@@ -6,11 +6,12 @@
 @using Domain.Enums
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 @{
-  List<Color> colors = ViewBag.Colors;
-  List<Guarantee> guarantees = ViewBag.Guarantees;
-  List<Brand> brands = ViewBag.Brands;
-  List<SubCategory> subCategories = ViewBag.SubCat;
+    List<Color> colors = ViewBag.Colors;
+    List<Guarantee> guarantees = ViewBag.Guarantees;
+    List<Brand> brands = ViewBag.Brands;
+    List<SubCategory> subCategories = ViewBag.SubCat;
 }
+
 @section link{
 
     <style>
@@ -34,7 +35,8 @@
         <div class="card" style="margin: 15px 15px 0px 15px;">
             <div class="card-header p-2">
                 <ul class="nav nav-pills">
-                    <li class="nav-item"><a class="nav-link active" href="#activity" data-toggle="tab">افزودن کالا</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="#activity" data-toggle="tab">افزودن کالا</a>
+                    </li>
                     <li class="nav-item d-flex justify-content-center align-items-center" style="margin-right: 16px">
                         <h6 class="card-title p-1" style="font-weight: 400;font-size: 16px">
                             کد آخرین کالا : 3213
@@ -60,41 +62,49 @@
                                 <div class="d-flex justify-content-between flex-nowrap gap-3 align-items-center ">
                                     <div class="form-group w-50 p-3">
                                         <label>عنوان</label>
-                                        <input id="Title" type="text" class="form-control" required="required" placeholder="عنوان را وارد نمایید...">
+                                        <input id="Title" type="text" class="form-control" required="required"
+                                               placeholder="عنوان را وارد نمایید...">
                                     </div>
                                     <div class="form-group w-50 p-3">
                                         <label>عنوان فارسی</label>
-                                        <input id="PersianTitle" type="text" class="form-control" required="required" placeholder="عنوان فارسی را وارد نمایید...">
+                                        <input id="PersianTitle" type="text" class="form-control" required="required"
+                                               placeholder="عنوان فارسی را وارد نمایید...">
                                     </div>
                                 </div>
                                 <div class="d-flex justify-content-between flex-nowrap gap-3 align-items-center">
                                     <div class="form-group w-50 p-3">
                                         <label>معرفی</label>
-                                        <textarea id="Detail" class="form-control" required="required" placeholder="معرفی کوتاه محصول..."></textarea>
+                                        <textarea id="Detail" class="form-control" required="required"
+                                                  placeholder="معرفی کوتاه محصول..."></textarea>
                                     </div>
                                     <div class="form-group w-50 p-3">
                                         <label>کد محصول</label>
-                                        <input id="UnicCode" type="text" class="form-control" placeholder="کد محصول را وارد نمایید...">
+                                        <input id="UnicCode" type="text" class="form-control"
+                                               placeholder="کد محصول را وارد نمایید...">
                                     </div>
                                 </div>
                                 <div class="d-flex justify-content-between flex-nowrap gap-3 align-items-center">
                                     <div class="form-group w-50 p-3">
                                         <label>تگ ها</label>
-                                        <input id="MetaKeyword" type="text" class="form-control" required="required" placeholder="تگ را وارد نمایید...">
+                                        <input id="MetaKeyword" type="text" class="form-control" required="required"
+                                               placeholder="تگ را وارد نمایید...">
                                     </div>
                                     <div class="form-group w-50 p-3">
                                         <label>هـدیه</label>
-                                        <input id="ProductGift" type="text" class="form-control" placeholder="نام هدیه را وارد نمایید...">
+                                        <input id="ProductGift" type="text" class="form-control"
+                                               placeholder="نام هدیه را وارد نمایید...">
                                     </div>
                                 </div>
                                 <div class="d-flex justify-content-between flex-nowrap gap-3 align-items-center">
                                     <div class="form-group w-50 p-3">
                                         <label>نقاط قوت</label>
-                                        <textarea id="Strengths" class="form-control" required="required" placeholder="نقاط قوت را وارد نمایید..."></textarea>
+                                        <textarea id="Strengths" class="form-control" required="required"
+                                                  placeholder="نقاط قوت را وارد نمایید..."></textarea>
                                     </div>
                                     <div class="form-group w-50 p-3">
                                         <label>نقاط ضعف</label>
-                                        <textarea id="WeakPoints" class="form-control" required="required" placeholder="نقاط ضعف را وارد نمایید..."></textarea>
+                                        <textarea id="WeakPoints" class="form-control" required="required"
+                                                  placeholder="نقاط ضعف را وارد نمایید..."></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -104,7 +114,8 @@
                         <div class="card collapsed-card" style="border-top: 3px solid #4e73df; margin-top: 0;">
                             <div class="card-header" style="padding-top: 0.25rem;">
                                 <div class="d-flex flex-column align-items-start justify-content-center">
-                                    <h3 class="card-title p-1" style="font-weight: bold;font-size: 20px">قیمت و موجودی</h3>
+                                    <h3 class="card-title p-1" style="font-weight: bold;font-size: 20px">قیمت و
+                                        موجودی</h3>
                                 </div>
                                 <div class="card-tools">
                                     <button type="button" class="btn btn-tool" data-widget="collapse">
@@ -125,17 +136,20 @@
                                     </div>
                                     <div class="form-group w-50 p-3">
                                         <label>مبلغ تخفیف</label>
-                                        <input id="PersianTitle" type="text" class="form-control" required="required" placeholder="مبلغ تخفیف را وارد نمایید...">
+                                        <input id="PersianTitle" type="text" class="form-control" required="required"
+                                               placeholder="مبلغ تخفیف را وارد نمایید...">
                                     </div>
                                     <div class="form-group w-50 p-3">
                                         <label>درصد سود</label>
-                                        <input id="PersianTitle" type="number" class="form-control" required="required" placeholder="درصد سود را عددی وارد نمایید...">
+                                        <input id="PersianTitle" type="number" class="form-control" required="required"
+                                               placeholder="درصد سود را عددی وارد نمایید...">
                                     </div>
                                 </div>
                                 <div class="d-flex justify-content-start align-items-center" style="margin-right: 15px">
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">انتخاب رنگ بندی</label>
-                                        <select class="form-control select2" id="SelectColor" name="color" multiple="multiple"
+                                        <select class="form-control select2" id="SelectColor" name="color"
+                                                multiple="multiple"
                                                 data-placeholder="--انتخاب کنید--"
                                                 style="width: 100%;text-align: right">
                                             @foreach (var c in colors)
@@ -145,22 +159,26 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="d-flex flex-column justify-content-center align-items-start " style="gap: 15px"
+                                <div class="d-flex flex-column justify-content-center align-items-start "
+                                     style="gap: 15px"
                                      id="ProductColors">
                                 </div>
                                 <div class="d-flex justify-content-start align-items-center p-2 mt-2"
                                      style="gap: 35px;margin-right: 15px">
                                     <div class="form-check">
                                         <input class="form-check-input" type="checkbox" value="option1">
-                                        <label class="form-check-label" style="font-size: 16px;font-weight: bold;">پیشنهاد لحظه ای</label>
+                                        <label class="form-check-label" style="font-size: 16px;font-weight: bold;">پیشنهاد
+                                            لحظه ای</label>
                                     </div>
                                     <div class="form-check">
                                         <input class="form-check-input" type="checkbox" id="isOffer" value="option1">
-                                        <label class="form-check-label" style="font-size: 16px;font-weight: bold;">پیشنهاد ویژه</label>
+                                        <label class="form-check-label" style="font-size: 16px;font-weight: bold;">پیشنهاد
+                                            ویژه</label>
                                     </div>
                                     <div class="form-check">
                                         <input class="form-check-input" type="checkbox" value="option1">
-                                        <label class="form-check-label" style="font-size: 16px;font-weight: bold;">نمایش در کالای پیشنهادی</label>
+                                        <label class="form-check-label" style="font-size: 16px;font-weight: bold;">نمایش
+                                            در کالای پیشنهادی</label>
                                     </div>
                                 </div>
                                 <div style="display: none !important" id="OfferForm">
@@ -173,13 +191,15 @@
                                         </div>
                                         <div class="d-flex flex-column w-25">
                                             <label>مبلغ تخفیف</label>
-                                            <input id="OfferAmount" type="text" class="form-control" placeholder="مبلغ تخفیف...">
+                                            <input id="OfferAmount" type="text" class="form-control"
+                                                   placeholder="مبلغ تخفیف...">
                                         </div>
                                         <div class="form-group align-items-center w-50">
                                             <label>از تاریخ</label>
                                             <div class="input-group date" style="border-radius: 7px"
                                                  data-provide="datepicker">
-                                                <input id="datePicker" type="text" class="form-control" placeholder="تاریخ شروع...">
+                                                <input id="datePicker" type="text" class="form-control"
+                                                       placeholder="تاریخ شروع...">
                                                 <div class="input-group-addon">
                                                     <span class="glyphicon glyphicon-th"></span>
                                                 </div>
@@ -218,17 +238,20 @@
                                 <div class="d-flex justify-content-between flex-nowrap gap-3 align-items-center ">
                                     <div class="form-group w-50 p-3">
                                         <label>عنوان</label>
-                                        <input id="Title" type="text" class="form-control" required="required" placeholder="عنوان را وارد نمایید...">
+                                        <input id="Title" type="text" class="form-control" required="required"
+                                               placeholder="عنوان را وارد نمایید...">
                                     </div>
                                     <div class="form-group w-50 p-3">
                                         <label>آدرس متعارف</label>
-                                        <input id="PersianTitle" type="text" class="form-control" required="required" placeholder="آدرس متعارف را وارد نمایید...">
+                                        <input id="PersianTitle" type="text" class="form-control" required="required"
+                                               placeholder="آدرس متعارف را وارد نمایید...">
                                     </div>
                                 </div>
                                 <div class="d-flex justify-content-between flex-nowrap gap-3 align-items-center">
                                     <div class="form-group w-50 p-3">
                                         <label>توضیحات</label>
-                                        <textarea id="Detail" class="form-control" required="required" placeholder="توضیحات را وارد نمایید..."></textarea>
+                                        <textarea id="Detail" class="form-control" required="required"
+                                                  placeholder="توضیحات را وارد نمایید..."></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -238,7 +261,8 @@
                         <div class="card collapsed-card" style="border-top: 3px solid #4e73df; margin-top: 0;">
                             <div class="card-header" style="padding-top: 0.25rem;">
                                 <div class="d-flex flex-column align-items-start justify-content-center">
-                                    <h3 class="card-title p-1" style="font-weight: bold;font-size: 20px">تصویر محصول</h3>
+                                    <h3 class="card-title p-1" style="font-weight: bold;font-size: 20px">تصویر
+                                        محصول</h3>
                                 </div>
                                 <div class="card-tools">
                                     <button type="button" class="btn btn-tool" data-widget="collapse">
@@ -251,11 +275,14 @@
                                     <label for="imageUpload" class="d-block mb-2">آپلود تصویر</label>
                                     <div class="d-flex justify-content-start">
                                         <div class="custom-file" style="width: auto;">
-                                            <input type="file" class="custom-file-input" id="imageUpload" multiple accept="image/*">
-                                            <label class="custom-file-label" for="imageUpload">تصویر را انتخاب کنید</label>
+                                            <input type="file" class="custom-file-input" id="imageUpload" multiple
+                                                   accept="image/*">
+                                            <label class="custom-file-label" for="imageUpload">تصویر را انتخاب
+                                                کنید</label>
                                         </div>
                                     </div>
-                                    <small class="form-text text-muted d-block mt-2">فرمت‌های مجاز: JPG, PNG, WEBP | حداکثر حجم: 1MB </small>
+                                    <small class="form-text text-muted d-block mt-2">فرمت‌های مجاز: JPG, PNG, WEBP |
+                                        حداکثر حجم: 1MB </small>
                                 </div>
                                 <div class="row" id="imagePreviewContainer">
                                     <div class="col-12">
@@ -268,7 +295,8 @@
                         <div class="card collapsed-card" style="border-top: 3px solid #4e73df; margin-top: 0;">
                             <div class="card-header" style="padding-top: 0.25rem;">
                                 <div class="d-flex flex-column align-items-start justify-content-center">
-                                    <h3 class="card-title p-1" style="font-weight: bold;font-size: 20px">جزئیات محصول</h3>
+                                    <h3 class="card-title p-1" style="font-weight: bold;font-size: 20px">جزئیات
+                                        محصول</h3>
                                 </div>
                                 <div class="card-tools">
                                     <button type="button" class="btn btn-tool" data-widget="collapse">
@@ -305,7 +333,11 @@
                                         </select>
                                     </div>
                                 </div>
+                                <div id="featureDetailsProd">
+
+                                </div>
                             </div>
+                          
                         </div>
 
                     </div>
@@ -319,88 +351,121 @@
 
 @section script
 
-
-
 {
-  <script>
-    $(document).ready(function () {
-        $('#categorySelect').change(function() {
-            var categoryId = $(this).val();
-            var subCategorySelect = $('#subCategorySelect');
+    <script>
+        $(document).ready(function () {
+            $('#categorySelect').change(function () {
+                var categoryId = $(this).val();
+                var subCategorySelect = $('#subCategorySelect');
 
-            // پاک کردن گزینه‌های قبلی
-            subCategorySelect.empty();
-            subCategorySelect.append('<option value="0">انتخاب</option>');
+                // پاک کردن گزینه‌های قبلی
+                subCategorySelect.empty();
+                subCategorySelect.append('<option value="0">انتخاب</option>');
 
-            if(categoryId && categoryId !== "0") {
-                // نمایش لودینگ با SweetAlert2
-                Swal.fire({
-                    title: 'در حال بارگذاری...',
-                    text: 'لطفاً منتظر بمانید',
-                    allowOutsideClick: false, // کاربر نمی‌تونه با کلیک بیرون ببندتش
-                    didOpen: () => {
-                        Swal.showLoading(); // نمایش اسپینر لودینگ
-                    }
-                });
-
-                $.ajax({
-                    url: '/api/v1/Category/get-cat-details-by-sub-id?id=' + categoryId,
-                    type: 'GET',
-                    dataType: 'json',
-                    success: function(response) {  // تغییر نام پارامتر به response به جای data
-                        // پاک کردن گزینه‌های قبلی (اختیاری)
-                        subCategorySelect.empty();
-
-                        // اضافه کردن گزینه جدید
-                        if (response.data && Array.isArray(response.data)) {
-                            const options = response.data.map(item =>
-                                `<option value="${item.id}">${item.title}</option>`
-                            ).join('');
-
-                            subCategorySelect.html(options);
+                if (categoryId && categoryId !== "0") {
+                    // نمایش لودینگ با SweetAlert2
+                    Swal.fire({
+                        title: 'در حال بارگذاری...',
+                        text: 'لطفاً منتظر بمانید',
+                        allowOutsideClick: false, // کاربر نمی‌تونه با کلیک بیرون ببندتش
+                        didOpen: () => {
+                            Swal.showLoading(); // نمایش اسپینر لودینگ
                         }
+                    });
 
-                        // بستن لودینگ بعد از موفقیت
-                        Swal.close();
-                    },
-                    error: function(xhr, status, error) {
-                        console.log('خطا در دریافت زیرگروه‌ها: ' + error);
-                        // بستن لودینگ و نمایش پیام خطا
-                        Swal.close();
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'خطا',
-                            text: 'مشکلی در بارگذاری زیرگروه‌ها رخ داد!'
-                        });
-                    }
-});
-            }
-        });
-        
-        
-        $('#SelectColor').select2({
-            placeholder: "انتخاب رنگ بندی",
-            allowClear: true,
-            dir: "rtl",
-            language: {
-                noResults: function() {
-                    return "نتیجه‌ای یافت نشد";
+                    $.ajax({
+                        url: '/api/v1/Category/get-cat-details-by-sub-id?id=' + categoryId,
+                        type: 'GET',
+                        dataType: 'json',
+                        success: function (response) {  // تغییر نام پارامتر به response به جای data
+                            // پاک کردن گزینه‌های قبلی (اختیاری)
+                            subCategorySelect.empty();
+
+                            // اضافه کردن گزینه جدید
+                            if (response.data && Array.isArray(response.data)) {
+                                const options = response.data.map(item =>
+                                    `<option value="${item.id}">${item.title}</option>`
+                                ).join('');
+
+                                subCategorySelect.html(options);
+                            }
+
+                            // بستن لودینگ بعد از موفقیت
+                            Swal.close();
+                        },
+                        error: function (xhr, status, error) {
+                            console.log('خطا در دریافت زیرگروه‌ها: ' + error);
+                            // بستن لودینگ و نمایش پیام خطا
+                            Swal.close();
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'خطا',
+                                text: 'مشکلی در بارگذاری زیرگروه‌ها رخ داد!'
+                            });
+                        }
+                    });
+
+                    $.ajax({
+                        url: '/api/v1/Feature/get-feature-details-by-sub-id?id=' + categoryId,
+                        type: 'GET',
+                        success: function (response) {
+                            if (response.isSuccess) {
+                                // استفاده از map برای ساخت اینپوت‌ها
+                                const inputs = response.data.map(item => {
+                                    return `
+                <div class="input-group " style="padding-right: 30px;background-color: rgb(220,220,220,0.4) ">
+                    <h6 class="p-2">${item.title}</h6>
+                    ${item.details.map(detail => `
+                        <div class="input-group mb-3 p-2">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">${detail.title}</span>
+                            </div>
+                            <input type="text" class="form-control" placeholder="${detail.title}">
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+                                });
+
+                                $('#featureDetailsProd').html(inputs.join(''));
+                            } else {
+                                alert('خطایی رخ داد: ' + response.message);
+                            }
+                            
+
+                        },
+                        error: function (xhr, status, error) {
+                            console.log('خطا در درخواست: ' + error);
+                            $('#featureDetailsProd').html('<p>خطا در بارگذاری داده‌ها</p>');
+                        }
+                    });
                 }
-            }
-        });
+            });
 
-      $('#SelectColor').on('change', function () {
-        let selectedColors = $(this).val();
-        let htmlInputs = '';
 
-        if (selectedColors && selectedColors.length > 0) {
-          selectedColors.forEach(function (colorId) {
-            // پیدا کردن گزینه مربوطه در سلکت
-            let option = $('#SelectColor option[value="' + colorId + '"]');
-            let colorTitle = option.text();
-            let colorCode = option.data('color-code') || '#000000'; // مقدار پیش‌فرض سیاه اگه کد رنگ نبود
+            $('#SelectColor').select2({
+                placeholder: "انتخاب رنگ بندی",
+                allowClear: true,
+                dir: "rtl",
+                language: {
+                    noResults: function () {
+                        return "نتیجه‌ای یافت نشد";
+                    }
+                }
+            });
 
-            htmlInputs += `
+            $('#SelectColor').on('change', function () {
+                let selectedColors = $(this).val();
+                let htmlInputs = '';
+
+                if (selectedColors && selectedColors.length > 0) {
+                    selectedColors.forEach(function (colorId) {
+                        // پیدا کردن گزینه مربوطه در سلکت
+                        let option = $('#SelectColor option[value="' + colorId + '"]');
+                        let colorTitle = option.text();
+                        let colorCode = option.data('color-code') || '#000000'; // مقدار پیش‌فرض سیاه اگه کد رنگ نبود
+
+                        htmlInputs += `
                     <div class="color-input-group d-flex justify-content-center align-items-center " 
                          style="gap: 10px;margin-right: 15px" data-color-id="${colorId}">
                         <label style="min-width: 90px; background-color: ${colorCode}; color: #fff; padding: 8px;margin-top: 8px" 
@@ -411,78 +476,84 @@
                                placeholder="قیمت برای ${colorTitle}">
                        <select class="form-control">
                          <option value="0" selected> انتخاب کنید</option>
-                               @foreach (var i in guarantees)
-            {
-              <option value="@i.Id">@i.Title</option>
-            }
-                         </select>
-                                    <button type="button" class="btn btn-danger btn-sm" 
-                                            onclick="removeColor(${colorId})">حذف</button>
+                               
+                        
+                        
+                        @foreach (var i in guarantees)
+                        {
+                            <option value="@i.Id">@i.Title</option>
+                        }
+                        
+                                                
+                                                                        
+                                                                                                 </select>
+                                                                                                            <button type="button" class="btn btn-danger btn-sm" 
+                                                                                                                    onclick="removeColor(${colorId})">حذف</button>
                     </div>
                 `;
-          });
+                    });
+                }
+
+                $('#ProductColors').html(htmlInputs);
+                $('.select2').select2();
+            });
+            $('#SelectColor').on('change', function () {
+                // گرفتن سلکت‌باکس دوم
+                const offerColor = document.getElementById('OfferColor');
+                // پاک کردن گزینه‌های قبلی در سلکت‌باکس دوم
+                offerColor.innerHTML = '<option value="">لطفاً یک رنگ انتخاب کنید</option>';
+
+                // گرفتن گزینه‌های انتخاب‌شده از سلکت‌باکس اول
+                const selectedOptions = $(this).find(':selected');
+
+                // اضافه کردن گزینه‌های انتخاب‌شده به سلکت‌باکس دوم
+                selectedOptions.each(function () {
+                    const optionValue = $(this).val();
+                    const optionText = $(this).text();
+                    const optionColorCode = $(this).data('color-code'); // گرفتن data-color-code
+
+                    // ساخت گزینه جدید
+                    const newOption = document.createElement('option');
+                    newOption.value = optionValue;
+                    newOption.text = optionText;
+                    // اگه بخواید data-color-code رو هم منتقل کنید
+                    newOption.setAttribute('data-color-code', optionColorCode);
+
+                    // اضافه کردن به سلکت‌باکس دوم
+                    offerColor.appendChild(newOption);
+                });
+            });
+
+
+        });
+
+        function removeColor(colorId) {
+            $(`div[data-color-id="${colorId}"]`).remove();
+            let currentValues = $('#SelectColor').val();
+            let newValues = currentValues.filter(id => id != colorId);
+            $('#SelectColor').val(newValues).trigger('change');
         }
 
-        $('#ProductColors').html(htmlInputs);
-        $('.select2').select2();
-      });
-      $('#SelectColor').on('change', function() {
-        // گرفتن سلکت‌باکس دوم
-        const offerColor = document.getElementById('OfferColor');
-        // پاک کردن گزینه‌های قبلی در سلکت‌باکس دوم
-        offerColor.innerHTML = '<option value="">لطفاً یک رنگ انتخاب کنید</option>';
+        // گرفتن المنت‌های چک‌باکس و div
+        const checkbox = document.getElementById('isOffer');
+        const offerForm = document.getElementById('OfferForm');
 
-        // گرفتن گزینه‌های انتخاب‌شده از سلکت‌باکس اول
-        const selectedOptions = $(this).find(':selected');
+        // اضافه کردن رویداد به چک‌باکس
+        checkbox.addEventListener('change', function () {
+            if (this.checked) {
+                // وقتی چک‌باکس تیک خورده، display رو تغییر بده
+                offerForm.style.display = 'block';
+            } else {
+                // وقتی تیک برداشته شد، دوباره مخفی کن
+                offerForm.style.display = 'none';
+            }
 
-        // اضافه کردن گزینه‌های انتخاب‌شده به سلکت‌باکس دوم
-        selectedOptions.each(function() {
-          const optionValue = $(this).val();
-          const optionText = $(this).text();
-          const optionColorCode = $(this).data('color-code'); // گرفتن data-color-code
 
-          // ساخت گزینه جدید
-          const newOption = document.createElement('option');
-          newOption.value = optionValue;
-          newOption.text = optionText;
-          // اگه بخواید data-color-code رو هم منتقل کنید
-          newOption.setAttribute('data-color-code', optionColorCode);
-
-          // اضافه کردن به سلکت‌باکس دوم
-          offerColor.appendChild(newOption);
         });
-      });
-      
-      
-    });
-
-    function removeColor(colorId) {
-      $(`div[data-color-id="${colorId}"]`).remove();
-      let currentValues = $('#SelectColor').val();
-      let newValues = currentValues.filter(id => id != colorId);
-      $('#SelectColor').val(newValues).trigger('change');
-    }
-
-    // گرفتن المنت‌های چک‌باکس و div
-    const checkbox = document.getElementById('isOffer');
-    const offerForm = document.getElementById('OfferForm');
-
-    // اضافه کردن رویداد به چک‌باکس
-    checkbox.addEventListener('change', function() {
-      if (this.checked) {
-        // وقتی چک‌باکس تیک خورده، display رو تغییر بده
-        offerForm.style.display = 'block';
-      } else {
-        // وقتی تیک برداشته شد، دوباره مخفی کن
-        offerForm.style.display = 'none';
-      }
-
-
-    });
         // JavaScript for handling image previews
         let allFiles = []; // آرایه برای ذخیره تمام فایل‌ها
 
-        document.getElementById('imageUpload').addEventListener('change', function(event) {
+        document.getElementById('imageUpload').addEventListener('change', function (event) {
             const newFiles = Array.from(event.target.files);
             const previewContainer = document.getElementById('imagePreviewContainer');
 
@@ -505,7 +576,7 @@
                     if (!file.type.match('image.*')) return;
 
                     const reader = new FileReader();
-                    reader.onload = function(e) {
+                    reader.onload = function (e) {
                         const col = document.createElement('div');
                         col.className = 'col-md-3 col-sm-6 mb-3';
                         col.innerHTML = `
@@ -522,7 +593,7 @@
                         container.appendChild(col);
 
                         // اضافه کردن رویداد برای دکمه حذف
-                        col.querySelector('.delete-btn').addEventListener('click', function() {
+                        col.querySelector('.delete-btn').addEventListener('click', function () {
                             const indexToRemove = parseInt(this.getAttribute('data-index'));
                             allFiles.splice(indexToRemove, 1);
                             displayAllImages(allFiles, container);
@@ -554,23 +625,24 @@
             if (count > 0) {
                 label.textContent = `${count} تصویر انتخاب شده`;
             } else {
-                    label.textContent = 'تصویر را انتخاب کنید';
+                label.textContent = 'تصویر را انتخاب کنید';
             }
         }
-                //برای دکمه پلاس و ماینس کارت ها
-                $(document).ready(function() {
-                // برای کارت‌هایی که از ابتدا باز هستند
-                $('.card:not(.collapsed-card) .btn-tool i').removeClass('fa-plus').addClass('fa-minus');
 
-                // برای کارت‌هایی که از ابتدا بسته هستند
-                $('.collapsed-card .btn-tool i').removeClass('fa-minus').addClass('fa-plus');
+        //برای دکمه پلاس و ماینس کارت ها
+        $(document).ready(function () {
+            // برای کارت‌هایی که از ابتدا باز هستند
+            $('.card:not(.collapsed-card) .btn-tool i').removeClass('fa-plus').addClass('fa-minus');
 
-                // رویداد تغییر وضعیت collapse
-                $('[data-widget="collapse"]').click(function() {
-                    $(this).find('i').toggleClass('fa-minus fa-plus');
-                });
-     });
-  </script>
+            // برای کارت‌هایی که از ابتدا بسته هستند
+            $('.collapsed-card .btn-tool i').removeClass('fa-minus').addClass('fa-plus');
+
+            // رویداد تغییر وضعیت collapse
+            $('[data-widget="collapse"]').click(function () {
+                $(this).find('i').toggleClass('fa-minus fa-plus');
+            });
+        });
+    </script>
 }
 
 
