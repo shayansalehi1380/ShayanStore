@@ -18,7 +18,7 @@ namespace AdminPanel.UI.Controllers.Api;
 public class ProductController(IMediator mediator, UserManager<User> userManager) : BaseApiController
 {
     [HttpPost("create")]
-    public async Task<ApiResult<bool>> Create(ProductDto request)
+    public async Task<ActionResult<ApiResult<bool>>> Create(ProductDto request)
     {
         var user = await userManager.FindByNameAsync(User.Identity.Name);
 
@@ -60,6 +60,7 @@ public class ProductController(IMediator mediator, UserManager<User> userManager
             });
         }
 
-        return new ApiResult<bool>(true, ApiResultStatusCode.Success.ToDisplay(), ApiResultStatusCode.Success);
+        var result = new ApiResult<bool>(true, ApiResultStatusCode.Success.ToDisplay(), ApiResultStatusCode.Success);
+        return Ok(result);
     }
 }

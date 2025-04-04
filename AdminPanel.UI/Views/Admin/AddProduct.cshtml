@@ -1,4 +1,6 @@
 ﻿@using Application.Common.Utilities
+@using Domain.Entity.Products.Brands
+@using Domain.Entity.Products.Categories
 @using Domain.Entity.Products.Colors
 @using Domain.Entity.Products.Guaranties
 @using Domain.Enums
@@ -6,6 +8,8 @@
 @{
   List<Color> colors = ViewBag.Colors;
   List<Guarantee> guarantees = ViewBag.Guarantees;
+  List<Brand> brands = ViewBag.Brands;
+  List<SubCategory> subCategories = ViewBag.SubCat;
 }
 @section link{
 
@@ -41,8 +45,6 @@
             <div class="card-body">
                 <div class="tab-content">
                     <div class="active tab-pane" id="activity">
-
-
                         <div class="card" style="border-top: 3px solid #4e73df; margin-top: 0;">
                             <div class="card-header" style="padding-top: 0.25rem;">
                                 <div class="d-flex flex-column align-items-start justify-content-center">
@@ -262,6 +264,50 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div class="card collapsed-card" style="border-top: 3px solid #4e73df; margin-top: 0;">
+                            <div class="card-header" style="padding-top: 0.25rem;">
+                                <div class="d-flex flex-column align-items-start justify-content-center">
+                                    <h3 class="card-title p-1" style="font-weight: bold;font-size: 20px">جزئیات محصول</h3>
+                                </div>
+                                <div class="card-tools">
+                                    <button type="button" class="btn btn-tool" data-widget="collapse">
+                                        <i class="fa fa-minus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="card-body collapse" style="background-color: rgb(220,220,220,0.4)">
+                                <div class="d-flex justify-content-start align-items-center">
+                                    <div class="form-group w-100 p-3">
+                                        <label>برند</label>
+                                        <select class="form-control">
+                                            @foreach (var brand in brands)
+                                            {
+                                                <option value="@brand.Id">@brand.Title</option>
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-center align-items-center" style="gap: 15px">
+                                    <div class="form-group w-50 p-3">
+                                        <label>دسته بندی</label>
+                                        <select class="form-control" id="categorySelect">
+                                            @foreach (var sub in subCategories)
+                                            {
+                                                <option value="@sub.Id">@sub.Title</option>
+                                            }
+                                        </select>
+                                    </div>
+                                    <div class="form-group w-50 p-3">
+                                        <label>زیر گروه کالا</label>
+                                        <select class="form-control" id="subCategorySelect">
+                                            <option value="0">انتخاب</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -278,6 +324,60 @@
 {
   <script>
     $(document).ready(function () {
+        $('#categorySelect').change(function() {
+            var categoryId = $(this).val();
+            var subCategorySelect = $('#subCategorySelect');
+
+            // پاک کردن گزینه‌های قبلی
+            subCategorySelect.empty();
+            subCategorySelect.append('<option value="0">انتخاب</option>');
+
+            if(categoryId && categoryId !== "0") {
+                // نمایش لودینگ با SweetAlert2
+                Swal.fire({
+                    title: 'در حال بارگذاری...',
+                    text: 'لطفاً منتظر بمانید',
+                    allowOutsideClick: false, // کاربر نمی‌تونه با کلیک بیرون ببندتش
+                    didOpen: () => {
+                        Swal.showLoading(); // نمایش اسپینر لودینگ
+                    }
+                });
+
+                $.ajax({
+                    url: '/api/v1/Category/get-cat-details-by-sub-id?id=' + categoryId,
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(response) {  // تغییر نام پارامتر به response به جای data
+                        // پاک کردن گزینه‌های قبلی (اختیاری)
+                        subCategorySelect.empty();
+
+                        // اضافه کردن گزینه جدید
+                        if (response.data && Array.isArray(response.data)) {
+                            const options = response.data.map(item =>
+                                `<option value="${item.id}">${item.title}</option>`
+                            ).join('');
+
+                            subCategorySelect.html(options);
+                        }
+
+                        // بستن لودینگ بعد از موفقیت
+                        Swal.close();
+                    },
+                    error: function(xhr, status, error) {
+                        console.log('خطا در دریافت زیرگروه‌ها: ' + error);
+                        // بستن لودینگ و نمایش پیام خطا
+                        Swal.close();
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'خطا',
+                            text: 'مشکلی در بارگذاری زیرگروه‌ها رخ داد!'
+                        });
+                    }
+});
+            }
+        });
+        
+        
         $('#SelectColor').select2({
             placeholder: "انتخاب رنگ بندی",
             allowClear: true,

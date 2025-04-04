@@ -120,6 +120,8 @@ namespace AdminPanel.UI.Controllers
 
             ViewBag.Colors = await unitOfWork.GenericRepository<Color>().TableNoTracking.ToListAsync();
             ViewBag.Guarantees = await unitOfWork.GenericRepository<Guarantee>().TableNoTracking.ToListAsync();
+            ViewBag.Brands = await unitOfWork.GenericRepository<Brand>().TableNoTracking.ToListAsync();
+            ViewBag.SubCat = await unitOfWork.GenericRepository<SubCategory>().TableNoTracking.ToListAsync();
             return View();
         }
 
