@@ -2,6 +2,35 @@
 @{
   List<Product> products = ViewBag.Products;
 }
+
+@section link {
+
+    <style>
+        /* برای گردی کامل و افکت‌ها */
+        .btn-primary.rounded-pill {
+            border-radius: 50px !important;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+            .btn-primary.rounded-pill:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+                background-color: #5649c0 !important;
+            }
+
+            /* تنظیمات آیکون */
+            .btn-primary.rounded-pill i {
+                font-size: 1.1rem;
+                margin-left: 5px; /* فاصله آیکون از متن در RTL */
+            }
+    </style>
+
+}
+
 <div class="row">
   <div class="col-12">
     <div class="card" style="margin: 15px 15px 0px 15px;">
@@ -13,9 +42,14 @@
       <div class="card-body">
         <div class="tab-content">
           <div class="active tab-pane" id="activity">
-            <div class="d-flex justify-content-between align-items-center p-2 m-1 " style="color: white">
-              <a type="button" class="btn btn-primary" href="@Url.Action("AddProduct","Admin")" >افزودن کالا</a>
-            </div>
+                        <div class="d-flex justify-content-between align-items-center p-2 m-1">
+                            <a href="@Url.Action("AddProduct","Admin")"
+                               class="btn btn-primary rounded-pill px-4 d-flex align-items-center"
+                               style="color: white; background-color: #6c5ce7; border: none; gap: 8px;">
+                                <i class="fa fa-plus-circle"></i>
+                                <span>افزودن کالا</span>
+                            </a>
+                        </div>
             <div class="card">
               <div class="card-header">
                 <h3 class="card-title">محصولات</h3>
