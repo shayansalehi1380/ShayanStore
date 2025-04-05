@@ -702,7 +702,7 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.17.2/dist/sweetalert2.min.css
     <!-- اسکریپت حالت شب/روز -->
     <script>
 
-                document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function() {
             const darkModeToggle = document.getElementById('dark-mode-toggle');
             if (!darkModeToggle) return;
 
@@ -718,16 +718,14 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.17.2/dist/sweetalert2.min.css
             function disableDarkMode() {
                 body.classList.remove('dark-mode');
                 icon.className = 'fas fa-moon';
-                localStorage.removeItem('darkMode');
+                localStorage.setItem('darkMode', 'disabled'); // ذخیره حالت غیرفعال به‌صورت صریح
             }
 
-            // حالت پیش‌فرض: روز (light mode)
-            // فقط اگر کاربر قبلاً dark mode را انتخاب کرده باشد، فعال می‌شود
+            // حالت پیش‌فرض: Light Mode (مگر اینکه کاربر Dark Mode را انتخاب کرده باشد)
             if (localStorage.getItem('darkMode') === 'enabled') {
                 enableDarkMode();
             } else {
-                // اطمینان حاصل کنید که dark mode غیرفعال است
-                disableDarkMode();
+                disableDarkMode(); // همیشه Light Mode پیش‌فرض است
             }
 
             darkModeToggle.addEventListener('click', function(e) {
@@ -735,6 +733,7 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.17.2/dist/sweetalert2.min.css
                 body.classList.contains('dark-mode') ? disableDarkMode() : enableDarkMode();
             });
         });
+
     </script>
 
     @await RenderSectionAsync("script",false)
