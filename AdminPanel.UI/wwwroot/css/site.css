@@ -24,7 +24,335 @@ background-color:#257ff2cf!important; ;
 
 
 
+/* حالت تاریک - پنل کاربر */
+body.dark-mode .user-panel .info a {
+    color: #fff !important;
+}
 
+/* حالت تاریک - تصویر کاربر */
+body.dark-mode .user-panel {
+    border-bottom: 1px solid #444 !important;
+}
+
+/* حالت تاریک - متن کاربر */
+body.dark-mode .user-panel .d-block {
+    color: #fff !important;
+}
+/* حالت تاریک برای نوار ناوبری */
+body.dark-mode .main-header {
+    background-color: #252536 !important;
+    border-color: #3a3a4a !important;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+/* حالت روز - نوار ناوبری آبی */
+.main-header.navbar {
+    background-color: #007bff !important;
+    border-bottom: none !important;
+}
+
+/* تغییر رنگ متن و آیکون‌ها در نوار آبی */
+.navbar-light .navbar-nav .nav-link,
+.navbar-light .navbar-nav .nav-link i {
+    color: rgba(255, 255, 255, 0.9) !important;
+}
+
+/* تغییر رنگ hover */
+.navbar-light .navbar-nav .nav-link:hover,
+.navbar-light .navbar-nav .nav-link:hover i {
+    color: #fff !important;
+}
+
+/* تغییر رنگ فرم جستجو */
+.form-inline .form-control {
+    background-color: rgba(255, 255, 255, 0.9) !important;
+    border-color: rgba(255, 255, 255, 0.8) !important;
+}
+
+/* تغییر رنگ دکمه جستجو */
+.btn-navbar {
+    background-color: rgba(255, 255, 255, 0.9) !important;
+    border-color: rgba(255, 255, 255, 0.8) !important;
+}
+
+/* تغییر رنگ آیکون همبرگر */
+.navbar-light .navbar-nav .nav-link > i.fas.fa-bars {
+    color: rgba(255, 255, 255, 0.9) !important;
+}
+
+/* حالت تاریک - بازنشانی به حالت قبلی */
+body.dark-mode .main-header.navbar {
+    background-color: #1a1a28 !important;
+    border-color: #3a3a4a !important;
+}
+/* تغییر رنگ آیکون منو در حالت روشن */
+.navbar-light .navbar-nav .nav-link > i.fas.fa-bars {
+    color: #b9bfc6 !important;
+}
+
+/* تغییر رنگ در حالت hover */
+.navbar-light .navbar-nav .nav-link:hover > i.fas.fa-bars {
+    color: #b9bfc6 !important;
+}
+/* پایه حالت تاریک با رنگ‌های بهبودیافته */
+body.dark-mode {
+    color: #e9ecef;
+    background-color: #1e1e2d;
+}
+
+/* ثابت کردن نوار ناوبری */
+.main-header {
+    position: sticky;
+    top: 0;
+    z-index: 1030;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease-in-out;
+}
+
+/* حالت تاریک برای متن‌ها و لینک‌ها */
+body.dark-mode .navbar-light .navbar-nav .nav-link,
+body.dark-mode .navbar-light .navbar-nav .nav-link i,
+body.dark-mode .brand-text {
+    color: white !important;
+}
+
+/* حالت روز - تغییر فقط برند لینک */
+
+.brand-text {
+    color: black !important;
+}
+
+/* حالت روز - تغییر فقط برند لینک */
+.brand-link {
+    background-color: #007bff !important;
+    transition: all 0.3s ease-in-out; /* غیرفعال کردن transition */
+}
+
+/* تغییر رنگ hover برند لینک به آبی */
+.brand-link:hover {
+    background-color: #007bff !important;
+    color: white !important;
+    transform: none !important;
+    box-shadow: none !important;
+}
+
+/* برای حالت تاریک */
+body.dark-mode .brand-link:hover {
+    background-color: #252536 !important;
+    color: #f8f9fa !important;
+}
+
+/* حالت تاریک برای سایدبار */
+body.dark-mode .main-sidebar {
+    background-color: #1a1a28 !important;
+}
+
+body.dark-mode .brand-link {
+    background-color: #252536 !important;
+    border-color: #3a3a4a !important;
+}
+
+body.dark-mode .content-wrapper {
+    background-color: #1e1e2d !important;
+    transition: background-color 0.3s ease-in-out;
+}
+
+body.dark-mode .card {
+    background-color: #2a2a3a !important;
+    border-color: #3a3a4a !important;
+}
+
+body.dark-mode .card-header {
+    background-color: #252536 !important;
+    border-bottom-color: #3a3a4a !important;
+}
+
+/*دکمه تغییر حالت*/
+#dark-mode-toggle i {
+    transition: all 0.3s ease-in-out;
+    color: #495057;
+}
+
+body.dark-mode #dark-mode-toggle i {
+    color: #fff !important;
+    transform: rotate(180deg);
+}
+
+/* بهبود منوی سایدبار */
+.nav-sidebar .nav-link > p {
+    font-weight: 600 !important;
+}
+
+.nav-sidebar .nav-treeview .nav-link > p {
+    font-weight: 500 !important;
+}
+
+body.dark-mode .nav-sidebar .nav-link > p,
+body.dark-mode .nav-sidebar .nav-treeview .nav-link > p {
+    color: white !important;
+}
+
+/* آیکون‌ها */
+body.dark-mode .nav-icon,
+body.dark-mode .nav-link > i,
+body.dark-mode .nav-treeview .nav-link > i,
+body.dark-mode .nav-item > .nav-link > .fa-angle-left {
+    color: #ffffff !important;
+}
+
+/* حالت hover و فعال */
+body.dark-mode .nav-sidebar .nav-item > .nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+body.dark-mode .nav-sidebar .nav-item > .nav-link:hover > p,
+body.dark-mode .nav-sidebar .nav-item > .nav-link:hover > i {
+    color: #ffffff !important;
+    opacity: 1 !important;
+}
+
+body.dark-mode .nav-sidebar .nav-item > .nav-link.active {
+    background-color: rgba(255, 255, 255, 0.15) !important;
+}
+
+body.dark-mode .nav-sidebar .nav-item > .nav-link.active > p,
+body.dark-mode .nav-sidebar .nav-item > .nav-link.active > i {
+    color: #ffffff !important;
+    font-weight: bold !important;
+}
+
+/* زیرمنوها */
+body.dark-mode .nav-treeview {
+    background-color: rgba(0, 0, 0, 0.2) !important;
+}
+
+body.dark-mode .nav-treeview .nav-link {
+    background-color: #1a1a28 !important;
+}
+
+body.dark-mode .nav-treeview .nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.05) !important;
+}
+
+/* دسته‌های باز شده */
+body.dark-mode .nav-sidebar .nav-item.menu-open > .nav-link {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+body.dark-mode .nav-sidebar .nav-item.menu-open > .nav-link > p,
+body.dark-mode .nav-sidebar .nav-item.menu-open > .nav-link > i {
+    color: #ffffff !important;
+}
+
+body.dark-mode .nav-sidebar .nav-item.menu-open > .nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.15) !important;
+}
+/* حالت تاریک - عنوان مدیریت فروشگاه */
+body.dark-mode h1.text-dark {
+    color: #fff !important;
+}
+
+body.dark-mode .main-footer {
+    background-color: #1a1a28 !important;
+    border-top: 1px solid #2a2a3a !important;
+}
+
+body.dark-mode .main-footer a {
+    color: #4e9af1 !important;
+}
+
+body.dark-mode .main-footer strong {
+    color: #e0e0e0 !important;
+}
+
+.nav-treeview .nav-link > p {
+    color: #212529 !important;
+}
+
+.nav-treeview .nav-link > i {
+    color: #495057 !important;
+}
+/* حالت روز - تغییر فقط رنگ پس‌زمینه سایدبار */
+.sidebar {
+    background-color: white !important;
+}
+
+/* حالت تاریک - بازنشانی به رنگ تاریک */
+body.dark-mode .sidebar {
+    background-color: #1a1a28 !important;
+    transition: all 0.3s ease-in-out;
+}
+
+
+
+
+/* حالت روز - متن دسته‌بندی‌ها و آیتم‌های منو */
+.nav-sidebar .nav-link > p,
+.nav-sidebar .nav-treeview .nav-link > p {
+    color: #000 !important; /* رنگ مشکی */
+}
+
+/* حالت روز - آیکون‌های منو */
+.nav-sidebar .nav-link > i,
+.nav-sidebar .nav-treeview .nav-link > i {
+    color: #333 !important; /* خاکستری تیره */
+}
+
+/* حالت روز - زیرمنوها */
+.nav-treeview .nav-link > p,
+.nav-treeview .nav-link > i {
+    color: #000 !important;
+}
+
+/* بهبود منوی سایدبار */
+.nav-sidebar .nav-link > p {
+    font-weight: 600 !important;
+    color: #000 !important; /* اضافه شده */
+}
+
+.nav-sidebar .nav-treeview .nav-link > p {
+    font-weight: 500 !important;
+    color: #000 !important; /* اضافه شده */
+}
+
+/* اضافه کردن این بخش جدید */
+.nav-sidebar .nav-link > i,
+.nav-sidebar .nav-treeview .nav-link > i {
+    color: #333 !important;
+}
+
+.nav-treeview .nav-link > p,
+.nav-treeview .nav-link > i {
+    color: #000 !important;
+}
+
+/* حالت روز - هاور روی آیتم‌های منو */
+.nav-sidebar .nav-item > .nav-link:hover {
+    background-color: #f0f0f0 !important;
+}
+
+.nav-sidebar .nav-item > .nav-link:hover > p,
+.nav-sidebar .nav-item > .nav-link:hover > i {
+    color: #000 !important; /* متن مشکی در هاور */
+}
+
+/* حالت روز - آیتم فعال */
+.nav-sidebar .nav-item > .nav-link.active {
+    background-color: #e0e0e0 !important;
+}
+
+.nav-sidebar .nav-item > .nav-link.active > p,
+.nav-sidebar .nav-item > .nav-link.active > i {
+    color: #000 !important;
+}
+
+body.dark-mode .user-panel .d-block {
+    color: #fff !important;
+}
+
+
+.user-panel .info a.d-block {
+    color: #000 !important;
+}
 
 
 

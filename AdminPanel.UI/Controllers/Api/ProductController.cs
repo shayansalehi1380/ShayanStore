@@ -18,7 +18,7 @@ namespace AdminPanel.UI.Controllers.Api;
 public class ProductController(IMediator mediator, UserManager<User> userManager) : BaseApiController
 {
     [HttpPost("create")]
-    public async Task<ActionResult<ApiResult<bool>>> Create(ProductDto request)
+    public async Task<ActionResult<ApiResult<bool>>> Create([FromForm] ProductDto? request)
     {
         var user = await userManager.FindByNameAsync(User.Identity.Name);
 
@@ -41,17 +41,17 @@ public class ProductController(IMediator mediator, UserManager<User> userManager
         await mediator.Send(new CreateProductDetailCommand
         {
             ProductId = prodResult.Data,
-            Details = request.ProductDetails,
+            Details = request.Features,
         }, CancellationToken.None);
 
         //create color
         await mediator.Send(new CreateProductColorCommand
         {
             ProductId = prodResult.Data,
-            Colors = request.ProductColors,
+            Colors = request.Colors,
         }, CancellationToken.None);
 
-        if (request.IsOffer)
+        if (request.IsSpecialOffer)
         {
             await mediator.Send(new CreateOfferCommand
             {

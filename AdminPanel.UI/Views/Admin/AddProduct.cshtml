@@ -109,8 +109,6 @@
                                 </div>
                             </div>
                         </div>
-
-
                         <div class="card collapsed-card" style="border-top: 3px solid #4e73df; margin-top: 0;">
                             <div class="card-header" style="padding-top: 0.25rem;">
                                 <div class="d-flex flex-column align-items-start justify-content-center">
@@ -124,10 +122,10 @@
                                 </div>
                             </div>
                             <div class="card-body collapse" style="background-color: rgb(220,220,220,0.4)">
-                                <div class="d-flex justify-content-between flex-nowrap gap-3 align-items-center ">
+                                <div class="d-flex justify-content-between flex-nowrap gap-3 align-items-center">
                                     <div class="form-group w-50 p-3">
                                         <label>وضعیت کالا</label>
-                                        <select class="form-control">
+                                        <select id="ProductStatus" class="form-control">
                                             @foreach (var status in Enum.GetValues(typeof(ProductStatus)).Cast<ProductStatus>())
                                             {
                                                 <option value="@((int)status)">@status.ToDisplay()</option>
@@ -136,12 +134,13 @@
                                     </div>
                                     <div class="form-group w-50 p-3">
                                         <label>مبلغ تخفیف</label>
-                                        <input id="PersianTitle" type="text" class="form-control" required="required"
+                                        <input id="DiscountAmount" type="text" class="form-control" required="required"
                                                placeholder="مبلغ تخفیف را وارد نمایید...">
                                     </div>
                                     <div class="form-group w-50 p-3">
                                         <label>درصد سود</label>
-                                        <input id="PersianTitle" type="number" class="form-control" required="required"
+                                        <input id="ProfitPercentage" type="number" class="form-control"
+                                               required="required"
                                                placeholder="درصد سود را عددی وارد نمایید...">
                                     </div>
                                 </div>
@@ -159,187 +158,206 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="d-flex flex-column justify-content-center align-items-start "
-                                     style="gap: 15px"
-                                     id="ProductColors">
+                            </div>
+                            <div class="d-flex flex-column justify-content-center align-items-start "
+                                 style="gap: 15px"
+                                 id="ProductColors">
+                            </div>
+
+                            <div class="d-flex justify-content-start align-items-center p-2 mt-2"
+                                 style="gap: 35px;margin-right: 15px">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="option1">
+                                    <label class="form-check-label" style="font-size: 16px;font-weight: bold;">پیشنهاد
+                                        لحظه ای</label>
                                 </div>
-                                <div class="d-flex justify-content-start align-items-center p-2 mt-2"
-                                     style="gap: 35px;margin-right: 15px">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="option1">
-                                        <label class="form-check-label" style="font-size: 16px;font-weight: bold;">پیشنهاد
-                                            لحظه ای</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="isOffer" value="option1">
-                                        <label class="form-check-label" style="font-size: 16px;font-weight: bold;">پیشنهاد
-                                            ویژه</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="option1">
-                                        <label class="form-check-label" style="font-size: 16px;font-weight: bold;">نمایش
-                                            در کالای پیشنهادی</label>
-                                    </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="isOffer" value="option1">
+                                    <label class="form-check-label" style="font-size: 16px;font-weight: bold;">پیشنهاد
+                                        ویژه</label>
                                 </div>
-                                <div style="display: none !important" id="OfferForm">
-                                    <div class="d-flex justify-content-center p-3" style="gap: 20px">
-                                        <div class="form-group w-50  d-flex flex-column">
-                                            <label for="exampleInputPassword1">رنگ مورد نظر</label>
-                                            <select id="OfferColor" class="form-control "
-                                                    aria-label="Default select example" required="required">
-                                            </select>
-                                        </div>
-                                        <div class="d-flex flex-column w-25">
-                                            <label>مبلغ تخفیف</label>
-                                            <input id="OfferAmount" type="text" class="form-control"
-                                                   placeholder="مبلغ تخفیف...">
-                                        </div>
-                                        <div class="form-group align-items-center w-50">
-                                            <label>از تاریخ</label>
-                                            <div class="input-group date" style="border-radius: 7px"
-                                                 data-provide="datepicker">
-                                                <input id="datePicker" type="text" class="form-control"
-                                                       placeholder="تاریخ شروع...">
-                                                <div class="input-group-addon">
-                                                    <span class="glyphicon glyphicon-th"></span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="d-flex justify-content-start w-75" style="gap: 10px">
-                                            <div class="d-flex flex-column">
-                                                <label for="hours">ساعت</label>
-                                                <input type="number" id="hours" name="hours" min="0" max="24"
-                                                       value="0" class="form-control"><br><br>
-                                            </div>
-                                            <div class="d-flex flex-column">
-                                                <label for="minutes">دقیقه</label>
-                                                <input type="number" id="minutes" name="minutes" min="0"
-                                                       max="60" value="0" class="form-control"><br><br>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="option1">
+                                    <label class="form-check-label" style="font-size: 16px;font-weight: bold;">نمایش
+                                        در کالای پیشنهادی</label>
+                                </div>
+                            </div>
+                            <div style="display: none !important" id="OfferForm">
+                                <div class="d-flex justify-content-center p-3" style="gap: 20px">
+                                    <div class="form-group w-50  d-flex flex-column">
+                                        <label for="exampleInputPassword1">رنگ مورد نظر</label>
+                                        <select id="OfferColor" class="form-control "
+                                                aria-label="Default select example" required="required">
+                                        </select>
+                                    </div>
+                                    <div class="d-flex flex-column w-25">
+                                        <label>مبلغ تخفیف</label>
+                                        <input id="OfferAmount" type="text" class="form-control"
+                                               placeholder="مبلغ تخفیف...">
+                                    </div>
+                                    <div class="form-group align-items-center w-50">
+                                        <label>از تاریخ</label>
+                                        <div class="input-group date" style="border-radius: 7px"
+                                             data-provide="datepicker">
+                                            <input id="datePicker" type="text" class="form-control"
+                                                   placeholder="تاریخ شروع...">
+                                            <div class="input-group-addon">
+                                                <span class="glyphicon glyphicon-th"></span>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <div class="card collapsed-card" style="border-top: 3px solid #4e73df; margin-top: 0;">
-                            <div class="card-header" style="padding-top: 0.25rem;">
-                                <div class="d-flex flex-column align-items-start justify-content-center">
-                                    <h3 class="card-title p-1" style="font-weight: bold;font-size: 20px">محتوای سئو</h3>
-                                </div>
-                                <div class="card-tools">
-                                    <button type="button" class="btn btn-tool" data-widget="collapse">
-                                        <i class="fa fa-minus"></i>
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="card-body collapse" style="background-color: rgb(220,220,220,0.4)">
-                                <div class="d-flex justify-content-between flex-nowrap gap-3 align-items-center ">
-                                    <div class="form-group w-50 p-3">
-                                        <label>عنوان</label>
-                                        <input id="Title" type="text" class="form-control" required="required"
-                                               placeholder="عنوان را وارد نمایید...">
-                                    </div>
-                                    <div class="form-group w-50 p-3">
-                                        <label>آدرس متعارف</label>
-                                        <input id="PersianTitle" type="text" class="form-control" required="required"
-                                               placeholder="آدرس متعارف را وارد نمایید...">
-                                    </div>
-                                </div>
-                                <div class="d-flex justify-content-between flex-nowrap gap-3 align-items-center">
-                                    <div class="form-group w-50 p-3">
-                                        <label>توضیحات</label>
-                                        <textarea id="Detail" class="form-control" required="required"
-                                                  placeholder="توضیحات را وارد نمایید..."></textarea>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <div class="card collapsed-card" style="border-top: 3px solid #4e73df; margin-top: 0;">
-                            <div class="card-header" style="padding-top: 0.25rem;">
-                                <div class="d-flex flex-column align-items-start justify-content-center">
-                                    <h3 class="card-title p-1" style="font-weight: bold;font-size: 20px">تصویر
-                                        محصول</h3>
-                                </div>
-                                <div class="card-tools">
-                                    <button type="button" class="btn btn-tool" data-widget="collapse">
-                                        <i class="fa fa-minus"></i>
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="card-body collapse" style="background-color: rgba(220,220,220,0.4)">
-                                <div class="form-group mb-4">
-                                    <label for="imageUpload" class="d-block mb-2">آپلود تصویر</label>
-                                    <div class="d-flex justify-content-start">
-                                        <div class="custom-file" style="width: auto;">
-                                            <input type="file" class="custom-file-input" id="imageUpload" multiple
-                                                   accept="image/*">
-                                            <label class="custom-file-label" for="imageUpload">تصویر را انتخاب
-                                                کنید</label>
+                                    <div class="d-flex justify-content-start w-75" style="gap: 10px">
+                                        <div class="d-flex flex-column">
+                                            <label for="hours">ساعت</label>
+                                            <input type="number" id="hours" name="hours" min="0" max="24"
+                                                   value="0" class="form-control"><br><br>
+                                        </div>
+                                        <div class="d-flex flex-column">
+                                            <label for="minutes">دقیقه</label>
+                                            <input type="number" id="minutes" name="minutes" min="0"
+                                                   max="60" value="0" class="form-control"><br><br>
                                         </div>
                                     </div>
-                                    <small class="form-text text-muted d-block mt-2">فرمت‌های مجاز: JPG, PNG, WEBP |
-                                        حداکثر حجم: 1MB </small>
-                                </div>
-                                <div class="row" id="imagePreviewContainer">
-                                    <div class="col-12">
-                                        <p class="text-center text-muted">هنوز تصویری آپلود نشده است</p>
-                                    </div>
                                 </div>
                             </div>
                         </div>
-
-                        <div class="card collapsed-card" style="border-top: 3px solid #4e73df; margin-top: 0;">
-                            <div class="card-header" style="padding-top: 0.25rem;">
-                                <div class="d-flex flex-column align-items-start justify-content-center">
-                                    <h3 class="card-title p-1" style="font-weight: bold;font-size: 20px">جزئیات
-                                        محصول</h3>
+                    </div>
+                    <div class="card collapsed-card" style="border-top: 3px solid #4e73df; margin-top: 0;">
+                        <div class="card-header" style="padding-top: 0.25rem;">
+                            <div class="d-flex flex-column align-items-start justify-content-center">
+                                <h3 class="card-title p-1" style="font-weight: bold;font-size: 20px">محتوای سئو</h3>
+                            </div>
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-widget="collapse">
+                                    <i class="fa fa-minus"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body collapse" style="background-color: rgb(220,220,220,0.4)">
+                            <div class="d-flex justify-content-between flex-nowrap gap-3 align-items-center ">
+                                <div class="form-group w-50 p-3">
+                                    <label>عنوان</label>
+                                    <input id="SeoTitle" type="text" class="form-control" required="required"
+                                           placeholder="عنوان را وارد نمایید...">
                                 </div>
-                                <div class="card-tools">
-                                    <button type="button" class="btn btn-tool" data-widget="collapse">
-                                        <i class="fa fa-minus"></i>
-                                    </button>
+                                <div class="form-group w-50 p-3">
+                                    <label>آدرس متعارف</label>
+                                    <input id="SeoCanonicalUrl" type="text" class="form-control" required="required"
+                                           placeholder="آدرس متعارف را وارد نمایید...">
                                 </div>
                             </div>
-                            <div class="card-body collapse" style="background-color: rgb(220,220,220,0.4)">
-                                <div class="d-flex justify-content-start align-items-center">
-                                    <div class="form-group w-100 p-3">
-                                        <label>برند</label>
-                                        <select class="form-control">
-                                            @foreach (var brand in brands)
-                                            {
-                                                <option value="@brand.Id">@brand.Title</option>
-                                            }
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="d-flex justify-content-center align-items-center" style="gap: 15px">
-                                    <div class="form-group w-50 p-3">
-                                        <label>دسته بندی</label>
-                                        <select class="form-control" id="categorySelect">
-                                            @foreach (var sub in subCategories)
-                                            {
-                                                <option value="@sub.Id">@sub.Title</option>
-                                            }
-                                        </select>
-                                    </div>
-                                    <div class="form-group w-50 p-3">
-                                        <label>زیر گروه کالا</label>
-                                        <select class="form-control" id="subCategorySelect">
-                                            <option value="0">انتخاب</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div id="featureDetailsProd">
-
+                            <div class="d-flex justify-content-between flex-nowrap gap-3 align-items-center">
+                                <div class="form-group w-50 p-3">
+                                    <label>توضیحات</label>
+                                    <textarea id="SeoDescription" class="form-control" required="required"
+                                              placeholder="توضیحات را وارد نمایید..."></textarea>
                                 </div>
                             </div>
-                          
+                        </div>
+                    </div>
+                    <div class="card collapsed-card" style="border-top: 3px solid #4e73df; margin-top: 0;">
+                        <div class="card-header" style="padding-top: 0.25rem;">
+                            <div class="d-flex flex-column align-items-start justify-content-center">
+                                <h3 class="card-title p-1" style="font-weight: bold;font-size: 20px">تصویر
+                                    محصول</h3>
+                            </div>
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-widget="collapse">
+                                    <i class="fa fa-minus"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body collapse" style="background-color: rgba(220,220,220,0.4)">
+                            <div class="form-group mb-4">
+                                <label for="imageUpload" class="d-block mb-2">آپلود تصویر</label>
+                                <div class="d-flex justify-content-start">
+                                    <div class="custom-file" style="width: auto;">
+                                        <input type="file" class="custom-file-input" id="imageUpload" multiple
+                                               accept="image/*">
+                                        <label class="custom-file-label" for="imageUpload">تصویر را انتخاب
+                                            کنید</label>
+                                    </div>
+                                </div>
+                                <small class="form-text text-muted d-block mt-2">فرمت‌های مجاز: JPG, PNG, WEBP |
+                                    حداکثر حجم: 1MB </small>
+                            </div>
+                            <div class="row" id="imagePreviewContainer">
+                                <div class="col-12">
+                                    <p class="text-center text-muted">هنوز تصویری آپلود نشده است</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card collapsed-card" style="border-top: 3px solid #4e73df; margin-top: 0;">
+                        <div class="card-header" style="padding-top: 0.25rem;">
+                            <div class="d-flex flex-column align-items-start justify-content-center">
+                                <h3 class="card-title p-1" style="font-weight: bold;font-size: 20px">جزئیات
+                                    محصول</h3>
+                            </div>
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-widget="collapse">
+                                    <i class="fa fa-minus"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body collapse" style="background-color: rgb(220,220,220,0.4)">
+                            <div class="d-flex justify-content-start align-items-center">
+                                <div class="form-group w-100 p-3">
+                                    <label>برند</label>
+                                    <select class="form-control" id="brandSelect">
+                                        @foreach (var brand in brands)
+                                        {
+                                            <option value="@brand.Id">@brand.Title</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-center align-items-center" style="gap: 15px">
+                                <div class="form-group w-50 p-3">
+                                    <label>دسته بندی</label>
+                                    <select class="form-control" id="categorySelect">
+                                        @foreach (var sub in subCategories)
+                                        {
+                                            <option value="@sub.Id">@sub.Title</option>
+                                        }
+                                    </select>
+                                </div>
+                                <div class="form-group w-50 p-3">
+                                    <label>زیر گروه کالا</label>
+                                    <select class="form-control" id="subCategorySelect">
+                                        <option value="0">انتخاب</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div id="featureDetailsProd">
+
+                            </div>
                         </div>
 
+                    </div>
+
+                    <div class="card" style="border-top: 3px solid #4e73df; margin-top: 0;">
+                        <div class="card-header" style="padding-top: 0.25rem;">
+                            <div class="d-flex flex-column align-items-start justify-content-center">
+                                <h3 class="card-title p-1" style="font-weight: bold;font-size: 20px">معرفی
+                                    محصول</h3>
+                            </div>
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-widget="collapse">
+                                    <i class="fa fa-minus"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body" style="background-color: rgb(220,220,220,0.4)">
+                            <textarea name="editor1" id="editor1" rows="10" cols="80">
+                                ویرایش پروفایل
+                                    
+                                </textarea>
+                        </div>
+                        <div>
+                            <button type="button" onclick="insertProduct()" class="btn btn-primary">ثبت</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -350,7 +368,6 @@
 
 
 @section script
-
 {
     <script>
         $(document).ready(function () {
@@ -418,7 +435,7 @@
                     ${item.details.map(detail => `
                         <div class="input-group mb-3 p-2">
                             <div class="input-group-prepend">
-                                <span class="input-group-text">${detail.title}</span>
+                                <span class="input-group-text" id="${detail.id}">${detail.title}</span>
                             </div>
                             <input type="text" class="form-control" placeholder="${detail.title}">
                         </div>
@@ -431,7 +448,7 @@
                             } else {
                                 alert('خطایی رخ داد: ' + response.message);
                             }
-                            
+
 
                         },
                         error: function (xhr, status, error) {
@@ -474,11 +491,8 @@
                                placeholder="تعداد برای ${colorTitle}" min="0">
                         <input type="text" name="price_${colorId}" class="form-control" 
                                placeholder="قیمت برای ${colorTitle}">
-                       <select class="form-control">
+                       <select class="form-control" name="guarantee_${colorId}">
                          <option value="0" selected> انتخاب کنید</option>
-                               
-                        
-                        
                         @foreach (var i in guarantees)
                         {
                             <option value="@i.Id">@i.Title</option>
@@ -486,9 +500,13 @@
                         
                                                 
                                                                         
-                                                                                                 </select>
-                                                                                                            <button type="button" class="btn btn-danger btn-sm" 
-                                                                                                                    onclick="removeColor(${colorId})">حذف</button>
+                                                                                                
+                                                                                                                        
+                                                                                                                                                
+                                                                                                                                                                        
+                                                                                                                                                                                                 </select>
+                                                                                                                                                                                                            <button type="button" class="btn btn-danger btn-sm" 
+                                                                                                                                                                                                                    onclick="removeColor(${colorId})">حذف</button>
                     </div>
                 `;
                     });
@@ -642,6 +660,85 @@
                 $(this).find('i').toggleClass('fa-minus fa-plus');
             });
         });
+    </script>
+
+    <script>
+        CKEDITOR.replace('editor1', {
+            language: 'fa',
+            contentsLangDirection: 'rtl',
+            height: 400,
+            toolbar: 'Full', // استفاده از نوار ابزار کامل با همه ۷۲ پلاگین
+            font_names: 'Arial/Arial;Times New Roman/Times New Roman;Verdana;B Nazanin/B Nazanin;IRANSans/IRANSans;Tahoma/Tahoma',
+            font_defaultLabel: 'B Nazanin',
+            fontSize_defaultLabel: '14px',
+            extraPlugins: '' // همه پلاگین‌ها به‌صورت پیش‌فرض لود می‌شن
+        });
+
+
+        function insertProduct() {
+            // گرفتن رنگ‌های انتخاب‌شده
+            let selectedColors = $("#SelectColor").val() || [];
+            let colorsData = [];
+            selectedColors.forEach(function (colorId) {
+                let colorInfo = {
+                    colorId: colorId,
+                    quantity: $(`input[name="quantity_${colorId}"]`).val() || 0,
+                    price: $(`input[name="price_${colorId}"]`).val() || "",
+                    guarantee: $(`select[name="guarantee_${colorId}"]`).val() || "0"
+                };
+                colorsData.push(colorInfo);
+            });
+
+            // گرفتن فایل‌های انتخاب‌شده از input
+            let imageFiles = $("#imageUpload")[0].files;
+            let formData = new FormData();
+
+            // اضافه کردن ویژگی‌ها به FormData
+            formData.append("title", $("#Title").val());
+            formData.append("persianTitle", $("#PersianTitle").val());
+            formData.append("detail", $("#Detail").val());
+            formData.append("uniqueCode", $("#UnicCode").val());
+            formData.append("metaKeyword", $("#MetaKeyword").val());
+            formData.append("productGift", $("#ProductGift").val());
+            formData.append("strengths", $("#Strengths").val());
+            formData.append("weakPoints", $("#WeakPoints").val());
+            formData.append("productStatus", $("#ProductStatus").val());
+            formData.append("discountAmount", $("#DiscountAmount").val());
+            formData.append("profitPercentage", $("#ProfitPercentage").val());
+            formData.append("selectedColors", JSON.stringify(selectedColors));
+            formData.append("colorsData", JSON.stringify(colorsData));
+            formData.append("seoTitle", $("#SeoTitle").val());
+            formData.append("seoCanonicalUrl", $("#SeoCanonicalUrl").val());
+            formData.append("seoDescription", $("#SeoDescription").val());
+            formData.append("fullDesc", CKEDITOR.instances.editor1.getData());
+            formData.append("isFlashOffer", $(".form-check-input:eq(0)").prop('checked'));
+            formData.append("isSpecialOffer", $('#isOffer').prop('checked'));
+            formData.append("isSuggested", $(".form-check-input:eq(2)").prop('checked'));
+            formData.append("brandId", $("#brandSelect").val());
+            formData.append("categoryId", $("#categorySelect").val());
+            formData.append("subCategoryId", $("#subCategorySelect").val());
+
+            // اضافه کردن تصاویر به FormData
+            for (let i = 0; i < imageFiles.length; i++) {
+                formData.append("images", imageFiles[i]);
+            }
+
+            $.ajax({
+                url: '/api/v1/Product/create',
+                type: 'POST',
+                data: formData,
+                processData: false, // جلوگیری از تبدیل داده‌ها به string
+                contentType: false, // اجازه به مرورگر برای تعیین contentType
+                success: function(response) {
+                    console.log("Product saved successfully:", response);
+                    alert("محصول با موفقیت ذخیره شد!");
+                },
+                error: function(xhr, status, error) {
+                    console.error("Error saving product:", error);
+                    alert("خطا در ذخیره محصول. لطفا دوباره تلاش کنید.");
+                }});
+
+        }
     </script>
 }
 

@@ -15,10 +15,10 @@ public class CreateOfferCommandHandler(IUnitOfWork unitOfWork) : IRequestHandler
         {
             ProductId = request.ProductId,
             ColorId = request.Offer.ColorId.ToInt(),
-            Hours = request.Offer.Hours.ToInt(),
-            Minutes = request.Offer.Minutes.ToInt(),
-            OfferAmount = request.Offer.OfferAmount.ToLong(),
-            StartDate = request.Offer.Time
+            Hours = request.Offer.Hours,
+            Minutes = request.Offer.Minutes,
+            OfferAmount = request.Offer.DiscountAmount.ToLong(),
+            StartDate = DateTime.Parse(request.Offer.StartDate),
         };
         await unitOfWork.GenericRepository<Offer>().AddAsync(offer, cancellationToken);
         var prod = await unitOfWork.GenericRepository<Product>().Table

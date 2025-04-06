@@ -2,9 +2,10 @@
 
 public class OfferDto
 {
-    public string? ColorId { get; set; }
-    public string? OfferAmount { get; set; }
-    public string? Hours { get; set; }
-    public string? Minutes { get; set; }
-    public DateTime Time { get; set; }
+    public string ColorId { get; set; }
+    public string DiscountAmount { get; set; }
+    public string StartDate { get; set; }
+    public int Hours { get; set; }
+    public int Minutes { get; set; }
+    
 }

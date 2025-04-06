@@ -26,13 +26,13 @@ public class CreateProductCommandHandler(IUnitOfWork _unitOfWork, IWebHostEnviro
         }
 
         if (!await _unitOfWork.GenericRepository<Brand>().TableNoTracking
-                .AnyAsync(x => x.Id == request.Product.BrandId.ToInt(), cancellationToken: cancellationToken))
+                .AnyAsync(x => x.Id == request.Product.BrandId, cancellationToken: cancellationToken))
         {
             return new ApiResult<int>(0, "برند محصول نا معتبر میباشد", ApiResultStatusCode.BadRequest);
         }
 
         if (!await _unitOfWork.GenericRepository<CategoryDetail>().TableNoTracking
-                .AnyAsync(x => x.Id == request.Product.CategoryDetailId.ToInt(), cancellationToken: cancellationToken))
+                .AnyAsync(x => x.Id == request.Product.CategoryId, cancellationToken: cancellationToken))
         {
             return new ApiResult<int>(0, "زیر گروه محصول نا معتبر میباشد", ApiResultStatusCode.BadRequest);
         }
@@ -43,28 +43,28 @@ public class CreateProductCommandHandler(IUnitOfWork _unitOfWork, IWebHostEnviro
         var prod = new Product
         {
             UniqueCode = request.Product.UniqueCode,
-            BrandId = request.Product.BrandId.ToInt(),
+            BrandId = request.Product.BrandId,
             Status = (ProductStatus)request.Product.ProductStatus.ToInt(),
             Detail = request.Product.Detail!,
             Strengths = request.Product.Strengths,
             CreatorId = request.UserId,
             DiscountAmount = request.Product.DiscountAmount.ToInt(),
-            EnTitle = request.Product.EnTitle!,
+            EnTitle = request.Product.Title!,
             WeakPoints = request.Product.WeakPoints,
-            CategoryDetailId = request.Product.CategoryDetailId.ToInt(),
+            CategoryDetailId = request.Product.CategoryId,
             SeoTitle = request.Product.SeoTitle,
-            SeoDesc = request.Product.SeoDesc,
-            SeoCanonical = request.Product.SeoCanonical,
+            SeoDesc = request.Product.SeoDescription,
+            SeoCanonical = request.Product.SeoCanonicalUrl,
             ProductGift = request.Product.ProductGift,
             OnClick = 0,
-            IsOffer = request.Product.IsOffer,
-            IsActive = request.Product.IsActive,
-            InterestRate = request.Product.InterestRate,
+            IsOffer = request.Product.IsSpecialOffer,
+            IsActive = true,
+            InterestRate = request.Product.ProfitPercentage.ToDouble(),
             InsertDate = DateTime.Now,
-            ImageUri = up.AddImage(request.Product.ImageUri!, "Images/Product",
+            ImageUri = up.AddImage(request.Product.Images.First()!, "Images/Product",
                 Guid.NewGuid().ToString().Substring(0, 6)),
-            FaTitle = request.Product.FaTitle!,
-            FullDetail = request.Product.FullDetail!,
+            FaTitle = request.Product.PersianTitle!,
+            FullDetail = request.Product.FullDesc!,
         };
         await _unitOfWork.GenericRepository<Product>().AddAsync(prod, cancellationToken);
         return new ApiResult<int>(prod.Id, ApiResultStatusCode.Success.ToDisplay(), ApiResultStatusCode.Success);

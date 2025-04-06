@@ -16,9 +16,9 @@ public class CreateProductColorCommandHandler(IUnitOfWork unitOfWork) : IRequest
                 {
                     ProductId = request.ProductId,
                     ColorId = i.ColorId.ToInt(),
-                    Inventory = i.Inventory.ToInt(),
+                    Inventory = i.Quantity.ToInt(),
                     Price = i.Price.ToLong(),
-                    GuaranteeId = i.GuaranteeId.ToInt(),
+                    GuaranteeId = i.Guarantee.ToInt(),
                     Priority = 1,
                 }, cancellationToken);
         }
