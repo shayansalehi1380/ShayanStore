@@ -1,4 +1,6 @@
-﻿namespace Application.Dtos.Products;
+﻿using Microsoft.AspNetCore.Http;
+
+namespace Application.Dtos.Products;
 
 public class ProductDto
 {
@@ -22,13 +24,13 @@ public class ProductDto
     public string? SeoTitle { get; set; }
     public string? SeoCanonicalUrl { get; set; }
     public string? SeoDescription { get; set; }
-    public List<string> Images { get; set; } = new List<string>();
-    public Dictionary<string, string> Features { get; set; } = new Dictionary<string, string>();
+    public List<IFormFile> Images { get; set; } = [];
+    public Dictionary<string, string> Features { get; set; } = new ();
     public string? FullDesc { get; set; }
     public bool IsFlashOffer { get; set; }
     public bool IsSpecialOffer { get; set; }
     public bool IsSuggested { get; set; }
-    public OfferDto Offer { get; set; }
+    public OfferDto? Offer { get; set; }
 
 }
 

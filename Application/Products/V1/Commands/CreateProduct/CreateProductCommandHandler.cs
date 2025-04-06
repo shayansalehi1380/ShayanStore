@@ -61,8 +61,7 @@ public class CreateProductCommandHandler(IUnitOfWork _unitOfWork, IWebHostEnviro
             IsActive = true,
             InterestRate = request.Product.ProfitPercentage.ToDouble(),
             InsertDate = DateTime.Now,
-            ImageUri = up.AddImage(request.Product.Images.First()!, "Images/Product",
-                Guid.NewGuid().ToString().Substring(0, 6)),
+            ImageUri = up.UploadFile(request.Product.Images.First()!, "Images/Product"),
             FaTitle = request.Product.PersianTitle!,
             FullDetail = request.Product.FullDesc!,
         };

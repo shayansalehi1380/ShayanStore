@@ -12,12 +12,11 @@ public class UploadImageCommandHandler(IUnitOfWork unitOfWork, IWebHostEnvironme
     public async Task Handle(UploadImageCommand request, CancellationToken cancellationToken)
     {
         Upload up = new Upload(env);
-        foreach (var i in request.Base64Images)
+        foreach (var i in request.Images)
         {
             await unitOfWork.GenericRepository<ImageGallery>().AddAsync(new ImageGallery
             {
-                ImageUri = up.AddImage(i, "Images/Product",
-                    Guid.NewGuid().ToString().Substring(0, 6))
+                ImageUri = up.UploadFile(i, "Images/Product")
             }, cancellationToken);
         }
     }

@@ -34,7 +34,7 @@ public class ProductController(IMediator mediator, UserManager<User> userManager
         await mediator.Send(new UploadImageCommand
         {
             ProductId = prodResult.Data,
-            Base64Images = request.Images
+            Images = request.Images
         }, CancellationToken.None);
 
         //create feature

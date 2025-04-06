@@ -1,9 +1,10 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Http;
 
 namespace Application.Products.V1.Commands.UploadImage;
 
 public class UploadImageCommand : IRequest
 {
-    public List<string> Base64Images { get; set; } = [];
+    public List<IFormFile> Images { get; set; } = [];
     public int ProductId { get; set; }
 }

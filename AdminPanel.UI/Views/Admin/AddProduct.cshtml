@@ -676,68 +676,74 @@
 
 
         function insertProduct() {
-            // گرفتن رنگ‌های انتخاب‌شده
             let selectedColors = $("#SelectColor").val() || [];
             let colorsData = [];
             selectedColors.forEach(function (colorId) {
                 let colorInfo = {
                     colorId: colorId,
-                    quantity: $(`input[name="quantity_${colorId}"]`).val() || 0,
+                    quantity: $(`input[name="quantity_${colorId}"]`).val() || "0",
                     price: $(`input[name="price_${colorId}"]`).val() || "",
                     guarantee: $(`select[name="guarantee_${colorId}"]`).val() || "0"
                 };
                 colorsData.push(colorInfo);
             });
 
-            // گرفتن فایل‌های انتخاب‌شده از input
             let imageFiles = $("#imageUpload")[0].files;
             let formData = new FormData();
 
-            // اضافه کردن ویژگی‌ها به FormData
-            formData.append("title", $("#Title").val());
-            formData.append("persianTitle", $("#PersianTitle").val());
-            formData.append("detail", $("#Detail").val());
-            formData.append("uniqueCode", $("#UnicCode").val());
-            formData.append("metaKeyword", $("#MetaKeyword").val());
-            formData.append("productGift", $("#ProductGift").val());
-            formData.append("strengths", $("#Strengths").val());
-            formData.append("weakPoints", $("#WeakPoints").val());
-            formData.append("productStatus", $("#ProductStatus").val());
-            formData.append("discountAmount", $("#DiscountAmount").val());
-            formData.append("profitPercentage", $("#ProfitPercentage").val());
-            formData.append("selectedColors", JSON.stringify(selectedColors));
-            formData.append("colorsData", JSON.stringify(colorsData));
-            formData.append("seoTitle", $("#SeoTitle").val());
-            formData.append("seoCanonicalUrl", $("#SeoCanonicalUrl").val());
-            formData.append("seoDescription", $("#SeoDescription").val());
-            formData.append("fullDesc", CKEDITOR.instances.editor1.getData());
-            formData.append("isFlashOffer", $(".form-check-input:eq(0)").prop('checked'));
-            formData.append("isSpecialOffer", $('#isOffer').prop('checked'));
-            formData.append("isSuggested", $(".form-check-input:eq(2)").prop('checked'));
-            formData.append("brandId", $("#brandSelect").val());
-            formData.append("categoryId", $("#categorySelect").val());
-            formData.append("subCategoryId", $("#subCategorySelect").val());
+            formData.append("Title", $("#Title").val() || "");
+            formData.append("PersianTitle", $("#PersianTitle").val() || "");
+            formData.append("Detail", $("#Detail").val() || "");
+            formData.append("UniqueCode", $("#UnicCode").val() || "");
+            formData.append("MetaKeyword", $("#MetaKeyword").val() || "");
+            formData.append("ProductGift", $("#ProductGift").val() || "");
+            formData.append("Strengths", $("#Strengths").val() || "");
+            formData.append("WeakPoints", $("#WeakPoints").val() || "");
+            formData.append("ProductStatus", $("#ProductStatus").val() || "");
+            formData.append("DiscountAmount", $("#DiscountAmount").val() || "");
+            formData.append("ProfitPercentage", $("#ProfitPercentage").val() || "");
+            selectedColors.forEach(color => formData.append("SelectedColors", color));
+            colorsData.forEach((color, index) => {
+                formData.append(`Colors[${index}].ColorId`, color.colorId);
+                formData.append(`Colors[${index}].Quantity`, color.quantity);
+                formData.append(`Colors[${index}].Price`, color.price);
+                formData.append(`Colors[${index}].Guarantee`, color.guarantee);
+            });
+            formData.append("SeoTitle", $("#SeoTitle").val() || "");
+            formData.append("SeoCanonicalUrl", $("#SeoCanonicalUrl").val() || "");
+            formData.append("SeoDescription", $("#SeoDescription").val() || "");
+            formData.append("FullDesc", CKEDITOR.instances.editor1.getData() || "");
+            formData.append("IsFlashOffer", $(".form-check-input:eq(0)").prop('checked'));
+            formData.append("IsSpecialOffer", $('#isOffer').prop('checked'));
+            formData.append("IsSuggested", $(".form-check-input:eq(2)").prop('checked'));
+            formData.append("BrandId", parseInt($("#brandSelect").val()) || 0);
+            formData.append("CategoryId", parseInt($("#categorySelect").val()) || 0);
+            formData.append("SubCategoryId", parseInt($("#subCategorySelect").val()) || 0);
 
-            // اضافه کردن تصاویر به FormData
             for (let i = 0; i < imageFiles.length; i++) {
-                formData.append("images", imageFiles[i]);
+                formData.append("Images", imageFiles[i]);
+            }
+
+            // دیباگ
+            for (let [key, value] of formData.entries()) {
+                console.log(`${key}: ${value}`);
             }
 
             $.ajax({
                 url: '/api/v1/Product/create',
                 type: 'POST',
                 data: formData,
-                processData: false, // جلوگیری از تبدیل داده‌ها به string
-                contentType: false, // اجازه به مرورگر برای تعیین contentType
+                processData: false,
+                contentType: false,
                 success: function(response) {
                     console.log("Product saved successfully:", response);
                     alert("محصول با موفقیت ذخیره شد!");
                 },
                 error: function(xhr, status, error) {
-                    console.error("Error saving product:", error);
-                    alert("خطا در ذخیره محصول. لطفا دوباره تلاش کنید.");
-                }});
-
+                    console.error("Error:", xhr.status, xhr.responseText);
+                    alert("خطا در ذخیره محصول: " + xhr.responseText);
+                }
+            });
         }
     </script>
 }
