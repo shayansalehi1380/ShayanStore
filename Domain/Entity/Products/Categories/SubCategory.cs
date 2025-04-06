@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using Domain.Common;
+using Domain.Entity.Products.Features;
 
 namespace Domain.Entity.Products.Categories
 {

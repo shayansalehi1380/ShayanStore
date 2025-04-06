@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using Domain.Entity.BasicInfo;
+using Domain.Entity.BlogPosts;
 using Microsoft.AspNetCore.Identity;
 
 namespace Domain.Entity.Users
@@ -18,5 +19,7 @@ namespace Domain.Entity.Users
         [ForeignKey("CityId")] public int CityId { get; set; }
         public City City { get; set; } = default!;
         public Wallet Wallet { get; set; } = default!;
+
+        public ICollection<BlogPost> BlogPosts { get; set; } = default!;
     }
 }

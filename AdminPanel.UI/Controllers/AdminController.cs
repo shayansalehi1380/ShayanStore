@@ -20,6 +20,8 @@ using Domain.Entity.Products.Colors;
 using Domain.Entity.Products.Brands;
 using Domain.Entity.DiscountCodes;
 using Domain.Entity.Products;
+using Domain.Entity.BlogPosts;
+using Polly;
 
 namespace AdminPanel.UI.Controllers
 {
@@ -395,6 +397,8 @@ namespace AdminPanel.UI.Controllers
             ViewBag.selectTab = tabs;
             ViewBag.Status = status;
 
+
+
             IQueryable<Wallet> queryhWallet = unitOfWork.GenericRepository<Wallet>()
                 .TableNoTracking
                 .Include(w => w.User);
@@ -430,6 +434,35 @@ namespace AdminPanel.UI.Controllers
             }
 
             ViewBag.DiscountCode = await queryDiscountCode.OrderByDescending(x => x.Id).ToListAsync();
+            return View();
+        }
+
+        public async Task<ActionResult> ManageBlogPost(string searchBlogPost, int tabs = 1,
+                                                        FunctionStatus status = FunctionStatus.None)
+        {
+            ViewData["Title"] = "پنل مدیریت | وبلاگ";
+            ViewBag.selectTab = tabs;
+            ViewBag.Status = status;
+
+            
+            var users = new List<UserDto>();
+            var queri = userManager.Users.AsTracking();
+            ViewBag.User = users;
+
+            var query = unitOfWork.GenericRepository<BlogPost>()
+                .TableNoTracking
+                .Include(b => b.User)
+                .Where(b => !b.IsDelete);
+
+            if (!string.IsNullOrEmpty(searchBlogPost))
+            {
+                query = query.Where(x =>
+                    x.Title.Contains(searchBlogPost) ||
+                    x.User.Name.Contains(searchBlogPost) ||
+                    x.User.Family.Contains(searchBlogPost));
+            }
+
+            ViewBag.BlogPost = await query.OrderByDescending(x => x.Id).ToListAsync();
             return View();
         }
 

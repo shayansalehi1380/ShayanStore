@@ -57,7 +57,7 @@ namespace AdminPanel.UI.Controllers
             wallet.IsDelete = true;
 
             await unitOfWork.GenericRepository<Wallet>().UpdateAsync(wallet, CancellationToken.None);
-            return RedirectToAction("ManageGuarantee", "Admin", new { tabs = 1, status = FunctionStatus.Success });
+            return RedirectToAction("ManageWallet", "Admin", new { tabs = 1, status = FunctionStatus.Success });
         }
     }
 }

@@ -4,6 +4,7 @@ using Domain.DBContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Domain.Migrations
 {
     [DbContext(typeof(ShayanStoreDBContext))]
-    partial class ShayanStoreDBContextModelSnapshot : ModelSnapshot
+    [Migration("20250406093549_AddPBlog")]
+    partial class AddPBlog
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -971,7 +974,7 @@ namespace Domain.Migrations
                         .IsRequired();
 
                     b.HasOne("Domain.Entity.Products.Categories.SubCategory", "SubCategory")
-                        .WithMany("FeatureDetails")
+                        .WithMany()
                         .HasForeignKey("SubCategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1144,8 +1147,6 @@ namespace Domain.Migrations
             modelBuilder.Entity("Domain.Entity.Products.Categories.SubCategory", b =>
                 {
                     b.Navigation("CategoryDetails");
-
-                    b.Navigation("FeatureDetails");
                 });
 
             modelBuilder.Entity("Domain.Entity.Products.Features.Feature", b =>

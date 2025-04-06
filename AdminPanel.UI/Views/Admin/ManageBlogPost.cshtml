@@ -1,0 +1,223 @@
+﻿@using Application.Common.ApiResult
+@using Domain.Entity.BlogPosts
+@using Domain.Entity.Users
+@using Application.Dtos.Users
+@{
+    List<BlogPost> blogposts = ViewBag.BlogPost;
+    List<UserDto> user = ViewBag.User;
+
+    int selectTab = ViewBag.selectTab;
+    string blogpostTab = string.Empty;
+    FunctionStatus status = ViewBag.Status;
+    if (selectTab == 1)
+    {
+        blogpostTab = "active";
+    }
+    else
+    {
+        blogpostTab = "active";
+    }
+
+    bool isError = status == FunctionStatus.Error ? true : false;
+    bool isSuccess = status == FunctionStatus.Success ? true : false;
+}
+
+@section link {
+    <style>
+        #searchUser {
+            border-top-right-radius: 5px;
+            border-bottom-right-radius: 5px;
+            border-top-left-radius: 0 !important;
+            border-bottom-left-radius: 0 !important;
+            border: none;
+            background-color: #f2f4f6;
+        }
+
+        #searchIcon {
+            border: none;
+            background-color: #f2f4f6;
+        }
+
+        .modal {
+            top: 5%;
+        }
+    </style>
+}
+
+<div class="row">
+    <div class="col-12">
+
+        <div class="card" style="margin: 15px 15px 0px 15px;">
+            <div class="card-header p-2">
+                <ul class="nav nav-pills">
+                    <li class="nav-item"><a class="nav-link @blogpostTab" href="#activity" data-toggle="tab">وبلاگ</a></li>
+                </ul>
+            </div><!-- /.card-body -->
+            <div class="card-body">
+                <div class="tab-content">
+
+                    <div class="@blogpostTab tab-pane" id="activity">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <form asp-controller="BlogPost" asp-action="Create" method="post"
+                                  class="d-flex flex-column justify-content-start align-items-start" style="gap: 15px">
+                                <div class="form-group w-100">
+                                    <label for="blogTitle">عنوان وبلاگ</label>
+                                    <input type="text" class="form-control" name="name" id="blogTitle"
+                                           placeholder="عنوان وبلاگ را وارد کنید">
+                                </div>
+
+                                <div class="form-group w-100">
+                                    <label for="userSelect">انتخاب نویسنده</label>
+                                    <select class="form-control" id="userSelect" name="userId">
+                                        <option value="">-- انتخاب نویسنده --</option>
+                                        @foreach (var user in ViewBag.User)
+                                        {
+                                            <option value="@user.Id">@user.Name @user.Family</option> <!-- نام و نام خانوادگی -->
+                                        }
+                                    </select>
+                                </div>
+
+                                <div class="form-group w-100">
+                                    <label for="blogContent">محتوای وبلاگ</label>
+                                    <textarea class="form-control" id="editor1" name="content" rows="10"
+                                              placeholder="محتوای وبلاگ را وارد کنید"></textarea>
+                                </div>
+
+                                <div>
+                                    <button type="submit" class="btn btn-primary">ثبت وبلاگ</button>
+                                </div>
+                            </form>
+
+                            <!-- فرم جستجو -->
+                            <form class="input-group input-group-sm w-25 p-2" asp-action="ManageBlogPost" asp-controller="Admin" method="post">
+                                <input class="form-control form-control-navbar" id="searchUser" name="searchBlogPost" type="search"
+                                       placeholder="جستجو" aria-label="Search">
+                                <div class="input-group-append">
+                                    <button class="btn btn-navbar" id="searchIcon" type="submit">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="card-body p-0">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 10px">#</th>
+                                        <th class="text-center">عنوان وبلاگ</th>
+                                        <th class="text-center">نویسنده</th>
+                                        <th class="text-center">عملیات</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var blogpost in blogposts)
+                                    {
+                                        <tr>
+                                            <td>@blogpost.Id</td>
+                                            <td class="text-center">@blogpost.Title</td>
+                                            <td class="text-center">@blogpost.User.Name @blogpost.User.Family</td>
+                                            <td class="text-center">
+                                                <form>
+                                                    <button type="button" class="badge badge-warning editeGuarantee"
+                                                            data-toggle="modal" data-target="#editGuaranteeModal">
+                                                        ویرایش
+                                                    </button>
+                                                    <input type="text" name="gId" class="gId" value="@blogpost.Id" hidden />
+                                                    <input type="text" name="gName" class="gName" value="@blogpost.Title" hidden />
+                                                    <input type="text" name="gUser" class="gUser" value="@blogpost.UserId" hidden />
+                                                    <input type="text" name="gContent" class="gContent" value="@blogpost.Content" hidden />
+                                                </form>
+                                                <a class="badge badge-danger"
+                                                   href="@Url.Action("SoftDelete", "BlogPost", new { id = blogpost.Id })">حذف</a>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="editGuaranteeModal" tabindex="-1" role="dialog" aria-labelledby="editGuaranteeModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h5 class="modal-title" id="editGuaranteeModalLabel">ویرایش وبلاگ</h5>
+            </div>
+            <div class="modal-body">
+                <form asp-action="Update" asp-controller="BlogPost" method="post">
+                    <input id="blogPostId" name="id" hidden="hidden" />
+                    <div class="form-group">
+                        <label for="blogPostTitle">عنوان وبلاگ</label>
+                        <input type="text" class="form-control" id="blogPostTitle" name="name" placeholder="عنوان وبلاگ را وارد کنید">
+                    </div>
+                    <div class="form-group">
+                        <label for="blogPostUser">نویسنده</label>
+                        <select class="form-control" id="blogPostUser" name="userId">
+                            @foreach (var user in ViewBag.User)
+                            {
+                                <option value="@user.Id">@user.UserName</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="editor2">محتوای وبلاگ</label>
+                        <textarea class="form-control" id="editor2" name="content" rows="10"></textarea>
+                    </div>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">بستن</button>
+                    <button type="submit" class="btn btn-primary">ثبت تغییرات</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section script
+{
+    <script>
+        $(document).ready(function () {
+            // Initialize CKEditors
+            CKEDITOR.replace('editor1', {
+                language: 'fa',
+                contentsLangDirection: 'rtl',
+                height: 400
+            });
+
+            CKEDITOR.replace('editor2', {
+                language: 'fa',
+                contentsLangDirection: 'rtl',
+                height: 400
+            });
+
+            // ویرایش وبلاگ
+            $(".editeGuarantee").click(function () {
+                var currentRow = $(this).closest("form");
+                $("#blogPostId").val(currentRow.find("input.gId[type=text]").val());
+                $("#blogPostTitle").val(currentRow.find("input.gName[type=text]").val());
+
+                // تنظیم کاربر انتخاب شده
+                var userId = currentRow.find("input.gUser[type=text]").val();
+                $("#blogPostUser").val(userId);
+
+                // تنظیم محتوای CKEditor
+                CKEDITOR.instances.editor2.setData(currentRow.find("input.gContent[type=text]").val());
+            });
+
+            // نمایش پیام‌ها
+            if (@Html.Raw(isError).ToString().ToLower()) {
+                ShowErrorAlret();
+            }
+            if (@Html.Raw(isSuccess).ToString().ToLower()) {
+                ShowSuccessAlret();
+            }
+        });
+    </script>
+}
