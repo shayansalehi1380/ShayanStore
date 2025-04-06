@@ -1,4 +1,5 @@
 ﻿using Domain.Entity.BasicInfo;
+using Domain.Entity.BlogPosts;
 using Domain.Entity.DiscountCodes;
 using Domain.Entity.Products;
 using Domain.Entity.Products.Brands;
@@ -37,6 +38,8 @@ namespace Domain.DBContext
         public DbSet<Product> Products { get; set; }
         public DbSet<Offer> Offers { get; set; }
 
+        public DbSet<BlogPost> BlogPosts { get; set; }
+
         public ShayanStoreDBContext(DbContextOptions<ShayanStoreDBContext> options) : base(options)
         {
         }
@@ -72,6 +75,7 @@ namespace Domain.DBContext
             modelBuilder.Entity<CategoryDetail>().HasQueryFilter(x => !x.IsDelete);
             modelBuilder.Entity<Wallet>().HasQueryFilter(x => !x.IsDelete);
             modelBuilder.Entity<DiscountCode>().HasQueryFilter(x => !x.IsDelete);
+            modelBuilder.Entity<BlogPost>().HasQueryFilter(x => !x.IsDelete);
 
             base.OnModelCreating(modelBuilder);
         }
