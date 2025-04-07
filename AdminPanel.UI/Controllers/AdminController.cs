@@ -440,14 +440,16 @@ namespace AdminPanel.UI.Controllers
         public async Task<ActionResult> ManageBlogPost(string searchBlogPost, int tabs = 1,
                                                         FunctionStatus status = FunctionStatus.None)
         {
+
             ViewData["Title"] = "پنل مدیریت | وبلاگ";
             ViewBag.selectTab = tabs;
             ViewBag.Status = status;
 
-            
-            var users = new List<UserDto>();
-            var queri = userManager.Users.AsTracking();
-            ViewBag.User = users;
+
+
+
+            ViewBag.User = unitOfWork.GenericRepository<userManager>()
+                .TableNoTracking;
 
             var query = unitOfWork.GenericRepository<BlogPost>()
                 .TableNoTracking
