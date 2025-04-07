@@ -12,4 +12,5 @@ public class FeatureDetails : BaseEntity
     public int SubCategoryId { get; set; }
     [ForeignKey(nameof(SubCategoryId))] public SubCategory SubCategory{ get; set; } = default!;
     public int Priority { get; set; }
+    public int testttttsadqefefwef { get; set; }
 }

@@ -20,13 +20,13 @@ public class ProductController(IMediator mediator, UserManager<User> userManager
     [HttpPost("create")]
     public async Task<ActionResult<ApiResult<bool>>> Create([FromForm] ProductDto? request)
     {
-        var user = await userManager.FindByNameAsync(User.Identity.Name);
+        // var user = await userManager.FindByNameAsync(User.Identity.Name);
 
         //create product
         var prodResult = await mediator.Send(new CreateProductCommand
         {
             Product = request,
-            UserId = user.Id
+            UserId = 1
         }, CancellationToken.None);
 
         

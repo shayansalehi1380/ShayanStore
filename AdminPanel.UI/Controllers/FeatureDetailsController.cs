@@ -40,13 +40,14 @@ namespace AdminPanel.UI.Controllers
             return RedirectToAction("ManageFeature", "Admin", new { tabs = 2 });
         }
 
-        public async Task<ActionResult> Create(string name, int priority, int featureId)
+        public async Task<ActionResult> Create(string name, int priority, int featureId, int subCategoryId)
         {
             await unitOfWork.GenericRepository<FeatureDetails>().AddAsync(new FeatureDetails
             {
                 Title = name,
                 Priority = priority,
-                FeatureId = featureId
+                FeatureId = featureId,
+                SubCategoryId = subCategoryId == 0 ? 1 : subCategoryId
             }, CancellationToken.None);
 
             return RedirectToAction("ManageFeature", "Admin", new { tabs = 2, status = FunctionStatus.Success });

@@ -15,7 +15,7 @@ public class CreateProductDetailCommandHandler(IUnitOfWork unitOfWork):IRequestH
             {
                 Value = i.Value,
                 ProductId = request.ProductId,
-                FeatureDetailsId = i.Key.ToInt()
+                FeatureDetailsId = i.Id
             },cancellationToken);
         }
     }

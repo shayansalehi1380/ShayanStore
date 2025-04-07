@@ -721,13 +721,27 @@
             formData.append("CategoryId", parseInt($("#categorySelect").val()) || 0);
             formData.append("SubCategoryId", parseInt($("#subCategorySelect").val()) || 0);
 
+            // اضافه کردن Features (از قبل)
+            $('.feature-input').each(function(index) {
+                const value = $(this).val();
+                const id = $(this).data('id');
+                const title = $(this).data('title');
+
+                if (value) {
+                    formData.append(`Features[${index}].Id`, id);
+                    formData.append(`Features[${index}].Title`, title);
+                    formData.append(`Features[${index}].Value`, value);
+                }
+});
+            // اضافه کردن OfferDto
+            formData.append("Offer.ColorId", $("#OfferColor").val() || "");
+            formData.append("Offer.DiscountAmount", $("#OfferAmount").val() || "");
+            formData.append("Offer.StartDate", $("#datePicker").val() || "");
+            formData.append("Offer.Hours", parseInt($("#hours").val()) || 0);
+            formData.append("Offer.Minutes", parseInt($("#minutes").val()) || 0);
+
             for (let i = 0; i < imageFiles.length; i++) {
                 formData.append("Images", imageFiles[i]);
-            }
-
-            // دیباگ
-            for (let [key, value] of formData.entries()) {
-                console.log(`${key}: ${value}`);
             }
 
             $.ajax({

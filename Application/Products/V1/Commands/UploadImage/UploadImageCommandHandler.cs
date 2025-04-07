@@ -16,7 +16,8 @@ public class UploadImageCommandHandler(IUnitOfWork unitOfWork, IWebHostEnvironme
         {
             await unitOfWork.GenericRepository<ImageGallery>().AddAsync(new ImageGallery
             {
-                ImageUri = up.UploadFile(i, "Images/Product")
+                ImageUri = up.UploadFile(i, "Images/Product"),
+                ProductId = request.ProductId,
             }, cancellationToken);
         }
     }

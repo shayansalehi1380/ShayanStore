@@ -53,7 +53,7 @@ namespace Domain.DBContext
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(
-                "Data Source=185.88.152.27,1430;Initial Catalog=ShayanStore;User ID=Shayan;Password=i4qO3j^93;Trust Server Certificate=True"
+                "Data Source=185.165.118.72,1433;Initial Catalog=sh12opOn;User ID=AdminSa;Password=4p#8V65cb;Trust Server Certificate=True"
             );
             base.OnConfiguring(optionsBuilder);
         }

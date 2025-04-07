@@ -388,6 +388,9 @@ namespace Domain.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("testttttsadqefefwef")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("FeatureId");
@@ -971,7 +974,7 @@ namespace Domain.Migrations
                         .IsRequired();
 
                     b.HasOne("Domain.Entity.Products.Categories.SubCategory", "SubCategory")
-                        .WithMany("FeatureDetails")
+                        .WithMany()
                         .HasForeignKey("SubCategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1144,8 +1147,6 @@ namespace Domain.Migrations
             modelBuilder.Entity("Domain.Entity.Products.Categories.SubCategory", b =>
                 {
                     b.Navigation("CategoryDetails");
-
-                    b.Navigation("FeatureDetails");
                 });
 
             modelBuilder.Entity("Domain.Entity.Products.Features.Feature", b =>
