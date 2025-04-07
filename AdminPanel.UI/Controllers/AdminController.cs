@@ -448,8 +448,8 @@ namespace AdminPanel.UI.Controllers
 
 
 
-            ViewBag.User = unitOfWork.GenericRepository<userManager>()
-                .TableNoTracking;
+            ViewBag.User = await userManager.Users.ToListAsync();
+
 
             var query = unitOfWork.GenericRepository<BlogPost>()
                 .TableNoTracking
