@@ -47,13 +47,13 @@ namespace AdminPanel.UI.Controllers
                 Title = name,
                 Priority = priority,
                 FeatureId = featureId,
-                SubCategoryId = subCategoryId == 0 ? 1 : subCategoryId
+                SubCategoryId = subCategoryId
             }, CancellationToken.None);
 
             return RedirectToAction("ManageFeature", "Admin", new { tabs = 2, status = FunctionStatus.Success });
         }
 
-        public async Task<ActionResult> Update(int id, string name, int priority, int featureId)
+        public async Task<ActionResult> Update(int id, string name, int priority, int featureId, int subCategoryId)
         {
             var featureDetails = await unitOfWork.GenericRepository<FeatureDetails>()
                 .GetByIdAsync(id, CancellationToken.None);
@@ -65,7 +65,7 @@ namespace AdminPanel.UI.Controllers
             featureDetails.Title = name;
             featureDetails.Priority = priority;
             featureDetails.FeatureId = featureId;
-
+            featureDetails.SubCategoryId = subCategoryId;
             await unitOfWork.GenericRepository<FeatureDetails>().UpdateAsync(featureDetails, CancellationToken.None);
 
             return RedirectToAction("ManageFeature", "Admin", new { tabs = 2 });

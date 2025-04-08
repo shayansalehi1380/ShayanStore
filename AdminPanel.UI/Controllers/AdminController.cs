@@ -111,7 +111,7 @@ namespace AdminPanel.UI.Controllers
                     x.FaTitle.Contains(search) || x.EnTitle.Contains(search) || x.UniqueCode.Contains(search));
             }
 
-            var products = await query.ToListAsync();
+            var products = await query.OrderByDescending(x => x.Id).ToListAsync();
             ViewBag.Products = products;
             return View();
         }
@@ -120,10 +120,10 @@ namespace AdminPanel.UI.Controllers
         {
             ViewData["Title"] = "پنل مدیریت | افزودن کالا";
 
-            ViewBag.Colors = await unitOfWork.GenericRepository<Color>().TableNoTracking.ToListAsync();
-            ViewBag.Guarantees = await unitOfWork.GenericRepository<Guarantee>().TableNoTracking.ToListAsync();
-            ViewBag.Brands = await unitOfWork.GenericRepository<Brand>().TableNoTracking.ToListAsync();
-            ViewBag.SubCat = await unitOfWork.GenericRepository<SubCategory>().TableNoTracking.ToListAsync();
+            ViewBag.Colors = await unitOfWork.GenericRepository<Color>().TableNoTracking.OrderByDescending(x => x.Id).ToListAsync();
+            ViewBag.Guarantees = await unitOfWork.GenericRepository<Guarantee>().TableNoTracking.OrderByDescending(x => x.Id).ToListAsync();
+            ViewBag.Brands = await unitOfWork.GenericRepository<Brand>().TableNoTracking.OrderByDescending(x => x.Id).ToListAsync();
+            ViewBag.SubCat = await unitOfWork.GenericRepository<SubCategory>().TableNoTracking.OrderByDescending(x => x.Id).ToListAsync();
             return View();
         }
 
@@ -263,7 +263,14 @@ namespace AdminPanel.UI.Controllers
 
             IQueryable<FeatureDetails> queryDetailsFeature = unitOfWork.GenericRepository<FeatureDetails>()
                 .TableNoTracking
-                .Include(x => x.Feature);
+                .Include(x => x.Feature)
+                .Include(x => x.SubCategory);
+
+            ViewBag.SubCategories = await unitOfWork.GenericRepository<SubCategory>()
+                .TableNoTracking
+                .OrderBy(x => x.Title)
+                .ToListAsync();
+
 
             if (!string.IsNullOrEmpty(searchFeatureDetails))
             {

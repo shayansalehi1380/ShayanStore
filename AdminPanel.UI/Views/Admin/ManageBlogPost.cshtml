@@ -1,10 +1,9 @@
 ﻿@using Application.Common.ApiResult
 @using Domain.Entity.BlogPosts
 @using Domain.Entity.Users
-@using Application.Dtos.Users
 @{
     List<BlogPost> blogposts = ViewBag.BlogPost;
-    List<UserDto> user = ViewBag.User;
+    List<User> user = ViewBag.User;
 
     int selectTab = ViewBag.selectTab;
     string blogpostTab = string.Empty;
@@ -59,31 +58,38 @@
                     <div class="@blogpostTab tab-pane" id="activity">
                         <div class="d-flex justify-content-between align-items-center">
                             <form asp-controller="BlogPost" asp-action="Create" method="post"
-                                  class="d-flex flex-column justify-content-start align-items-start" style="gap: 15px">
-                                <div class="form-group w-100">
+                                  class="d-flex justify-content-start align-items-center" style="gap: 10px">
+                                <div class="form-group">
                                     <label for="blogTitle">عنوان وبلاگ</label>
                                     <input type="text" class="form-control" name="name" id="blogTitle"
                                            placeholder="عنوان وبلاگ را وارد کنید">
                                 </div>
 
-                                <div class="form-group w-100">
+                                <div class="form-group">
                                     <label for="userSelect">انتخاب نویسنده</label>
                                     <select class="form-control" id="userSelect" name="userId">
                                         <option value="">-- انتخاب نویسنده --</option>
                                         @foreach (var user in ViewBag.User)
                                         {
-                                            <option value="@user.Id">@user.Name @user.Family</option> <!-- نام و نام خانوادگی -->
+                                            <option value="@user.Id">@user.Name @user.Family</option>
                                         }
                                     </select>
                                 </div>
 
-                                <div class="form-group w-100">
+                                <div class="form-group">
                                     <label for="blogContent">محتوای وبلاگ</label>
-                                    <textarea class="form-control" id="editor1" name="content" rows="10"
-                                              placeholder="محتوای وبلاگ را وارد کنید"></textarea>
+                                    <div class="input-group">
+                                        <input type="hidden" id="hiddenBlogContent" name="content">
+                                        <textarea class="form-control d-none" id="blogContent" rows="3" readonly></textarea>
+                                        <div class="input-group-append">
+                                            <button type="button" id="editContentBtn" class="btn btn-warning" style="border-radius: 9px !important;">
+                                                <i class="fa fa-edit"></i> نگارش محتوا
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
 
-                                <div>
+                                <div style="padding-top: 15px">
                                     <button type="submit" class="btn btn-primary">ثبت وبلاگ</button>
                                 </div>
                             </form>
@@ -146,11 +152,11 @@
 <div class="modal fade" id="editGuaranteeModal" tabindex="-1" role="dialog" aria-labelledby="editGuaranteeModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <div class="modal-header d-flex justify-content-between align-items-center">
+                <h5 class="modal-title">محتوای وبلاگ</h5>
+                <button type="button" class="close m-0" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
-                <h5 class="modal-title" id="editGuaranteeModalLabel">ویرایش وبلاگ</h5>
             </div>
             <div class="modal-body">
                 <form asp-action="Update" asp-controller="BlogPost" method="post">
@@ -162,19 +168,42 @@
                     <div class="form-group">
                         <label for="blogPostUser">نویسنده</label>
                         <select class="form-control" id="blogPostUser" name="userId">
-                            @foreach (var user in ViewBag.User)
+                            @foreach (var u in user)
                             {
-                                <option value="@user.Id">@user.UserName</option>
+                                <option value="@u.Id">@u.Name @u.Family</option>
                             }
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="editor2">محتوای وبلاگ</label>
-                        <textarea class="form-control" id="editor2" name="content" rows="10"></textarea>
+                        <textarea id="editor2" class="form-control" name="content" rows="10"></textarea>
                     </div>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">بستن</button>
-                    <button type="submit" class="btn btn-primary">ثبت تغییرات</button>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">بستن</button>
+                        <button type="submit" class="btn btn-primary">ویرایش وبلاگ</button>
+                    </div>
                 </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- مودال جدید برای محتوای وبلاگ -->
+<div class="modal fade" id="blogContentModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header d-flex justify-content-between align-items-center">
+                <h5 class="modal-title">محتوای وبلاگ</h5>
+                <button type="button" class="close m-0" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <textarea id="blogContentEditor" name="content" class="form-control"></textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">بستن</button>
+                <button type="button" id="saveContentBtn" class="btn btn-warning">ثبت محتوا</button>
             </div>
         </div>
     </div>
@@ -184,34 +213,91 @@
 {
     <script>
         $(document).ready(function () {
-            // Initialize CKEditors
-            CKEDITOR.replace('editor1', {
+            // تابع ایجاد CKEditor
+            function initCKEditor(editorId) {
+                return CKEDITOR.replace(editorId, {
+                    language: 'fa',
+                    contentsLangDirection: 'rtl',
+                    height: 400,
+                    extraPlugins: 'autogrow',
+                    autoGrow_minHeight: 300,
+                    autoGrow_maxHeight: 600,
+                    removePlugins: 'resize'
+                });
+            }
+
+            // مقداردهی اولیه ادیتورها هنگام نمایش مودال
+            $('#blogContentModal').on('shown.bs.modal', function () {
+            $('#blogContentEditor').ckeditor(function() {
+                // callback بعد از بارگذاری
+            }, {
                 language: 'fa',
                 contentsLangDirection: 'rtl',
                 height: 400
             });
+        });
 
-            CKEDITOR.replace('editor2', {
-                language: 'fa',
-                contentsLangDirection: 'rtl',
-                height: 400
+            $('#editGuaranteeModal').on('shown.bs.modal', function () {
+                if (!CKEDITOR.instances['editor2']) {
+                    window.editEditor = initCKEditor('editor2');
+                }
             });
 
-            // ویرایش وبلاگ
+            // Handle edit content button click (برای فرم ایجاد)
+            $('#editContentBtn').click(function() {
+                $('#blogContentModal').modal('show');
+            });
+
+            // Handle save content button (برای فرم ایجاد)
+            $('#saveContentBtn').click(function() {
+                var content = CKEDITOR.instances['blogContentEditor'].getData();
+                $('#hiddenBlogContent').val(content);
+                $('#blogContent').val(content.replace(/<[^>]*>/g, '').substring(0, 100) + '...');
+                $('#blogContentModal').modal('hide');
+            });
+
+            // ویرایش وبلاگ (برای فرم ویرایش)
             $(".editeGuarantee").click(function () {
                 var currentRow = $(this).closest("form");
-                $("#blogPostId").val(currentRow.find("input.gId[type=text]").val());
-                $("#blogPostTitle").val(currentRow.find("input.gName[type=text]").val());
+                $("#blogPostId").val(currentRow.find("input.gId").val());
+                $("#blogPostTitle").val(currentRow.find("input.gName").val());
 
-                // تنظیم کاربر انتخاب شده
-                var userId = currentRow.find("input.gUser[type=text]").val();
+                var userId = currentRow.find("input.gUser").val();
                 $("#blogPostUser").val(userId);
 
-                // تنظیم محتوای CKEditor
-                CKEDITOR.instances.editor2.setData(currentRow.find("input.gContent[type=text]").val());
+                // نمایش مودال ویرایش
+                $('#editGuaranteeModal').modal('show');
+
+                // تنظیم محتوا پس از نمایش مودال
+                setTimeout(function() {
+                    if (CKEDITOR.instances['editor2']) {
+                        CKEDITOR.instances['editor2'].setData(currentRow.find("input.gContent").val());
+                    }
+                }, 500);
             });
 
-            // نمایش پیام‌ها
+            // پاکسازی ادیتورها هنگام بستن مودال
+            $('#blogContentModal').on('hidden.bs.modal', function () {
+            if (CKEDITOR.instances['blogContentEditor']) {
+                CKEDITOR.instances['blogContentEditor'].destroy();
+            }
+        });
+
+                    // تخریب و ایجاد مجدد ادیتورها
+        $('#editGuaranteeModal').on('shown.bs.modal', function () {
+            if (CKEDITOR.instances['editor2']) {
+                CKEDITOR.instances['editor2'].destroy();
+            }
+            window.editEditor = CKEDITOR.replace('editor2', {
+                // تنظیمات
+            });
+
+            // تنظیم محتوا پس از ایجاد ادیتور
+            var content = $(this).closest("tr").find("input.gContent").val();
+            window.editEditor.setData(content);
+        });
+
+
             if (@Html.Raw(isError).ToString().ToLower()) {
                 ShowErrorAlret();
             }

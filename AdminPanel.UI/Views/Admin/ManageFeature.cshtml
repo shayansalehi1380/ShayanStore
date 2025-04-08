@@ -1,8 +1,10 @@
 ﻿@using Application.Common.ApiResult
 @using Domain.Entity.Products.Features
+@using Domain.Entity.Products.Categories
 @{
     List<FeatureDetails> featuredetails = ViewBag.DetailsFeatures;
     List<Feature> features = ViewBag.Features;
+    List<SubCategory> subCategories = ViewBag.SubCategories;
     int selectTab = ViewBag.selectTab;
     FunctionStatus status = ViewBag.Status;
 
@@ -169,6 +171,15 @@
                                         }
                                     </select>
                                 </div>
+                                <div class="form-group">
+                                    <label>زیردسته</label>
+                                    <select class="form-control select2" name="subCategoryId" style="width: 100%;">
+                                        @foreach (var subCategory in ViewBag.SubCategories)
+                                        {
+                                            <option value="@subCategory.Id">@subCategory.Title</option>
+                                        }
+                                    </select>
+                                </div>
                                 <div style="padding-top: 15px">
                                     <button type="submit" class="btn btn-primary">ثبت جزئیات ویژگی</button>
                                 </div>
@@ -200,6 +211,7 @@
                                             <th class="text-center">نام جزئیات ویژگی</th>
                                             <th class="text-center">نام ویژگی</th>
                                             <th class="text-center">الویت ویژگی</th>
+                                            <th class="text-center">زیر دسته</th>
                                             <th class="text-center">عملیات</th>
                                         </tr>
                                     </thead>
@@ -211,16 +223,18 @@
                                                 <td class="text-center">@featuredetail.Title</td>
                                                 <td class="text-center">@featuredetail.Feature.Title</td>
                                                 <td class="text-center">@featuredetail.Priority</td>
+                                                <td class="text-center">@featuredetail.SubCategory.Title</td>
                                                 <td class="text-center">
                                                     <form>
                                                         <button type="button" class="badge badge-warning editFd"
                                                                 data-toggle="modal" data-target="#editeFeatureDatails">
                                                             ویرایش
                                                         </button>
-                                                        <input type="text" name="fdId" class="fdId" value="@featuredetail.Id" hidden="hidden" />
-                                                        <input type="text" name="fdName" class="fdName" value="@featuredetail.Title" hidden="hidden" />
-                                                        <input type="text" name="fdPriority" class="fdPriority" value="@featuredetail.Priority" hidden="hidden" />
-                                                        <input type="text" name="fdFeatureId" class="fdFeatureId" value="@featuredetail.FeatureId" hidden="hidden" />
+                                                        <input type="hidden" name="fdId" class="fdId" value="@featuredetail.Id" />
+                                                        <input type="hidden" name="fdName" class="fdName" value="@featuredetail.Title" />
+                                                        <input type="hidden" name="fdPriority" class="fdPriority" value="@featuredetail.Priority" />
+                                                        <input type="hidden" name="fdFeatureId" class="fdFeatureId" value="@featuredetail.FeatureId" />
+                                                        <input type="hidden" name="fdSubCategoryId" class="fdSubCategoryId" value="@featuredetail.SubCategoryId" />
                                                     </form>
 
                                                     <a class="badge badge-danger"
@@ -254,25 +268,32 @@
             </div>
             <div class="modal-body">
                 <form asp-action="Update" asp-controller="FeatureDetails" method="post">
-                    <input id="FeatureDatailsId" name="id" hidden="hidden"/>
+                    <input id="FeatureDatailsId" name="id" type="hidden" />
                     <div class="form-group">
-                        <label for="exampleInputEmail1">نام جزئیات ویژگی</label>
+                        <label>نام جزئیات ویژگی</label>
                         <input type="text" class="form-control" id="NameFeatureDatails" name="name"
-                               aria-describedby="emailHelp"
                                placeholder="نام جزئیات ویژگی را وارد کنید">
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputEmail1">الویت ویژگی</label>
+                        <label>الویت ویژگی</label>
                         <input type="text" class="form-control" id="fdPriority" name="priority"
-                               aria-describedby="emailHelp"
-                               placeholder="نام جزئیات ویژگی را وارد کنید">
+                               placeholder="اولویت جزئیات ویژگی را وارد کنید">
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputEmail1">ویژگی</label>
+                        <label>ویژگی</label>
                         <select class="form-control" id="featureInsertId" name="featureId">
-                            @foreach (var i in features)
+                            @foreach (var feature in ViewBag.Features)
                             {
-                                <option value="@i.Id">@i.Title</option>
+                                <option value="@feature.Id">@feature.Title</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>زیردسته</label>
+                        <select class="form-control" id="subCategoryId" name="subCategoryId">
+                            @foreach (var subCategory in ViewBag.SubCategories)
+                            {
+                                <option value="@subCategory.Id">@subCategory.Title</option>
                             }
                         </select>
                     </div>
@@ -280,11 +301,9 @@
                     <button type="submit" class="btn btn-primary">ثبت</button>
                 </form>
             </div>
-
         </div>
     </div>
 </div>
-
 
 
 <div class="modal fade" id="editFeatureModal" tabindex="-1" role="dialog" aria-labelledby="editStateModalLabel"
@@ -325,13 +344,14 @@
 {
     <script>
         $(document).ready(function () {
-            $(".editFd").click(function () {
-                var currentRow = $(this).closest("form")
-                $("#FeatureDatailsId").val(currentRow.find($("input.fdId[type=text]")).val());
-                $("#NameFeatureDatails").val(currentRow.find($("input.fdName[type=text]")).val());
-                $("#fdPriority").val(currentRow.find($("input.fdPriority[type=text]")).val());
-                $("#featureInsertId").val(currentRow.find($("input.fdFeatureId[type=text]")).val());
-            })
+        $(".editFd").click(function () {
+            var currentRow = $(this).closest("form");
+            $("#FeatureDatailsId").val(currentRow.find("input.fdId").val());
+            $("#NameFeatureDatails").val(currentRow.find("input.fdName").val());
+            $("#fdPriority").val(currentRow.find("input.fdPriority").val());
+            $("#featureInsertId").val(currentRow.find("input.fdFeatureId").val());
+            $("#subCategoryId").val(currentRow.find("input.fdSubCategoryId").val());
+        });
             
             $(".editeFeature").click(function () {
                 var currentRow = $(this).closest("form");
