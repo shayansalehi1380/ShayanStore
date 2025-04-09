@@ -1,6 +1,8 @@
 using System.Diagnostics;
 using Application.Interface;
 using Domain.Entity.Products;
+using Domain.Entity.Products.Brands;
+using Domain.Entity.Products.Categories;
 using Infrastructure.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -22,6 +24,37 @@ public async Task<IActionResult>Index()
         ViewBag.Products = await _unitOfWork.GenericRepository<Product>().TableNoTracking
             .Include(x=>x.ProductColors)
             .ToListAsync();
+
+        var mcategories = await _unitOfWork.GenericRepository<MainCategory>()
+            .TableNoTracking
+            .Include(m => m.Categories)
+            .ThenInclude(c => c.SubCategories)
+            .ToListAsync();
+
+        var categories = await _unitOfWork.GenericRepository<Category>()
+            .TableNoTracking
+            .Include(x => x.MainCategory)
+            .ToListAsync();
+
+        var subcategories = await _unitOfWork.GenericRepository<SubCategory>()
+            .TableNoTracking
+            .Include(x => x.Category)
+            .ToListAsync();
+
+        var firstMainCategory = categories
+            .FirstOrDefault(c => c.MainCategory != null)?.MainCategory;
+
+        var brand = await _unitOfWork.GenericRepository<Brand>()
+            .TableNoTracking
+            .ToListAsync();
+
+        ViewBag.Brands = brand;
+
+        ViewBag.FirstMainCategory = firstMainCategory;
+        ViewBag.SubCategory = subcategories;
+        ViewBag.Categories = categories;
+        ViewBag.MainCategories = mcategories;
+
         return View();
     }
 

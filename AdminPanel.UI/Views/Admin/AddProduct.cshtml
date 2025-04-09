@@ -753,6 +753,7 @@
                 success: function(response) {
                     console.log("Product saved successfully:", response);
                     alert("محصول با موفقیت ذخیره شد!");
+                    window.location.href = '/Admin/ManageProducts';
                 },
                 error: function(xhr, status, error) {
                     console.error("Error:", xhr.status, xhr.responseText);

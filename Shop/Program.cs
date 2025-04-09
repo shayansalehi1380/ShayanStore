@@ -5,6 +5,7 @@ using Domain.Entity.Users;
 using Infrastructure;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.FileProviders;
 using Shop;
 
 var builder = WebApplication.CreateBuilder(args);
