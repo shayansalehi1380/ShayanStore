@@ -1,11 +1,14 @@
-body {
+﻿body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    min-height: 100vh;
     margin: 0;
+    padding-bottom: 60px; /* فضای کافی برای فوتر */
     background-color: #bee8ff;
     font-family: Arial, sans-serif;
+    position: relative;
+    overflow: hidden;
 }
 
 .login-container {
@@ -16,6 +19,9 @@ body {
     width: 320px;
     text-align: center;
     border: 2px solid #000;
+    margin-bottom: 60px; /* فاصله اضافی از پایین */
+    position: relative;
+    z-index: 1;
 }
 
 .form-box {
@@ -50,6 +56,8 @@ input {
     border: 1px solid #ccc;
     border-radius: 5px;
     box-sizing: border-box;
+    font-family: inherit; /* همان فونت label */
+    font-weight: 500;
 }
 
 .password-container {
@@ -73,6 +81,7 @@ button {
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    font-family: inherit;
     font-size: 16px;
     font-weight: bold;
     transition: background-color 0.3s;
@@ -84,4 +93,40 @@ button {
 
 .fa-sign-in-alt {
     margin-left: 8px;
+}
+
+.main-footer {
+    text-align: center;
+    padding: 15px;
+    background-color: #f8f9fa;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    direction: rtl;
+    font-family: inherit; /* استفاده از فونت والد (همان فونت body) */
+    box-shadow: 0 -2px 5px rgba(0,0,0,0.1);
+    z-index: 1000;
+
+}
+
+    .main-footer a {
+        color: #007bff;
+        text-decoration: none;
+        font-family: inherit; /* استفاده از فونت والد */
+    }
+
+        .main-footer a:hover {
+            text-decoration: underline;
+        }
+.error-message {
+    color: #dc3545;
+    font-size: 0.8rem;
+    margin-top: 5px;
+    display: none;
+}
+
+input:invalid {
+    border-color: #dc3545;
 }

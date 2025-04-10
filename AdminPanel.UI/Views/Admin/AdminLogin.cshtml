@@ -1,6 +1,6 @@
 ﻿@model Application.Users.v1.Commands.LoginAdmin.LoginAdminCommand
 @{
-    ViewData["Title"] = "ورود | پنل مدیریت";
+    ViewData["Title"] = "پنل مدیریت | ورود";
     Layout = null;
 }
 <!DOCTYPE html>
@@ -19,26 +19,35 @@
         <h2>ورود به پنل مدیریت</h2>
 
         <div class="form-box">
-            <form asp-action="AdminLogin" asp-controller="Admin" method="post">
+            <form asp-action="AdminLogin" asp-controller="Admin" method="post" id="loginForm">
                 <div class="form-group">
                     <label for="username">:نام کاربری</label>
-                    <input type="text" id="username" asp-for="Username" required>
+                    <input type="text" id="username" asp-for="Username" required 
+                           pattern="^[a-zA-Z0-9#$%^&*!\-_+=<>?;:\u0040]+$"
+                           title="فقط حروف انگلیسی، اعداد و کاراکترهای خاص مجاز هستند">
+                    <div class="error-message" id="usernameError">نام کاربری فقط می‌تواند شامل حروف انگلیسی، اعداد و کاراکترهای خاص باشد</div>
                 </div>
                 <div class="form-group">
                     <label for="password">:رمز عبور</label>
                     <div class="password-container">
-                        <input type="password" id="password" asp-for="Password" required>
+                        <input type="password" id="password" asp-for="Password" required
+                               pattern="^[a-zA-Z0-9#$%^&*!\-_+=<>?;:\u0040]+$"
+                               title="فقط حروف انگلیسی، اعداد و کاراکترهای خاص مجاز هستند">
                         <i class="toggle-password fas fa-eye" onclick="togglePassword()"></i>
                     </div>
+                    <div class="error-message" id="passwordError">رمز عبور فقط می‌تواند شامل حروف انگلیسی، اعداد و کاراکترهای خاص باشد</div>
                 </div>
+                <button type="submit">
+                    <i class="fas fa-sign-in-alt"></i>
+                    ورود
+                </button>
             </form>
         </div>
-
-        <button type="submit">
-            <i class="fas fa-sign-in-alt"></i>
-            ورود
-        </button>
     </div>
+
+    <footer class="main-footer">
+        <strong>CopyLeft &copy; 2025 <a href="http://github.com/shayansalehi1380/" target="_blank">شایان صالحی</a></strong>
+    </footer>
 
     <script>
         function togglePassword() {
@@ -55,6 +64,86 @@
                 toggleIcon.classList.add('fa-eye');
             }
         }
+
+        // اعتبارسنجی فرم
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            let isValid = true;
+
+            // اعتبارسنجی نام کاربری
+            const username = document.getElementById('username');
+            const usernameError = document.getElementById('usernameError');
+            usernameError.style.display = 'none';
+
+            if (!username.value.trim()) {
+                usernameError.textContent = 'نام کاربری نمی‌تواند خالی باشد';
+                usernameError.style.display = 'block';
+                isValid = false;
+            } else if (!username.checkValidity()) {
+                usernameError.textContent = 'فقط حروف انگلیسی، اعداد و کاراکترهای خاص مجاز هستند';
+                usernameError.style.display = 'block';
+                isValid = false;
+            } else if (/[\u0600-\u06FF]/.test(username.value)) {
+                usernameError.textContent = 'استفاده از حروف فارسی مجاز نیست';
+                usernameError.style.display = 'block';
+                isValid = false;
+            }
+
+            // اعتبارسنجی رمز عبور
+            const password = document.getElementById('password');
+            const passwordError = document.getElementById('passwordError');
+            passwordError.style.display = 'none';
+
+            if (!password.value.trim()) {
+                passwordError.textContent = 'رمز عبور نمی‌تواند خالی باشد';
+                passwordError.style.display = 'block';
+                isValid = false;
+            } else if (!password.checkValidity()) {
+                passwordError.textContent = 'فقط حروف انگلیسی، اعداد و کاراکترهای خاص مجاز هستند';
+                passwordError.style.display = 'block';
+                isValid = false;
+            } else if (/[\u0600-\u06FF]/.test(password.value)) {
+                passwordError.textContent = 'استفاده از حروف فارسی مجاز نیست';
+                passwordError.style.display = 'block';
+                isValid = false;
+            }
+
+            if (!isValid) {
+                event.preventDefault();
+            }
+        });
+
+        // اعتبارسنجی هنگام تایپ
+        document.getElementById('username').addEventListener('input', function() {
+            const usernameError = document.getElementById('usernameError');
+            usernameError.style.display = 'none';
+
+            if (!this.value.trim()) {
+                usernameError.textContent = 'نام کاربری نمی‌تواند خالی باشد';
+                usernameError.style.display = 'block';
+            } else if (!this.checkValidity()) {
+                usernameError.textContent = 'فقط حروف انگلیسی، اعداد و کاراکترهای خاص مجاز هستند';
+                usernameError.style.display = 'block';
+            } else if (/[\u0600-\u06FF]/.test(this.value)) {
+                usernameError.textContent = 'استفاده از حروف فارسی مجاز نیست';
+                usernameError.style.display = 'block';
+            }
+        });
+
+        document.getElementById('password').addEventListener('input', function() {
+            const passwordError = document.getElementById('passwordError');
+            passwordError.style.display = 'none';
+
+            if (!this.value.trim()) {
+                passwordError.textContent = 'رمز عبور نمی‌تواند خالی باشد';
+                passwordError.style.display = 'block';
+            } else if (!this.checkValidity()) {
+                passwordError.textContent = 'فقط حروف انگلیسی، اعداد و کاراکترهای خاص مجاز هستند';
+                passwordError.style.display = 'block';
+            } else if (/[\u0600-\u06FF]/.test(this.value)) {
+                passwordError.textContent = 'استفاده از حروف فارسی مجاز نیست';
+                passwordError.style.display = 'block';
+            }
+        });
     </script>
 </body>
 </html>
