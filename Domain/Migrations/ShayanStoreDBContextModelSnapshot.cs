@@ -44,7 +44,7 @@ namespace Domain.Migrations
 
                     b.HasIndex("StateId");
 
-                    b.ToTable("Cities");
+                    b.ToTable("Cities", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entity.BasicInfo.ShippingOption", b =>
@@ -67,7 +67,7 @@ namespace Domain.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ShippingOptions");
+                    b.ToTable("ShippingOptions", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entity.BasicInfo.State", b =>
@@ -87,7 +87,7 @@ namespace Domain.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("States");
+                    b.ToTable("States", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entity.BlogPosts.BlogPost", b =>
@@ -119,7 +119,7 @@ namespace Domain.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("BlogPosts");
+                    b.ToTable("BlogPosts", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entity.DiscountCodes.DiscountCode", b =>
@@ -155,7 +155,7 @@ namespace Domain.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("DiscountCodes");
+                    b.ToTable("DiscountCodes", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entity.Products.Brands.Brand", b =>
@@ -179,7 +179,7 @@ namespace Domain.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Brands");
+                    b.ToTable("Brands", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entity.Products.Categories.Category", b =>
@@ -204,7 +204,7 @@ namespace Domain.Migrations
 
                     b.HasIndex("MainCategoryId");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entity.Products.Categories.CategoryDetail", b =>
@@ -229,7 +229,7 @@ namespace Domain.Migrations
 
                     b.HasIndex("SubCategoryId");
 
-                    b.ToTable("CategoryDetails");
+                    b.ToTable("CategoryDetails", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entity.Products.Categories.MainCategory", b =>
@@ -249,7 +249,7 @@ namespace Domain.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("MainCategories");
+                    b.ToTable("MainCategories", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entity.Products.Categories.SubCategory", b =>
@@ -274,7 +274,7 @@ namespace Domain.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("SubCategories");
+                    b.ToTable("SubCategories", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entity.Products.Colors.Color", b =>
@@ -298,7 +298,7 @@ namespace Domain.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Colors");
+                    b.ToTable("Colors", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entity.Products.Colors.ProductColor", b =>
@@ -338,7 +338,7 @@ namespace Domain.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("ProductColors");
+                    b.ToTable("ProductColors", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entity.Products.Features.Feature", b =>
@@ -361,7 +361,7 @@ namespace Domain.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Features");
+                    b.ToTable("Features", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entity.Products.Features.FeatureDetails", b =>
@@ -397,7 +397,7 @@ namespace Domain.Migrations
 
                     b.HasIndex("SubCategoryId");
 
-                    b.ToTable("FeatureDetails");
+                    b.ToTable("FeatureDetails", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entity.Products.Features.ProductFeature", b =>
@@ -426,7 +426,7 @@ namespace Domain.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("ProductFeatures");
+                    b.ToTable("ProductFeatures", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entity.Products.Guaranties.Guarantee", b =>
@@ -446,7 +446,7 @@ namespace Domain.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Guarantees");
+                    b.ToTable("Guarantees", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entity.Products.ImageAttachments.ImageGallery", b =>
@@ -471,7 +471,7 @@ namespace Domain.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("ImageGalleries");
+                    b.ToTable("ImageGalleries", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entity.Products.Offers.Offer", b =>
@@ -507,7 +507,7 @@ namespace Domain.Migrations
 
                     b.HasIndex("ColorId");
 
-                    b.ToTable("Offers");
+                    b.ToTable("Offers", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entity.Products.Product", b =>
@@ -616,7 +616,7 @@ namespace Domain.Migrations
 
                     b.HasIndex("UserUpdateId");
 
-                    b.ToTable("Products");
+                    b.ToTable("Products", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entity.Users.Role", b =>
@@ -777,7 +777,7 @@ namespace Domain.Migrations
                     b.HasIndex("UserId")
                         .IsUnique();
 
-                    b.ToTable("Wallets");
+                    b.ToTable("Wallets", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>

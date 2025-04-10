@@ -29,5 +29,8 @@
   <ItemGroup>
     <Folder Include="wwwroot\AdminDashboard\" />
   </ItemGroup>
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Views\Product\ProductPage.cshtml" />
+  </ItemGroup>
 
 </Project>

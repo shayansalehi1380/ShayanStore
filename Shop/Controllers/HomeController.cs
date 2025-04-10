@@ -10,20 +10,18 @@ using Shop.Models;
 
 namespace Shop.Controllers;
 
-public class HomeController: Controller
+public class HomeController : Controller
 {
-private readonly IUnitOfWork _unitOfWork;
+    private readonly IUnitOfWork _unitOfWork;
 
-public HomeController(IUnitOfWork unitOfWork)
-{
-    _unitOfWork = unitOfWork;
-}
-
-public async Task<IActionResult>Index()
+    public HomeController(IUnitOfWork unitOfWork)
     {
-        ViewBag.Products = await _unitOfWork.GenericRepository<Product>().TableNoTracking
-            .Include(x=>x.ProductColors)
-            .ToListAsync();
+        _unitOfWork = unitOfWork;
+    }
+
+    public async Task<IActionResult> Index()
+    {
+        #region Required
 
         var mcategories = await _unitOfWork.GenericRepository<MainCategory>()
             .TableNoTracking
@@ -44,16 +42,61 @@ public async Task<IActionResult>Index()
         var firstMainCategory = categories
             .FirstOrDefault(c => c.MainCategory != null)?.MainCategory;
 
+        ViewBag.FirstMainCategory = firstMainCategory;
+        ViewBag.SubCategory = subcategories;
+        ViewBag.Categories = categories;
+        ViewBag.MainCategories = mcategories;
+
+        #endregion
+
+        ViewBag.Products = await _unitOfWork.GenericRepository<Product>().TableNoTracking
+            .Include(x => x.ProductColors)
+            .ToListAsync();
         var brand = await _unitOfWork.GenericRepository<Brand>()
             .TableNoTracking
             .ToListAsync();
 
         ViewBag.Brands = brand;
 
+
+        return View();
+    }
+
+    public async Task<IActionResult> SubCategoryProduct(int id)
+    {
+        #region Required
+
+        var mcategories = await _unitOfWork.GenericRepository<MainCategory>()
+            .TableNoTracking
+            .Include(m => m.Categories)
+            .ThenInclude(c => c.SubCategories)
+            .ToListAsync();
+
+        var categories = await _unitOfWork.GenericRepository<Category>()
+            .TableNoTracking
+            .Include(x => x.MainCategory)
+            .ToListAsync();
+
+        var subcategories = await _unitOfWork.GenericRepository<SubCategory>()
+            .TableNoTracking
+            .Include(x => x.Category)
+            .ToListAsync();
+
+        var firstMainCategory = categories
+            .FirstOrDefault(c => c.MainCategory != null)?.MainCategory;
+
         ViewBag.FirstMainCategory = firstMainCategory;
         ViewBag.SubCategory = subcategories;
         ViewBag.Categories = categories;
         ViewBag.MainCategories = mcategories;
+
+        #endregion
+ViewBag.SubCat = await _unitOfWork.GenericRepository<SubCategory>().TableNoTracking.FirstOrDefaultAsync(x=>x.Id == id);
+        ViewBag.Prods = await _unitOfWork.GenericRepository<Product>().TableNoTracking
+            .Include(x => x.ProductColors)
+            .Include(x=>x.CategoryDetail)
+            .Where(x => x.CategoryDetail.SubCategoryId == id)
+            .ToListAsync();
 
         return View();
     }

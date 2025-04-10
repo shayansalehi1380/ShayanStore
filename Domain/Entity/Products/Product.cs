@@ -34,7 +34,8 @@ public class Product : BaseEntity
     public DateTime InsertDate { get; set; }
     public DateTime UpdateTime { get; set; }
     public ProductStatus Status { get; set; }
-   
+    // public int SubCategoryId { get; set; }
+    // [ForeignKey(nameof(SubCategoryId))] public SubCategory? SubCategory { get; set; } 
     public int? CategoryDetailId { get; set; }
     [ForeignKey(nameof(CategoryDetailId))] public CategoryDetail? CategoryDetail { get; set; }
     public int BrandId { get; set; }
