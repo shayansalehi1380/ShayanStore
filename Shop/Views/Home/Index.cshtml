@@ -19,7 +19,7 @@
                     <div class="header-right">
                         <div class="col-lg-3 pr">
                             <div class="header-logo row text-right">
-                                <a href="#">
+                                <a href="@Url.Action("Index","Home")">
                                     <img src="~/Shop/assets/images/logo.png" alt="کالامارکت">
                                 </a>
                             </div>
@@ -120,16 +120,16 @@
                                         <div class="dropdown-menu">
                                             <ul class="account-uls mb-0">
                                                 <li class="account-item">
-                                                    <a href="#" class="account-link">پنل کاربری</a>
+                                                    <a href="@Url.Action("Panel","UserPanel")" class="account-link">پنل کاربری</a>
                                                 </li>
                                                 <li class="account-item">
-                                                    <a href="#" class="account-link">سفارشات من</a>
+                                                    <a href="@Url.Action("Orders","UserPanel")" class="account-link">سفارشات من</a>
                                                 </li>
                                                 <li class="account-item">
-                                                    <a href="#" class="account-link">تنظیمات</a>
+                                                    <a href="@Url.Action("Wallet","UserPanel")" class="account-link" style="background-color: #f5f5f5">کیف پول:  0 تومان</a>
                                                 </li>
                                                 <li class="account-item">
-                                                    <a href="#" class="account-link">خروج</a>
+                                                    <a href="@Url.Action("Logout","UserPanel")" class="account-link">خروج</a>
                                                 </li>
                                             </ul>
                                         </div>
