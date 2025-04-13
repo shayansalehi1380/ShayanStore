@@ -38,27 +38,28 @@ public class ProductController(IUnitOfWork _unitOfWork) : Controller
         ViewBag.MainCategories = mcategories;
 
         #endregion
-      
-        ViewBag.Prods = await _unitOfWork.GenericRepository<Product>().TableNoTracking
-            .Include(x => x.ProductColors)
-            .Include(x=>x.CategoryDetail)
-            .Where(x => x.Id == id)
-            .ToListAsync();
 
-        ViewBag.CurrentProduct = await _unitOfWork.GenericRepository<Product>()
-            .TableNoTracking
-            .Include(p => p.ProductColors)
-                .ThenInclude(pc => pc.Color) // فقط برای روابط موجودیت‌ها
-            .Include(p => p.ProductFeatures)
-                .ThenInclude(pf => pf.FeatureDetails)
-            .Include(p => p.Brand)
-            .Include(p => p.CategoryDetail)
-            .FirstOrDefaultAsync(p => p.Id == id);
-
-        ViewBag.CurrentBrand = await _unitOfWork.GenericRepository<Brand>()
-            .TableNoTracking
-            .FirstOrDefaultAsync(b => b.Id == id);
-
+        var prod = await _unitOfWork.GenericRepository<Product>().TableNoTracking
+            .Include(x => x.ProductColors).ThenInclude(x => x.Color)
+            .Include(x => x.ProductColors).ThenInclude(x => x.Guarantee)
+            .Include(x => x.CategoryDetail).ThenInclude(x => x!.SubCategory)
+            .ThenInclude(x => x.Category)
+            .ThenInclude(x => x.MainCategory)
+            .Include(x => x.Brand)
+            .Include(x => x.ImageGalleries)
+            .Include(x => x.Offer)
+            .Include(x => x.ProductFeatures)
+            .ThenInclude(x => x.FeatureDetails)
+            .FirstOrDefaultAsync(x => x.Id == id);
+        ViewBag.Prod = prod;
         return View();
+    }
+[HttpGet]
+    public async Task<List<Product>> SearchProds(string keyword)
+    {
+        return await _unitOfWork.GenericRepository<Product>().TableNoTracking
+            .Where(x => x.FaTitle.Contains(keyword))
+            .Take(6)
+            .ToListAsync();
     }
 }

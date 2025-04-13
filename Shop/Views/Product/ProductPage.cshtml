@@ -6,12 +6,21 @@
     List<MainCategory> mcategories = ViewBag.MainCategories;
     List<Category> categories = ViewBag.Categories;
     MainCategory mcategory = ViewBag.FirstMainCategory;
-    List<Product> prods = ViewBag.Prods;
-    Product prod = ViewBag.CurrentProduct;
-    Brand brand = ViewBag.CurrentBrand;
-    SubCategory subCategory = ViewBag.SubCat;
+    Product prod = ViewBag.Prod;
+}
+@section link
+{
+    <link rel="stylesheet" href="~/Shop/assets/css/vendor/noUISlider.min.css">
+    <link rel="stylesheet" href="~/Shop/assets/css/vendor/lightgallery.css">
 }
 @section header
+
+
+
+
+
+
+
 {
     <header class="header-main">
         <div class="d-block">
@@ -20,7 +29,7 @@
                     <div class="header-right">
                         <div class="col-lg-3 pr">
                             <div class="header-logo row text-right">
-                                <a href="@Url.Action("Index","Home")">
+                                <a href="@Url.Action("Index", "Home")">
                                     <img src="~/Shop/assets/images/logo.png" alt="کالامارکت">
                                 </a>
                             </div>
@@ -30,7 +39,7 @@
                                 <div class="header-search-box">
                                     <form action="#" class="form-search">
                                         <input type="search" class="header-search-input" name="search-input"
-                                        placeholder="نام محصول یا برند را جستجو کنید…">
+                                               placeholder="نام محصول یا برند را جستجو کنید…">
                                         <div class="action-btns">
                                             <button class="btn btn-search" type="submit">
                                                 <img src="~/Shop/assets/images/search.png" alt="search">
@@ -121,16 +130,19 @@
                                         <div class="dropdown-menu">
                                             <ul class="account-uls mb-0">
                                                 <li class="account-item">
-                                                    <a href="@Url.Action("Panel","UserPanel")" class="account-link">پنل کاربری</a>
+                                                    <a href="@Url.Action("Panel", "UserPanel")" class="account-link">پنل
+                                                        کاربری</a>
                                                 </li>
                                                 <li class="account-item">
-                                                    <a href="@Url.Action("Orders","UserPanel")" class="account-link">سفارشات من</a>
+                                                    <a href="@Url.Action("Orders", "UserPanel")" class="account-link">سفارشات
+                                                        من</a>
                                                 </li>
                                                 <li class="account-item">
-                                                    <a href="@Url.Action("Wallet","UserPanel")" class="account-link" style="background-color: #f5f5f5">کیف پول: 0تومان</a>
+                                                    <a href="@Url.Action("Wallet", "UserPanel")" class="account-link"
+                                                       style="background-color: #f5f5f5">کیف پول: 0تومان</a>
                                                 </li>
                                                 <li class="account-item">
-                                                    <a href="@Url.Action("Logout","UserPanel")" class="account-link">خروج</a>
+                                                    <a href="@Url.Action("Logout", "UserPanel")" class="account-link">خروج</a>
                                                 </li>
                                             </ul>
                                         </div>
@@ -148,7 +160,7 @@
                             @foreach (var mainCat in mcategories)
                             {
                                 <li id="nav-menu-item"
-                                class="menu-item @(mainCat.Categories.Any() ? "nav-overlay" : "")">
+                                    class="menu-item @(mainCat.Categories.Any() ? "nav-overlay" : "")">
                                     <a href="#" class="current-link-menu">
                                         @mainCat.Title
                                         @if (mainCat.Categories.Any())
@@ -212,7 +224,7 @@
                                                                     </a>
                                                                     <a href="#" class="mini-cart-item-image d-block">
                                                                         <img
-                                                                        src="~/Shop/assets/images/menu-main/img-card.jpg">
+                                                                            src="~/Shop/assets/images/menu-main/img-card.jpg">
                                                                     </a>
                                                                     <span class="product-name-card">لپ تاپ چووی
                                                                         الترابوک 14
@@ -241,7 +253,7 @@
                                                                     </a>
                                                                     <a href="#" class="mini-cart-item-image d-block">
                                                                         <img
-                                                                        src="~/Shop/assets/images/menu-main/img-card-2.jpg">
+                                                                            src="~/Shop/assets/images/menu-main/img-card-2.jpg">
                                                                     </a>
                                                                     <span class="product-name-card">هواوای میت
                                                                         بوک X پرو
@@ -307,11 +319,11 @@
                         var id = "collapseOne" + i.Id;
                         <li>
                             <a href="#" class="collapsed" type="button" data-toggle="collapse" data-target="#@id"
-                            aria-expanded="false" aria-controls="collapseOne"><i
-                                class="mdi mdi-chevron-down"></i>@i.Title</a>
+                               aria-expanded="false" aria-controls="collapseOne"><i
+                                    class="mdi mdi-chevron-down"></i>@i.Title</a>
 
                             <div id="@id" class="collapse" aria-labelledby="headingOne"
-                            data-parent="#accordionExample" style="">
+                                 data-parent="#accordionExample" style="">
                                 <ul>
                                     @foreach (var c in i.Categories)
                                     {
@@ -321,7 +333,7 @@
                                                 {
                                                     <li>
                                                         <a href="@Url.Action("SubCategoryProduct", "Home", new { id = @c.Id })"
-                                                        class="category-level-3">@s.Title</a></li>
+                                                           class="category-level-3">@s.Title</a></li>
                                                 }
                                             </ul>
                                         </li>
@@ -382,6 +394,7 @@
         </div>
     </header>
 }
+
 <div class="container-main">
     <div class="d-block">
         <div class="page-content page-row">
@@ -391,16 +404,12 @@
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="@Url.Action("Index", "Home")">خانه</a></li>
-                            <li class="breadcrumb-item"><a href="#">@mcategory.Title</a></li>
-                            @if (subCategory?.Category != null)
-                            {
-                                <li class="breadcrumb-item"><a href="#">@subCategory.Category.Name</a></li>
-                            }
-                            @if (subCategory != null)
-                            {
-                                <li class="breadcrumb-item active" aria-current="page">@subCategory.Title</li>
-                            }
-                            <li class="breadcrumb-item active" aria-current="page">@prod.FaTitle</li>
+                            <li class="breadcrumb-item"><a
+                                    href="#">@prod.CategoryDetail.SubCategory.Category.Name</a></li>
+                            <li class="breadcrumb-item"><a href="#">@prod.CategoryDetail.SubCategory.Title</a>
+                            </li>
+                            <li class="breadcrumb-item active"
+                                aria-current="page">@prod.CategoryDetail.Title</li>
                         </ol>
                     </nav>
                 </div>
@@ -420,68 +429,70 @@
                                                 </li>
                                                 <li class="option-social">
                                                     <a href="#" class="btn-option btn-option-social"
-                                                    data-toggle="modal" data-target="#option-social">
+                                                       data-toggle="modal" data-target="#option-social">
                                                         <i class="mdi mdi-share"></i>
                                                         <span>اشتراک</span>
                                                     </a>
                                                     <!-- Modal-option-social -->
                                                     <div class="modal fade" id="option-social" tabindex="-1"
-                                                    role="dialog" aria-labelledby="exampleModalCenterTitle"
-                                                    aria-hidden="true">
+                                                         role="dialog" aria-labelledby="exampleModalCenterTitle"
+                                                         aria-hidden="true">
                                                         <div class="modal-dialog modal-dialog-centered"
-                                                        role="document">
+                                                             role="document">
                                                             <div class="modal-content">
                                                                 <div class="modal-header">
                                                                     <h5 class="modal-title"
-                                                                    id="exampleModalCenterTitle">اشتراک گذاری
+                                                                        id="exampleModalCenterTitle">اشتراک گذاری
                                                                     </h5>
                                                                     <button type="button" class="close"
-                                                                    data-dismiss="modal" aria-label="Close">
+                                                                            data-dismiss="modal" aria-label="Close">
                                                                         <span aria-hidden="true">&times;</span>
                                                                     </button>
                                                                 </div>
                                                                 <div class="modal-body">
                                                                     <div class="title">با استفاده از روش‌های زیر
                                                                         می‌توانید این صفحه را با دوستان خود به
-                                                                        اشتراک بگذارید.</div>
+                                                                        اشتراک بگذارید.
+                                                                    </div>
                                                                     <form action="#" class="email-sharing">
                                                                         <h5 class="share-title">ارسال از طریق ایمیل
                                                                         </h5>
                                                                         <div class="input-group-sharing">
                                                                             <input type="email"
-                                                                            class="share-email-address form-control"
-                                                                            id="share-email">
+                                                                                   class="share-email-address form-control"
+                                                                                   id="share-email">
                                                                             <button
-                                                                            class="btn-send-email btn btn-primary"
-                                                                            type="submit">ارسال ایمیل</button>
+                                                                                class="btn-send-email btn btn-primary"
+                                                                                type="submit">ارسال ایمیل
+                                                                            </button>
                                                                         </div>
                                                                     </form>
                                                                     <div class="share-options">
                                                                         <div
-                                                                        class="share-social-buttons text-center">
+                                                                            class="share-social-buttons text-center">
                                                                             <a href="#"
-                                                                            class="share-social share-social-twitter">
+                                                                               class="share-social share-social-twitter">
                                                                                 <i class="mdi mdi-twitter"></i>
                                                                             </a>
                                                                             <a href="#"
-                                                                            class="share-social share-social-facebook">
+                                                                               class="share-social share-social-facebook">
                                                                                 <i class="mdi mdi-facebook"></i>
                                                                             </a>
                                                                             <a href="#"
-                                                                            class="share-social share-social-whatsapp">
+                                                                               class="share-social share-social-whatsapp">
                                                                                 <i class="mdi mdi-whatsapp"></i>
                                                                             </a>
                                                                             <a href="#"
-                                                                            class="share-social share-social-email-outline">
+                                                                               class="share-social share-social-email-outline">
                                                                                 <i
-                                                                                class="mdi mdi-email-outline"></i>
+                                                                                    class="mdi mdi-email-outline"></i>
                                                                             </a>
                                                                         </div>
                                                                     </div>
                                                                     <div class="form-share-col">
                                                                         <input class="ui-url-field" type="url"
-                                                                        value="https://www.digikala.com/product/dkp-1672478"
-                                                                        readonly="">
+                                                                               value="https://www.digikala.com/product/dkp-1672478"
+                                                                               readonly="">
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -490,23 +501,23 @@
                                                 </li>
                                                 <li class="option-alarm">
                                                     <a href="#" class="btn-option btn-option-alarm"
-                                                    data-toggle="modal" data-target="#btn-option-alarm">
+                                                       data-toggle="modal" data-target="#btn-option-alarm">
                                                         <i class="mdi mdi-bell-outline"></i>
                                                         <span>اطلاع‌رسانی</span>
                                                     </a>
                                                     <!-- Modal-option-alarm -->
                                                     <div class="modal fade" id="btn-option-alarm" tabindex="-1"
-                                                    role="dialog" aria-labelledby="exampleModalCenterTitle"
-                                                    aria-hidden="true">
+                                                         role="dialog" aria-labelledby="exampleModalCenterTitle"
+                                                         aria-hidden="true">
                                                         <div class="modal-dialog modal-dialog-centered"
-                                                        role="document">
+                                                             role="document">
                                                             <div class="modal-content">
                                                                 <div class="modal-header">
                                                                     <h5 class="modal-title"
-                                                                    id="exampleModalCenterTitle">به من اطلاع بده
+                                                                        id="exampleModalCenterTitle">به من اطلاع بده
                                                                     </h5>
                                                                     <button type="button" class="close"
-                                                                    data-dismiss="modal" aria-label="Close">
+                                                                            data-dismiss="modal" aria-label="Close">
                                                                         <span aria-hidden="true">&times;</span>
                                                                     </button>
                                                                 </div>
@@ -516,39 +527,41 @@
                                                                     <div class="form-auth-row">
                                                                         <label for="#" class="ui-checkbox mt-1">
                                                                             <input type="checkbox" value="1"
-                                                                            name="login" id="remember">
+                                                                                   name="login" id="remember">
                                                                             <span class="ui-checkbox-check"></span>
                                                                         </label>
                                                                         <label for="remember"
-                                                                        class="remember-me mr-0">ایمیل به
+                                                                               class="remember-me mr-0">ایمیل به
                                                                             info@digismart.com</label>
                                                                     </div>
                                                                     <div class="form-auth-row">
                                                                         <label for="#" class="ui-checkbox mt-1">
                                                                             <input type="checkbox" value="1"
-                                                                            name="login" id="remember">
+                                                                                   name="login" id="remember">
                                                                             <span class="ui-checkbox-check"></span>
                                                                         </label>
                                                                         <label for="remember"
-                                                                        class="remember-me mr-0">پیامک به
+                                                                               class="remember-me mr-0">پیامک به
                                                                             *******0991</label>
                                                                     </div>
                                                                     <div class="form-auth-row">
                                                                         <label for="#" class="ui-checkbox mt-1">
                                                                             <input type="checkbox" value="1"
-                                                                            name="login" id="remember">
+                                                                                   name="login" id="remember">
                                                                             <span class="ui-checkbox-check"></span>
                                                                         </label>
                                                                         <label for="remember"
-                                                                        class="remember-me mr-0">سیستم پیام شخصی
+                                                                               class="remember-me mr-0">سیستم پیام شخصی
                                                                             کالامارکت</label>
                                                                     </div>
                                                                 </div>
                                                                 <div class="modal-footer">
                                                                     <button type="button"
-                                                                    class="btn btn-primary ml-2">ثبت</button>
+                                                                            class="btn btn-primary ml-2">ثبت
+                                                                    </button>
                                                                     <button type="button" class="btn btn-secondary"
-                                                                    data-dismiss="modal">بازگشت</button>
+                                                                            data-dismiss="modal">بازگشت
+                                                                    </button>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -556,28 +569,31 @@
                                                 </li>
                                                 <li class="Three-dimensional">
                                                     <a href="#" class="btn-option btn-Three-dimensional"
-                                                    data-toggle="modal" data-target="#more-product">
+                                                       data-toggle="modal" data-target="#more-product">
                                                         <i class="mdi mdi-more"></i>
                                                         <span>نمایش بیشتر</span>
                                                     </a>
                                                     <div class="modal fade" id="more-product" tabindex="-1"
-                                                    role="dialog" aria-labelledby="exampleModalCenterTitle"
-                                                    aria-hidden="true">
+                                                         role="dialog" aria-labelledby="exampleModalCenterTitle"
+                                                         aria-hidden="true">
                                                         <div class="modal-dialog modal-dialog-centered more-product"
-                                                        role="document">
+                                                             role="document">
                                                             <div class="modal-content">
                                                                 <div class="modal-body">
                                                                     @{
-                                                                        foreach (var i in prods)
+                                                                        foreach (var i in prod.ImageGalleries)
                                                                         {
                                                                             <div id="custom-events">
-                                                                                <a href="">
-                                                                                    <img src="https://localhost:7001/Images/Brands/@i.ImageGalleries" class="img-fluid img-brand"
-                                                                                    alt="@i.ImageGalleries" title="@i.ImageGalleries" />
+                                                                                <a href="https://localhost:7001/Images/Images/Product/@i.ImageUri">
+                                                                                    <img
+                                                                                        src="https://localhost:7001/Images/Images/Product/@i.ImageUri"
+                                                                                        class="img-fluid img-brand"
+                                                                                        alt="@i.ImageUri"
+                                                                                        title="@i.ImageUri"/>
                                                                                 </a>
                                                                             </div>
                                                                         }
-                                                                    }            
+                                                                    }
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -585,7 +601,7 @@
                                                 </li>
                                                 <li class="Three-dimensional">
                                                     <a href="product-comparison.html"
-                                                    class="btn-option btn-compare">
+                                                       class="btn-option btn-compare">
                                                         <i class="mdi mdi-compare"></i>
                                                         <span>مقایسه</span>
                                                     </a>
@@ -597,19 +613,24 @@
                                         <div class="gallery-img">
                                             <a href="#">
                                                 <img class="zoom-img" id="img-product-zoom"
-                                                src="~/Shop/assets/images/page-single-product/product-img/product-img-note10.jpg"
-                                                data-zoom-image="~/Shop/assets/images/page-single-product/product-img/product-img-note10.jpg"
-                                                width="411" />
+                                                     src="https://localhost:7001/Images/Images/Product/@prod.ImageUri"
+                                                     data-zoom-image="https://localhost:7001/Images/Images/Product/@prod.ImageUri"
+                                                     width="411"/>
                                                 <div id="gallery_01f" style="width:420px;float:right;">
                                             </a>
                                             <ul class="gallery-items owl-carousel owl-theme" id="gallery-slider">
-                                                <li class="item">
-                                                    <a href="#" class="elevatezoom-gallery active" data-update=""
-                                                    data-image="~/Shop/assets/images/page-single-product/product-img/product-img-note10-big-1.jpg"
-                                                    data-zoom-image="~/Shop/assets/images/page-single-product/product-img/product-img-note10-big-1.jpg">
-                                                        <img src="~/Shop/assets/images/page-single-product/product-img/product-img-note10-big-1.jpg"
-                                                        width="100" /></a>
-                                                </li>
+                                            
+                                                @foreach (var i in prod.ImageGalleries)
+                                                {
+                                                    <li class="item">
+                                                        <a href="#" class="elevatezoom-gallery active" data-update=""
+                                                           data-image="https://localhost:7001/Images/Images/Product/@i.ImageUri"
+                                                           data-zoom-image="~/Shop/assets/images/page-single-product/product-img/product-img-note10-big-1.jpg">
+                                                            <img
+                                                                src="https://localhost:7001/Images/Images/Product/@i.ImageUri"
+                                                                width="100"/></a>
+                                                    </li>
+                                                }
                                             </ul>
                                         </div>
                                     </div>
@@ -641,44 +662,27 @@
                                     <ul>
                                         <li>
                                             <span><i class="fa fa-archive"></i> دسته:</span>
-                                            @if (mcategory != null)
-                                            {
-                                                <a href="#" class="product-link product-cat-title">@mcategory.Title</a>
-                                            }
-                                            @if (subCategory != null)
-                                            {
-                                                @:,
-                                                <a href="#" class="product-link product-cat-title">@subCategory.Title</a>
-
-                                                @if (subCategory.Category != null)
-                                                {
-                                                    <a href="#" class="product-link product-cat-title">@subCategory.Category.Name</a>
-                                                }
-                                            }
+                                            <a href="#"
+                                               class="product-link product-cat-title">@prod.CategoryDetail.SubCategory.Category.Name</a>
+                                            
                                         </li>
-                                        <li>
-                                            <span><i class="fa fa-tags"></i> برچسب:</span>
-                                            @if (brand != null)
-                                            {
-                                                <a href="#" class="product-link product-tag-title">@brand.Title</a>
-                                            }
-                                            else
-                                            {
-                                                <a href="#" class="product-link product-tag-title">برچسب ثبت نشده</a>
-                                            }
-                                        </li>
+                                        @*  <li> *@
+                                        @*      <span><i class="fa fa-tags"></i> برچسب:</span> *@
+                                        @* @{ *@
+                                        @*          foreach (var VARIABLE in prod.) *@
+                                        @*          { *@
+                                        @*               *@
+                                        @*          } *@
+                                        @*      } *@
+                                        @*          <a href="#" class="product-link product-tag-title">برچسب ثبت نشده</a> *@
+                                        @*  </li> *@
                                         <li>
                                             <span>
                                                 برند:
                                             </span>
-                                            @if (@brand?.Title != null)
-                                            {
-                                                <a href="#" class="product-link product-tag-title">@brand.Title</a>
-                                            }
-                                            else
-                                            {
-                                                <a href="#" class="product-link product-tag-title">برند ثبت نشده</a>
-                                            }
+
+                                            <a href="#" class="product-link product-tag-title">@prod.Brand.Title</a>
+
                                         </li>
                                     </ul>
                                 </div>
@@ -688,20 +692,22 @@
                                         <ul class="js-product-variants">
                                             @if (prod.ProductColors != null && prod.ProductColors.Any())
                                             {
+                                                int indexC = 0;
                                                 @foreach (var productColor in prod.ProductColors)
                                                 {
                                                     <li class="ui-variant">
-                                                        <label for="color_@productColor.ColorId" class="ui-variant-color">
+                                                        <label for="color_@productColor.ColorId"
+                                                               class="ui-variant-color">
                                                             <span class="ui-variant-shape"
-                                                            style="background-color: @productColor.Color?.Code;
-                                                                    @(string.IsNullOrEmpty(productColor.Color?.Code) ? "display:none" : "")"></span>
+                                                                  style="background-color: @productColor.Color?.Code;
+                                                                  @(string.IsNullOrEmpty(productColor.Color?.Code) ? "display:none" : "")"></span>
                                                             <input type="radio"
-                                                            value="@productColor.ColorId"
-                                                            name="color"
-                                                            id="color_@productColor.ColorId"
-                                                            class="js-variant-selector"
-                                                            data-price="@productColor.Price"
-                                                            @(productColor == prod.ProductColors.First() ? "checked" : "")>
+                                                                   value="@productColor.ColorId"
+                                                                   name="color"
+                                                                   id="color_@productColor.ColorId"
+                                                                   class="js-variant-selector"
+                                                                   data-price="@productColor.Price"
+                                                                   @(indexC == 0 ? "checked" : "")>
                                                             <span class="ui-variant-check"></span>
                                                         </label>
                                                     </li>
@@ -716,12 +722,13 @@
                                     <div class="product-params pt-3">
                                         <ul data-title="ویژگی‌های محصول">
                                             <li>
-                                                @if (prod.ProductFeatures != null && prod.ProductFeatures.Any())
+                                                @if ( prod.ProductFeatures.Any())
                                                 {
-                                                    @foreach (var feature in prod.ProductFeatures.Where(f => f.FeatureDetails != null))
+                                                    @foreach (var feature in prod.ProductFeatures)
                                                     {
                                                         <div class="feature-item">
-                                                            <span class="feature-title">@feature.FeatureDetails.Title:</span>
+                                                            <span
+                                                                class="feature-title">@feature.FeatureDetails.Title:</span>
                                                             <span class="feature-value">@feature.Value</span>
                                                         </div>
                                                     }
@@ -734,553 +741,498 @@
                                         </ul>
                                     </div>
                                 </div>
-                                    <div class="col=lg-6 col-md-6 col-xs-12 pr">
-                                        <div class="product-seller-info">
-                                            <div class="seller-info-changable">
-                                                <div class="product-seller-row vendor">
-                                                    <span class="title"> فروشنده:</span>
-                                                    <a href="#" class="product-name">کالامارکت</a>
-                                                </div>
-                                                <div class="product-seller-row guarantee">
-                                                    <span class="title"> گارانتی:</span>
-                                                    <a href="#" class="product-name">گارانتی ثبت نشده</a>
-                                                </div>
-                                                <div class="product-seller-row price">
-                                                    <span class="title"> قیمت:</span>
-                                                    <a href="#" class="product-name">
-                                                        <span class="amount">
-                                                        @foreach (var productColor in prod.ProductColors)
-                                                        {
+                                <div class="col=lg-6 col-md-6 col-xs-12 pr">
+                                    @{
+                                        int index = 0;
+                                        foreach (var i in prod.ProductColors)
+                                    {
+                                        if (index != 0)
+                                        {
+                                              <div class="product-seller-info d-none">
+                                        <div class="seller-info-changable">
+                                            <div class="product-seller-row vendor">
+                                                <span class="title"> فروشنده:</span>
+                                                <a href="#" class="product-name">کالامارکت</a>
+                                            </div>
+                                            <div class="product-seller-row guarantee">
+                                                <span class="title"> گارانتی:</span>
+                                                <a href="#" class="product-name">@i.Guarantee.Title</a>
+                                            </div>
+                                            <div class="product-seller-row price">
+                                                <span class="title"> قیمت:</span>
+                                                <a href="#" class="product-name">
+                                                    <span class="amount">
                                                             <div>
-                                                                قیمت: @productColor.Price.ToString("N0")
+                                                                قیمت: @i.Price.ToString("N0")
                                                             </div>
-                                                        }
-                                                            <span>تومان</span>
-                                                        </span>
-                                                    </a>
-                                                </div>
-                                                <div class="product-seller-row guarantee">
-                                                    <span class="title mt-3"> تعداد:</span>
-                                                    <div class="quantity pl">
-                                                        <input type="number" min="1" max="100" step="1" value="1">
-                                                        <div class="quantity-nav">
-                                                            <div class="quantity-button quantity-up">+</div>
-                                                            <div class="quantity-button quantity-down">-</div>
-                                                        </div>
+                                                        <span>تومان</span>
+                                                    </span>
+                                                </a>
+                                            </div>
+                                            <div class="product-seller-row guarantee">
+                                                <span class="title mt-3"> تعداد:</span>
+                                                <div class="quantity pl">
+                                                    <input type="number" min="1" max="4" step="1" value="1">
+                                                    <div class="quantity-nav">
+                                                        <div class="quantity-button quantity-up">+</div>
+                                                        <div class="quantity-button quantity-down">-</div>
                                                     </div>
                                                 </div>
-                                                <div class="product-seller-row add-to-cart">
-                                                    <a href="#" class="btn-add-to-cart btn btn-primary">
-                                                        <span class="btn-add-to-cart-txt">افزودن به سبد خرید</span>
-                                                    </a>
-                                                </div>
+                                            </div>
+                                            <div class="product-seller-row add-to-cart">
+                                                <a href="#" class="btn-add-to-cart btn btn-primary">
+                                                    <span class="btn-add-to-cart-txt">افزودن به سبد خرید</span>
+                                                </a>
                                             </div>
                                         </div>
                                     </div>
+                                        }
+                                        else
+                                        {
+                                              <div class="product-seller-info">
+                                        <div class="seller-info-changable">
+                                            <div class="product-seller-row vendor">
+                                                <span class="title"> فروشنده:</span>
+                                                <a href="#" class="product-name">کالامارکت</a>
+                                            </div>
+                                            <div class="product-seller-row guarantee">
+                                                <span class="title"> گارانتی:</span>
+                                                <a href="#" class="product-name">@i.Guarantee.Title</a>
+                                            </div>
+                                            <div class="product-seller-row price">
+                                                <span class="title"> قیمت:</span>
+                                                <a href="#" class="product-name">
+                                                    <span class="amount">
+                                                            <div>
+                                                                قیمت: @i.Price.ToString("N0")
+                                                            </div>
+                                                        <span>تومان</span>
+                                                    </span>
+                                                </a>
+                                            </div>
+                                            <div class="product-seller-row guarantee">
+                                                <span class="title mt-3"> تعداد:</span>
+                                                <div class="quantity pl">
+                                                    <input type="number" min="1" max="4" step="1" value="1">
+                                                    <div class="quantity-nav">
+                                                        <div class="quantity-button quantity-up">+</div>
+                                                        <div class="quantity-button quantity-down">-</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="product-seller-row add-to-cart">
+                                                <a href="#" class="btn-add-to-cart btn btn-primary">
+                                                    <span class="btn-add-to-cart-txt">افزودن به سبد خرید</span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                        }
+                                       
+                                    }
+                                    }
+                                   
                                 </div>
-                            </section>
-                        </div>
-                        <div class="product-usp">
-                            <div class="product-feature">
-                                <div class="product-feature-col">
-                                    <a href="#" class="product-feature-item">
-                                        <img src="~/Shop/assets/images/page-single-product/delivery.svg">
-                                        امکان تحویل
-                                        <br>
-                                        اکسپرس
-                                    </a>
-                                </div>
-                                <div class="product-feature-col">
-                                    <a href="#" class="product-feature-item">
-                                        <img src="~/Shop/assets/images/page-single-product/contact-us.svg">
-                                        ۷ روز هفته
-                                        <br>
-                                        ۲۴ ساعته
-                                    </a>
-                                </div>
-                                <div class="product-feature-col">
-                                    <a href="#" class="product-feature-item">
-                                        <img src="~/Shop/assets/images/page-single-product/payment-terms.svg">
-                                        امکان
-                                        <br>
-                                        پرداخت در محل
-                                    </a>
-                                </div>
-                                <div class="product-feature-col">
-                                    <a href="#" class="product-feature-item">
-                                        <img src="~/Shop/assets/images/page-single-product/return-policy.svg">
-                                        هفت روز ضمانت بازگشت کالا
-                                    </a>
-                                </div>
-                                <div class="product-feature-col">
-                                    <a href="#" class="product-feature-item">
-                                        <img src="~/Shop/assets/images/page-single-product/origin-guarantee.svg">
-                                        ضمانت
-                                        <br>
-                                        اصل بودن کالا
-                                    </a>
-                                </div>
+                            </div>
+                        </section>
+                    </div>
+                    <div class="product-usp">
+                        <div class="product-feature">
+                            <div class="product-feature-col">
+                                <a href="#" class="product-feature-item">
+                                    <img src="~/Shop/assets/images/page-single-product/delivery.svg">
+                                    امکان تحویل
+                                    <br>
+                                    اکسپرس
+                                </a>
+                            </div>
+                            <div class="product-feature-col">
+                                <a href="#" class="product-feature-item">
+                                    <img src="~/Shop/assets/images/page-single-product/contact-us.svg">
+                                    ۷ روز هفته
+                                    <br>
+                                    ۲۴ ساعته
+                                </a>
+                            </div>
+                            <div class="product-feature-col">
+                                <a href="#" class="product-feature-item">
+                                    <img src="~/Shop/assets/images/page-single-product/payment-terms.svg">
+                                    امکان
+                                    <br>
+                                    پرداخت در محل
+                                </a>
+                            </div>
+                            <div class="product-feature-col">
+                                <a href="#" class="product-feature-item">
+                                    <img src="~/Shop/assets/images/page-single-product/return-policy.svg">
+                                    هفت روز ضمانت بازگشت کالا
+                                </a>
+                            </div>
+                            <div class="product-feature-col">
+                                <a href="#" class="product-feature-item">
+                                    <img src="~/Shop/assets/images/page-single-product/origin-guarantee.svg">
+                                    ضمانت
+                                    <br>
+                                    اصل بودن کالا
+                                </a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="tabs">
-                <div class="tab-box">
-                    <ul class="tab nav nav-tabs" id="myTab" role="tablist">
-                        <li class="nav-item">
-                            <a class="nav-link active" id="Review-tab" data-toggle="tab" href="#Review" role="tab"
-                                aria-controls="Review" aria-selected="true">
-                                <i class="mdi mdi-glasses"></i>
-                                نقد و بررسی
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="Specifications-tab" data-toggle="tab" href="#Specifications"
-                                role="tab" aria-controls="Specifications" aria-selected="false">
-                                <i class="mdi mdi-format-list-checks"></i>
-                                مشخصات
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="User-comments-tab" data-toggle="tab" href="#User-comments"
-                                role="tab" aria-controls="User-comments" aria-selected="false">
-                                <i class="mdi mdi-comment-text-multiple-outline"></i>
-                                نظرات کاربران
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="col-lg">
-                    <div class="tabs-content">
-                        <div class="tab-content" id="myTabContent">
-                            <div class="tab-pane fade show active" id="Review" role="tabpanel"
-                                aria-labelledby="Review-tab">
-                                <h2 class="params-headline">نقد و بررسی اجمالی</h2>
-                                <section class="content-expert-summary">
-                                    <div class="mask pm-3">
-                                        <div class="mask-text">
-                                            <p>@prod.Detail</p>
-                                        </div>
-                                        <a href="#" class="mask-handler">
-                                            <span class="show-more">+ ادامه مطلب</span>
-                                            <span class="show-less">- بستن</span>
-                                        </a>
-                                        <div class="shadow-box"></div>
+        </div>
+        <div class="tabs">
+            <div class="tab-box">
+                <ul class="tab nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="Review-tab" data-toggle="tab" href="#Review" role="tab"
+                           aria-controls="Review" aria-selected="true">
+                            <i class="mdi mdi-glasses"></i>
+                            نقد و بررسی
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="Specifications-tab" data-toggle="tab" href="#Specifications"
+                           role="tab" aria-controls="Specifications" aria-selected="false">
+                            <i class="mdi mdi-format-list-checks"></i>
+                            مشخصات
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="User-comments-tab" data-toggle="tab" href="#User-comments"
+                           role="tab" aria-controls="User-comments" aria-selected="false">
+                            <i class="mdi mdi-comment-text-multiple-outline"></i>
+                            نظرات کاربران
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-lg">
+                <div class="tabs-content">
+                    <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade show active" id="Review" role="tabpanel"
+                             aria-labelledby="Review-tab">
+                            <h2 class="params-headline">نقد و بررسی اجمالی</h2>
+                            <section class="content-expert-summary">
+                                <div class="mask pm-3">
+                                    <div class="mask-text">
+                                        <p>@prod.Detail</p>
                                     </div>
-                                </section>
-                                <section class="content-expert-stats">
-                                    <div class="content-expert-evaluation">
-                                        <div class="col-lg-4 col-md-4 col-xs-12 d-inline-block pr">
-                                            <div class="positive">
-                                                <span class="plus">نقاط قوت</span>
-                                                <ul>
-                                                    <li>
-                                                        <i class="fa fa-plus-circle"></i>
-                                                        @prod.Strengths
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4 col-md-4 col-xs-12 d-inline-block pr">
-                                            <div class="negative">
-                                                <span class="neg">نقاط ضعف</span>
-                                                <ul>
-                                                    <li>
-                                                        <i class="fa fa-minus-circle"></i>
-                                                        @prod.WeakPoints
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </section>
-                                <div class="content-expert-articles">
-                                    <section class="content-expert-article">
-                                        <button class="content-expert-button">
-                                            <span class="show-more"><i class="mdi mdi-plus"></i></span>
-                                            <span class="show-less"><i class="mdi mdi-minus"></i></span>
-                                        </button>
-                                        <h3 class="content-expert-title">بررسی کامل @prod.FaTitle</h3>
-                                        <div class="content-expert-text">
-                                            <p style="text-align:right">@prod.FullDetail</p>
-                                        </div>
-                                    </section>
+                                    <a href="#" class="mask-handler">
+                                        <span class="show-more">+ ادامه مطلب</span>
+                                        <span class="show-less">- بستن</span>
+                                    </a>
+                                    <div class="shadow-box"></div>
                                 </div>
-                            </div>
-                            <div class="tab-pane fade" id="Specifications" role="tabpanel"
-                                aria-labelledby="Specifications-tab">
-                                <article>
-                                    <h2 class="params-headline">مشخصات فنی
-                                        <span>@prod.EnTitle</span>
-                                    </h2>
-                                    <section>
-                                        <ul class="params-list">
-                                            <li class="params-list-item">
-                                                <div class="params-list-key">
-                                                    <span class="block">ابعاد</span>
-                                                </div>
-                                                <div class="params-list-value">
-                                                    <span class="block">
-                                                        7.9 × 71.8 × 151 میلی‌متر
-                                                    </span>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                    </section>
-                                    <section>
-                                        <ul class="params-list">
-                                            <li class="params-list-item">
-                                                <div class="params-list-key">
-                                                    <span class="block">تراشه</span>
-                                                </div>
-                                                <div class="params-list-value">
-                                                    <span class="block">
-                                                        Exynos 9825 (7 nm) Chipset
-                                                    </span>
-                                                </div>
-                                            </li>
-                                            <li class="params-list-item">
-                                                <div class="params-list-key">
-                                                    <span class="block">نوع پردازنده</span>
-                                                </div>
-                                                <div class="params-list-value">
-                                                    <span class="block">
-                                                        64 بیت
-                                                    </span>
-                                                </div>
-                                            </li>
-                                            <li class="params-list-item">
-                                                <div class="params-list-key">
-                                                    <span class="block">فرکانس پردازنده‌ی مرکزی</span>
-                                                </div>
-                                                <div class="params-list-value">
-                                                    <span class="block">
-                                                        2.73, 2.4 و 1.9 گیگاهرتز
-                                                    </span>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                    </section>
-                                    <section>
-                                        <ul class="params-list">
-                                            <li class="params-list-item">
-                                                <div class="params-list-key">
-                                                    <span class="block">حافظه داخلی</span>
-                                                </div>
-                                                <div class="params-list-value">
-                                                    <span class="block">
-                                                        256 گیگابایت
-                                                    </span>
-                                                </div>
-                                            </li>
-                                            <li class="params-list-item">
-                                                <div class="params-list-key">
-                                                    <span class="block">مقدار RAM</span>
-                                                </div>
-                                                <div class="params-list-value">
-                                                    <span class="block">
-                                                        8 گیگابایت
-                                                    </span>
-                                                </div>
-                                            </li>
-                                            <li class="params-list-item">
-                                                <div class="params-list-key">
-                                                    <span class="block">پشتیبانی از کارت حافظه جانبی</span>
-                                                </div>
-                                                <div class="params-list-value">
-                                                    <span class="block">
-                                                        ندارد
-                                                    </span>
-                                                </div>
-                                            </li>
-                                            <li class="params-list-item">
-                                                <div class="params-list-key">
-                                                    <span class="block">حداکثر ظرفیت کارت حافظه</span>
-                                                </div>
-                                                <div class="params-list-value">
-                                                    <span class="block">
-                                                        1 ترابایت
-                                                    </span>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                    </section>
-                                    <section>
-                                        <ul class="params-list">
-                                            <li class="params-list-item">
-                                                <div class="params-list-key">
-                                                    <span class="block">صفحه نمایش رنگی</span>
-                                                </div>
-                                                <div class="params-list-value">
-                                                    <span class="block"> بله </span>
-                                                </div>
-                                            </li>
-                                            <li class="params-list-item">
-                                                <div class="params-list-key">
-                                                    <span class="block">صفحه نمایش لمسی</span>
-                                                </div>
-                                                <div class="params-list-value">
-                                                    <span class="block">بله</span>
-                                                </div>
-                                            </li>
-                                            <li class="params-list-item">
-                                                <div class="params-list-key">
-                                                    <span class="block">فناوری</span>
-                                                </div>
-                                                <div class="params-list-value">
-                                                    <span class="block">Dynamic AMOLED</span>
-                                                </div>
-                                            </li>
-                                            <li class="params-list-item">
-                                                <div class="params-list-key">
-                                                    <span class="block">بازه‌ی اندازه صفحه نمایش</span>
-                                                </div>
-                                                <div class="params-list-value">
-                                                    <span class="block">6.0 اینچ و بزرگتر</span>
-                                                </div>
-                                            </li>
-                                            <li class="params-list-item">
-                                                <div class="params-list-key">
-                                                    <span class="block">اندازه</span>
-                                                </div>
-                                                <div class="params-list-value">
-                                                    <span class="block">6.3 اینچ</span>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                    </section>
-                                </article>
-                            </div>
-                            <div class="tab-pane fade" id="User-comments" role="tabpanel"
-                                aria-labelledby="User-comments-tab">
-                                <div class="comments">
-                                    <h2 class="params-headline">امتیاز کاربران به
-                                        <span>@prod.EnTitle</span>
-                                    </h2>
-                                    <div class="comments-summary">
-                                        <div class="col-lg-6 col-md-6 col-xs-12 pr">
-                                            <div class="comments-summary-box">
-                                                <ul class="comments-item-rating">
-                                                    <li>
-                                                        <span class="cell-title">کیفیت ساخت:</span>
-                                                        <span class="cell-value">خوب</span>
-                                                        <div class="rating-general">
-                                                            <div class="rating-value"></div>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <span class="cell-title">ارزش خرید به نسبت قیمت:</span>
-                                                        <span class="cell-value">خوب</span>
-                                                        <div class="rating-general">
-                                                            <div class="rating-value"></div>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <span class="cell-title">نوآوری:</span>
-                                                        <span class="cell-value">خوب</span>
-                                                        <div class="rating-general">
-                                                            <div class="rating-value" style="width: 70%;"></div>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <span class="cell-title">امکانات و قابلیت ها:</span>
-                                                        <span class="cell-value">متوسط</span>
-                                                        <div class="rating-general">
-                                                            <div class="rating-value" style="width: 65%;"></div>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <span class="cell-title">سهولت استفاده:</span>
-                                                        <span class="cell-value">خوب</span>
-                                                        <div class="rating-general">
-                                                            <div class="rating-value" style="width: 75%;"></div>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <span class="cell-title">طراحی و ظاهر:</span>
-                                                        <span class="cell-value">خوب</span>
-                                                        <div class="rating-general">
-                                                            <div class="rating-value"></div>
-                                                        </div>
-                                                    </li>
-                                                </ul>
-                                            </div>
+                            </section>
+                            <section class="content-expert-stats">
+                                <div class="content-expert-evaluation">
+                                    <div class="col-lg-4 col-md-4 col-xs-12 d-inline-block pr">
+                                        <div class="positive">
+                                            <span class="plus">نقاط قوت</span>
+                                            <ul>
+                                                @{
+                                                    foreach (var s in prod.Strengths.Split(","))
+                                                    {
+                                                        <li>
+                                                            <i class="fa fa-plus-circle"></i>
+                                                            @s
+                                                        </li>
+                                                    }
+                                              }
+                                            </ul>
                                         </div>
-                                        <div class="col-lg-6 col-md-6 col-xs-12 pr">
-                                            <div class="comments-summary-note">
-                                                <h6>شما هم می‌توانید در مورد این کالا نظر بدهید.</h6>
-                                                <p>
-                                                    برای ثبت نظر، لازم است ابتدا وارد حساب کاربری خود شوید. اگر این
-                                                    محصول را قبلا از دیجی‌کالا خریده باشید،
-                                                    نظر
-                                                    شما به عنوان مالک محصول ثبت خواهد شد.
-                                                </p>
-                                                <a href="#" class="btn-add-comment btn btn-secondary">افزودن نظر
-                                                    جدید</a>
-                                            </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-xs-12 d-inline-block pr">
+                                        <div class="negative">
+                                            <span class="neg">نقاط ضعف</span>
+                                            <ul>
+                                                @{
+                                                    foreach (var s in prod.WeakPoints.Split(","))
+                                                    {
+                                                        <li>
+                                                            <i class="fa fa-plus-circle"></i>
+                                                            @s
+                                                        </li>
+                                                    }
+                                                }
+                                            </ul>
                                         </div>
-                                        <div class="product-comment-list">
-                                            <ul class="comment-list">
+                                    </div>
+                                </div>
+                            </section>
+                            <div class="content-expert-articles">
+                                <section class="content-expert-article">
+                                    <button class="content-expert-button">
+                                        <span class="show-more"><i class="mdi mdi-plus"></i></span>
+                                        <span class="show-less"><i class="mdi mdi-minus"></i></span>
+                                    </button>
+                                    <h3 class="content-expert-title">بررسی کامل @prod.FaTitle</h3>
+                                    <div class="content-expert-text">
+                                        <p style="text-align:right">@Html.Raw(prod.FullDetail)</p>
+                                    </div>
+                                </section>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="Specifications" role="tabpanel"
+                             aria-labelledby="Specifications-tab">
+                            <article>
+                             @foreach (var i in prod.ProductFeatures)
+                             {
+                                 <section>
+                                     <ul class="params-list">
+                                         <li class="params-list-item">
+                                             <div class="params-list-key">
+                                                 <span class="block">@i.FeatureDetails.Title</span>
+                                             </div>
+                                             <div class="params-list-value">
+                                                 <span class="block">
+                                                     @i.Value
+                                                 </span>
+                                             </div>
+                                         </li>
+                                     </ul>
+                                 </section>
+                            
+                             }
+                            </article>
+                        </div>
+                        <div class="tab-pane fade" id="User-comments" role="tabpanel"
+                             aria-labelledby="User-comments-tab">
+                            <div class="comments">
+                                <h2 class="params-headline">امتیاز کاربران به
+                                    <span>@prod.EnTitle</span>
+                                </h2>
+                                <div class="comments-summary">
+                                    <div class="col-lg-6 col-md-6 col-xs-12 pr">
+                                        <div class="comments-summary-box">
+                                            <ul class="comments-item-rating">
                                                 <li>
-                                                    <div class="col-lg-3 pr">
-                                                        <section>
-                                                            <div class="comments-user-shopping">حسن شجاعی
-                                                                <div class="cell-date">
-                                                                    در تاریخ ۱۸ فروردین ۱۳۹۹
-                                                                </div>
-                                                                <div class="message-light"><i
-                                                                        class="fa fa-thumbs-o-up"></i>خرید این محصول را
-                                                                    توصیه می‌کنم</div>
-                                                            </div>
-                                                        </section>
-                                                    </div>
-                                                    <div class="col-lg-9 pl">
-                                                        <div class="article">
-                                                            <ul class="comment-text">
-                                                                <div class="header">
-                                                                    <div>بهتر از آیفون</div>
-                                                                    <div class="product-rate pl">
-                                                                        <i class="fa fa-star active"></i>
-                                                                        <i class="fa fa-star active"></i>
-                                                                        <i class="fa fa-star active"></i>
-                                                                        <i class="fa fa-star active"></i>
-                                                                        <i class="fa fa-star active"></i>
-                                                                    </div>
-                                                                    <p>در کل سامسونگ کاربردی تر از آیفون هست ولی از نظر
-                                                                        کیفیت تصویر و سرعت آیفون بهتره و کلاس!</p>
-                                                                </div>
-                                                                <div class="comments-evaluation">
-                                                                    <div class="comments-evaluation-positive">
-                                                                        <span>نقاط قوت</span>
-                                                                        <ul>
-                                                                            <li>
-                                                                                سبک
-                                                                            </li>
-                                                                            <li>
-                                                                                سرعت پردازش بالا
-                                                                            </li>
-                                                                            <li>
-                                                                                خوش دست
-                                                                            </li>
-                                                                            <li>
-                                                                                صفحه نمایش عالی
-                                                                            </li>
-                                                                        </ul>
-                                                                    </div>
-                                                                    <div class="comments-evaluation-negative">
-                                                                        <span>نقاط قوت</span>
-                                                                        <ul>
-                                                                            <li>
-                                                                                قیمت زیاد
-                                                                            </li>
-                                                                            <li>
-                                                                                باطری ضعیف
-                                                                            </li>
-                                                                        </ul>
-                                                                    </div>
-                                                                    <div class="footer">
-                                                                        <div class="comments-likes">آیا این نظر برایتان
-                                                                            مفید بود؟
-                                                                            <button class="btn-like js-comment-like"
-                                                                                type="submit">بله
-                                                                                <span class="count">8</span>
-                                                                            </button>
-                                                                            <button class="btn-like js-comment-dislike"
-                                                                                type="submit">خیر
-                                                                                <span class="count">4</span>
-                                                                            </button>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </ul>
-                                                        </div>
+                                                    <span class="cell-title">کیفیت ساخت:</span>
+                                                    <span class="cell-value">خوب</span>
+                                                    <div class="rating-general">
+                                                        <div class="rating-value"></div>
                                                     </div>
                                                 </li>
                                                 <li>
-                                                    <div class="col-lg-3 pr">
-                                                        <section>
-                                                            <div class="comments-user-shopping">اشکان
-                                                                <div class="cell-date">
-                                                                    در تاریخ ۱۹ فروردین ۱۳۹۹
-                                                                </div>
-                                                                <div class="message-light"><i
-                                                                        class="fa fa-thumbs-o-up"></i>خرید این محصول را
-                                                                    توصیه می‌کنم</div>
-                                                            </div>
-                                                        </section>
+                                                    <span class="cell-title">ارزش خرید به نسبت قیمت:</span>
+                                                    <span class="cell-value">خوب</span>
+                                                    <div class="rating-general">
+                                                        <div class="rating-value"></div>
                                                     </div>
-                                                    <div class="col-lg-9 pl">
-                                                        <div class="article">
-                                                            <ul class="comment-text">
-                                                                <div class="header">
-                                                                    <div>عالی و صدرصد بهتر از اپل</div>
-                                                                    <div class="product-rate pl">
-                                                                        <i class="fa fa-star active"></i>
-                                                                        <i class="fa fa-star active"></i>
-                                                                        <i class="fa fa-star active"></i>
-                                                                        <i class="fa fa-star active"></i>
-                                                                        <i class="fa fa-star active"></i>
-                                                                    </div>
-                                                                    <p>عالییه بنظرمن اونایی که میرن پول گوشی های ایفون
-                                                                        با اون قیمت رو میدن با استفاده از این گوشی باید
-                                                                        نظرشونو عوض کنن</p>
-                                                                </div>
-                                                                <div class="comments-evaluation">
-                                                                    <div class="comments-evaluation-positive">
-                                                                        <span>نقاط قوت</span>
-                                                                        <ul>
-                                                                            <li>
-                                                                                سبک
-                                                                            </li>
-                                                                            <li>
-                                                                                سرعت پردازش بالا
-                                                                            </li>
-                                                                            <li>
-                                                                                خوش دست
-                                                                            </li>
-                                                                            <li>
-                                                                                صفحه نمایش عالی
-                                                                            </li>
-                                                                        </ul>
-                                                                    </div>
-                                                                    <div class="comments-evaluation-negative">
-                                                                        <span>نقاط قوت</span>
-                                                                        <ul>
-                                                                            <li>
-                                                                                قیمت زیاد
-                                                                            </li>
-                                                                            <li>
-                                                                                باطری ضعیف
-                                                                            </li>
-                                                                        </ul>
-                                                                    </div>
-                                                                    <div class="footer">
-                                                                        <div class="comments-likes">آیا این نظر برایتان
-                                                                            مفید بود؟
-                                                                            <button class="btn-like js-comment-like"
-                                                                                type="submit">بله
-                                                                                <span class="count">8</span>
-                                                                            </button>
-                                                                            <button class="btn-like js-comment-dislike"
-                                                                                type="submit">خیر
-                                                                                <span class="count">4</span>
-                                                                            </button>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </ul>
-                                                        </div>
+                                                </li>
+                                                <li>
+                                                    <span class="cell-title">نوآوری:</span>
+                                                    <span class="cell-value">خوب</span>
+                                                    <div class="rating-general">
+                                                        <div class="rating-value" style="width: 70%;"></div>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <span class="cell-title">امکانات و قابلیت ها:</span>
+                                                    <span class="cell-value">متوسط</span>
+                                                    <div class="rating-general">
+                                                        <div class="rating-value" style="width: 65%;"></div>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <span class="cell-title">سهولت استفاده:</span>
+                                                    <span class="cell-value">خوب</span>
+                                                    <div class="rating-general">
+                                                        <div class="rating-value" style="width: 75%;"></div>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <span class="cell-title">طراحی و ظاهر:</span>
+                                                    <span class="cell-value">خوب</span>
+                                                    <div class="rating-general">
+                                                        <div class="rating-value"></div>
                                                     </div>
                                                 </li>
                                             </ul>
                                         </div>
                                     </div>
+                                    <div class="col-lg-6 col-md-6 col-xs-12 pr">
+                                        <div class="comments-summary-note">
+                                            <h6>شما هم می‌توانید در مورد این کالا نظر بدهید.</h6>
+                                            <p>
+                                                برای ثبت نظر، لازم است ابتدا وارد حساب کاربری خود شوید. اگر این
+                                                محصول را قبلا از دیجی‌کالا خریده باشید،
+                                                نظر
+                                                شما به عنوان مالک محصول ثبت خواهد شد.
+                                            </p>
+                                            <a href="#" class="btn-add-comment btn btn-secondary">افزودن نظر
+                                                جدید</a>
+                                        </div>
+                                    </div>
+                                    <div class="product-comment-list">
+                                        <ul class="comment-list">
+                                            <li>
+                                                <div class="col-lg-3 pr">
+                                                    <section>
+                                                        <div class="comments-user-shopping">حسن شجاعی
+                                                            <div class="cell-date">
+                                                                در تاریخ ۱۸ فروردین ۱۳۹۹
+                                                            </div>
+                                                            <div class="message-light"><i
+                                                                    class="fa fa-thumbs-o-up"></i>خرید این محصول را
+                                                                توصیه می‌کنم
+                                                            </div>
+                                                        </div>
+                                                    </section>
+                                                </div>
+                                                <div class="col-lg-9 pl">
+                                                    <div class="article">
+                                                        <ul class="comment-text">
+                                                            <div class="header">
+                                                                <div>بهتر از آیفون</div>
+                                                                <div class="product-rate pl">
+                                                                    <i class="fa fa-star active"></i>
+                                                                    <i class="fa fa-star active"></i>
+                                                                    <i class="fa fa-star active"></i>
+                                                                    <i class="fa fa-star active"></i>
+                                                                    <i class="fa fa-star active"></i>
+                                                                </div>
+                                                                <p>در کل سامسونگ کاربردی تر از آیفون هست ولی از نظر
+                                                                    کیفیت تصویر و سرعت آیفون بهتره و کلاس!</p>
+                                                            </div>
+                                                            <div class="comments-evaluation">
+                                                                <div class="comments-evaluation-positive">
+                                                                    <span>نقاط قوت</span>
+                                                                    <ul>
+                                                                        <li>
+                                                                            سبک
+                                                                        </li>
+                                                                        <li>
+                                                                            سرعت پردازش بالا
+                                                                        </li>
+                                                                        <li>
+                                                                            خوش دست
+                                                                        </li>
+                                                                        <li>
+                                                                            صفحه نمایش عالی
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                                <div class="comments-evaluation-negative">
+                                                                    <span>نقاط قوت</span>
+                                                                    <ul>
+                                                                        <li>
+                                                                            قیمت زیاد
+                                                                        </li>
+                                                                        <li>
+                                                                            باطری ضعیف
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                                <div class="footer">
+                                                                    <div class="comments-likes">آیا این نظر برایتان
+                                                                        مفید بود؟
+                                                                        <button class="btn-like js-comment-like"
+                                                                                type="submit">بله
+                                                                            <span class="count">8</span>
+                                                                        </button>
+                                                                        <button class="btn-like js-comment-dislike"
+                                                                                type="submit">خیر
+                                                                            <span class="count">4</span>
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="col-lg-3 pr">
+                                                    <section>
+                                                        <div class="comments-user-shopping">اشکان
+                                                            <div class="cell-date">
+                                                                در تاریخ ۱۹ فروردین ۱۳۹۹
+                                                            </div>
+                                                            <div class="message-light"><i
+                                                                    class="fa fa-thumbs-o-up"></i>خرید این محصول را
+                                                                توصیه می‌کنم
+                                                            </div>
+                                                        </div>
+                                                    </section>
+                                                </div>
+                                                <div class="col-lg-9 pl">
+                                                    <div class="article">
+                                                        <ul class="comment-text">
+                                                            <div class="header">
+                                                                <div>عالی و صدرصد بهتر از اپل</div>
+                                                                <div class="product-rate pl">
+                                                                    <i class="fa fa-star active"></i>
+                                                                    <i class="fa fa-star active"></i>
+                                                                    <i class="fa fa-star active"></i>
+                                                                    <i class="fa fa-star active"></i>
+                                                                    <i class="fa fa-star active"></i>
+                                                                </div>
+                                                                <p>عالییه بنظرمن اونایی که میرن پول گوشی های ایفون
+                                                                    با اون قیمت رو میدن با استفاده از این گوشی باید
+                                                                    نظرشونو عوض کنن</p>
+                                                            </div>
+                                                            <div class="comments-evaluation">
+                                                                <div class="comments-evaluation-positive">
+                                                                    <span>نقاط قوت</span>
+                                                                    <ul>
+                                                                        <li>
+                                                                            سبک
+                                                                        </li>
+                                                                        <li>
+                                                                            سرعت پردازش بالا
+                                                                        </li>
+                                                                        <li>
+                                                                            خوش دست
+                                                                        </li>
+                                                                        <li>
+                                                                            صفحه نمایش عالی
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                                <div class="comments-evaluation-negative">
+                                                                    <span>نقاط قوت</span>
+                                                                    <ul>
+                                                                        <li>
+                                                                            قیمت زیاد
+                                                                        </li>
+                                                                        <li>
+                                                                            باطری ضعیف
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                                <div class="footer">
+                                                                    <div class="comments-likes">آیا این نظر برایتان
+                                                                        مفید بود؟
+                                                                        <button class="btn-like js-comment-like"
+                                                                                type="submit">بله
+                                                                            <span class="count">8</span>
+                                                                        </button>
+                                                                        <button class="btn-like js-comment-dislike"
+                                                                                type="submit">خیر
+                                                                            <span class="count">4</span>
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
     </div>
 </div>
+@section Scripts
+{
+    <script src="~/Shop/assets/js/vendor/lightgallery-all.js"></script>
+    <script src="~/Shop/assets/js/vendor/jquery.ez-plus.js"></script>
+}
