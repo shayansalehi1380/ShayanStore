@@ -111,4 +111,13 @@ ViewBag.SubCat = await _unitOfWork.GenericRepository<SubCategory>().TableNoTrack
     {
         return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
+
+    [HttpGet]
+    public async Task<List<Product>> SearchProds(string keyword)
+    {
+        return await _unitOfWork.GenericRepository<Product>().TableNoTracking
+            .Where(x => x.FaTitle.Contains(keyword))
+            .Take(6)
+            .ToListAsync();
+    }
 }

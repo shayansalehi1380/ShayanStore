@@ -28,25 +28,12 @@
                             <div class="header-search row text-right">
                                 <div class="header-search-box">
                                     <form action="#" class="form-search">
-                                        <input type="search" class="header-search-input" name="search-input"
-                                               placeholder="نام محصول یا برند را جستجو کنید…">
+                                        <input type="search" id="SearchInput" class="header-search-input" name="search-input"
+                                               placeholder="نام کالا، برند و یا دسته مورد نظر خود را جستجو کنید…">
                                         <div class="action-btns">
                                             <button class="btn btn-search" type="submit">
                                                 <img src="~/Shop/assets/images/search.png" alt="search">
                                             </button>
-                                            <div class="search-filter">
-                                                <div class="form-ui">
-                                                    <div class="custom-select-ui">
-                                                        <select class="right">
-                                                            <option>@mcategory.Title</option>
-                                                            @foreach (var category in categories)
-                                                            {
-                                                                <option value="@category.Id">@category.Name</option>
-                                                            }
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </div>
                                         </div>
                                     </form>
                                     <div class="search-result">
@@ -54,46 +41,6 @@
                                             <li>
                                                 <a href="#"><i class="mdi mdi-clock-outline"></i>
                                                     کالای دیجیتال
-                                                    <button class="btn btn-light btn-continue-search" type="submit">
-                                                        <i class="fa fa-angle-left"></i>
-                                                    </button>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#"><i class="mdi mdi-clock-outline"></i>
-                                                    آرایشی و بهداشتی
-                                                    <button class="btn btn-light btn-continue-search" type="submit">
-                                                        <i class="fa fa-angle-left"></i>
-                                                    </button>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#"><i class="mdi mdi-clock-outline"></i>
-                                                    گوشی موبایل
-                                                    <button class="btn btn-light btn-continue-search" type="submit">
-                                                        <i class="fa fa-angle-left"></i>
-                                                    </button>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#"><i class="mdi mdi-clock-outline"></i>
-                                                    تبلت
-                                                    <button class="btn btn-light btn-continue-search" type="submit">
-                                                        <i class="fa fa-angle-left"></i>
-                                                    </button>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#"><i class="mdi mdi-clock-outline"></i>
-                                                    لپ تاپ
-                                                    <button class="btn btn-light btn-continue-search" type="submit">
-                                                        <i class="fa fa-angle-left"></i>
-                                                    </button>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#"><i class="mdi mdi-clock-outline"></i>
-                                                    دوربین
                                                     <button class="btn btn-light btn-continue-search" type="submit">
                                                         <i class="fa fa-angle-left"></i>
                                                     </button>
@@ -2293,3 +2240,45 @@
      
     </div>
     </div>
+
+<script>
+    $('#SearchInput').on('input', function() {
+        // Your function code here
+        $.ajax({
+            type: "Get",
+            data: {keyword: $(this).val()},
+            url: "/Product/SearchProds/",
+            beforeSend: function() {
+            },
+            error: function (xhr) {
+            },
+            complete: function() {
+            },
+            timeout: 40000,
+            success: function (data) {
+                let html = ``;
+                if (data.length>0)
+                { data.map(x =>
+                {
+                    html+=`  <li>
+                                            <a href="/product/ProductPage/${x.id}">
+                                                <img src="https://localhost:7001/Images/Images/Product/${x.imageUri}" width="30px">
+                                                ${x.faTitle}
+                                                <a class="btn btn-light btn-continue-search" href="/product/ProductPage/${x.id}">
+                                                    <i class="fa fa-angle-left"></i>
+                                                </a>
+                                            </a>
+                            </li>`;
+                })}else{
+                    html+=`  <li>
+                                            <a href="">
+                                              نتیجه ای یافت نشد
+                                            </a>
+                            </li>`;
+                }
+
+                document.getElementById("SearchResult2").innerHTML = html;
+            },
+        });
+    });
+</script>

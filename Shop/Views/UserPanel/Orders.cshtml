@@ -10,34 +10,34 @@
 }
 @section header
 {
-<header class="header-main">
-    <div class="d-block">
-        <section class="h-main-row">
-            <div class="col-lg-9 col-md-12 col-xs-12 pr">
-                <div class="header-right">
-                    <div class="col-lg-3 pr">
-                        <div class="header-logo row text-right">
+    <header class="header-main">
+        <div class="d-block">
+            <section class="h-main-row">
+                <div class="col-lg-9 col-md-12 col-xs-12 pr">
+                    <div class="header-right">
+                        <div class="col-lg-3 pr">
+                            <div class="header-logo row text-right">
                                 <a href="@Url.Action("Index","Home")">
-                                <img src="~/Shop/assets/images/logo.png" alt="کالامارکت">
-                            </a>
+                                    <img src="~/Shop/assets/images/logo.png" alt="کالامارکت">
+                                </a>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-lg-8 pr">
-                        <div class="header-search row text-right">
-                            <div class="header-search-box">
-                                <form action="#" class="form-search">
-                                    <input type="search" class="header-search-input" name="search-input"
-                                           placeholder="نام محصول یا برند را جستجو کنید…">
-                                    <div class="action-btns">
-                                        <button class="btn btn-search" type="submit">
-                                            <img src="~/Shop/assets/images/search.png" alt="search">
-                                        </button>
-                                        <div class="search-filter">
-                                            <div class="form-ui">
-                                                <div class="custom-select-ui">
-                                                    <select class="right">
-                                                        <option>@mcategory.Title</option>
-                                                        @foreach (var category in categories)
+                        <div class="col-lg-8 pr">
+                            <div class="header-search row text-right">
+                                <div class="header-search-box">
+                                    <form action="#" class="form-search">
+                                        <input type="search" class="header-search-input" name="search-input"
+                                               placeholder="نام محصول یا برند را جستجو کنید…">
+                                        <div class="action-btns">
+                                            <button class="btn btn-search" type="submit">
+                                                <img src="~/Shop/assets/images/search.png" alt="search">
+                                            </button>
+                                            <div class="search-filter">
+                                                <div class="form-ui">
+                                                    <div class="custom-select-ui">
+                                                        <select class="right">
+                                                            <option>@mcategory.Title</option>
+                                                            @foreach (var category in categories)
                                                             {
                                                                 <option value="@category.Id">@category.Name</option>
                                                             }
