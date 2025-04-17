@@ -396,32 +396,31 @@ namespace AdminPanel.UI.Controllers
             return View();
         }
 
-        public async Task<ActionResult<List<Wallet>>> ManageWallet(string searchWallet, int tabs = 1,
-            FunctionStatus status = FunctionStatus.None)
-        {
-            ViewData["Title"] = "پنل مدیریت | کیف پول";
-
-            ViewBag.selectTab = tabs;
-            ViewBag.Status = status;
-
-
-
-            IQueryable<Wallet> queryhWallet = unitOfWork.GenericRepository<Wallet>()
-                .TableNoTracking
-                .Include(w => w.User);
-
-            if (!string.IsNullOrEmpty(searchWallet))
-            {
-                queryhWallet = queryhWallet.Where(x =>
-                    x.User.UserName.Contains(searchWallet) ||
-                    x.User.Name.Contains(searchWallet) ||
-                    x.User.Family.Contains(searchWallet));
-            }
-
-
-            ViewBag.Wallet = await queryhWallet.OrderByDescending(x => x.Id).ToListAsync();
-            return View();
-        }
+        // public async Task<ActionResult<List<Wallet>>> ManageWallet(string searchWallet, int tabs = 1,
+        //     FunctionStatus status = FunctionStatus.None)
+        // {
+        //     ViewData["Title"] = "پنل مدیریت | کیف پول";
+        //
+        //     ViewBag.selectTab = tabs;
+        //     ViewBag.Status = status;
+        //
+        //
+        //
+        //     IQueryable<Wallet> queryhWallet = unitOfWork.GenericRepository<Wallet>()
+        //         .TableNoTracking.AsQueryable();
+        //
+        //     if (!string.IsNullOrEmpty(searchWallet))
+        //     {
+        //         queryhWallet = queryhWallet.Where(x =>
+        //             x.User.UserName.Contains(searchWallet) ||
+        //             x.User.Name.Contains(searchWallet) ||
+        //             x.User.Family.Contains(searchWallet));
+        //     }
+        //
+        //
+        //     ViewBag.Wallet = await queryhWallet.OrderByDescending(x => x.Id).ToListAsync();
+        //     return View();
+        // }
 
         public async Task<ActionResult<List<Wallet>>> ManageDiscountCode(string searchDiscountCode, int tabs = 1,
             FunctionStatus status = FunctionStatus.None)

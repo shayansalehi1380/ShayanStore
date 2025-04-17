@@ -44,7 +44,7 @@ namespace Domain.Migrations
 
                     b.HasIndex("StateId");
 
-                    b.ToTable("Cities", (string)null);
+                    b.ToTable("Cities");
                 });
 
             modelBuilder.Entity("Domain.Entity.BasicInfo.ShippingOption", b =>
@@ -67,7 +67,7 @@ namespace Domain.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ShippingOptions", (string)null);
+                    b.ToTable("ShippingOptions");
                 });
 
             modelBuilder.Entity("Domain.Entity.BasicInfo.State", b =>
@@ -87,7 +87,7 @@ namespace Domain.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("States", (string)null);
+                    b.ToTable("States");
                 });
 
             modelBuilder.Entity("Domain.Entity.BlogPosts.BlogPost", b =>
@@ -119,7 +119,7 @@ namespace Domain.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("BlogPosts", (string)null);
+                    b.ToTable("BlogPosts");
                 });
 
             modelBuilder.Entity("Domain.Entity.DiscountCodes.DiscountCode", b =>
@@ -155,7 +155,7 @@ namespace Domain.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("DiscountCodes", (string)null);
+                    b.ToTable("DiscountCodes");
                 });
 
             modelBuilder.Entity("Domain.Entity.Products.Brands.Brand", b =>
@@ -179,7 +179,7 @@ namespace Domain.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Brands", (string)null);
+                    b.ToTable("Brands");
                 });
 
             modelBuilder.Entity("Domain.Entity.Products.Categories.Category", b =>
@@ -204,7 +204,7 @@ namespace Domain.Migrations
 
                     b.HasIndex("MainCategoryId");
 
-                    b.ToTable("Categories", (string)null);
+                    b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("Domain.Entity.Products.Categories.CategoryDetail", b =>
@@ -229,7 +229,7 @@ namespace Domain.Migrations
 
                     b.HasIndex("SubCategoryId");
 
-                    b.ToTable("CategoryDetails", (string)null);
+                    b.ToTable("CategoryDetails");
                 });
 
             modelBuilder.Entity("Domain.Entity.Products.Categories.MainCategory", b =>
@@ -249,7 +249,7 @@ namespace Domain.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("MainCategories", (string)null);
+                    b.ToTable("MainCategories");
                 });
 
             modelBuilder.Entity("Domain.Entity.Products.Categories.SubCategory", b =>
@@ -274,7 +274,7 @@ namespace Domain.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("SubCategories", (string)null);
+                    b.ToTable("SubCategories");
                 });
 
             modelBuilder.Entity("Domain.Entity.Products.Colors.Color", b =>
@@ -298,7 +298,7 @@ namespace Domain.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Colors", (string)null);
+                    b.ToTable("Colors");
                 });
 
             modelBuilder.Entity("Domain.Entity.Products.Colors.ProductColor", b =>
@@ -338,7 +338,7 @@ namespace Domain.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("ProductColors", (string)null);
+                    b.ToTable("ProductColors");
                 });
 
             modelBuilder.Entity("Domain.Entity.Products.Features.Feature", b =>
@@ -361,7 +361,7 @@ namespace Domain.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Features", (string)null);
+                    b.ToTable("Features");
                 });
 
             modelBuilder.Entity("Domain.Entity.Products.Features.FeatureDetails", b =>
@@ -397,7 +397,7 @@ namespace Domain.Migrations
 
                     b.HasIndex("SubCategoryId");
 
-                    b.ToTable("FeatureDetails", (string)null);
+                    b.ToTable("FeatureDetails");
                 });
 
             modelBuilder.Entity("Domain.Entity.Products.Features.ProductFeature", b =>
@@ -426,7 +426,7 @@ namespace Domain.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("ProductFeatures", (string)null);
+                    b.ToTable("ProductFeatures");
                 });
 
             modelBuilder.Entity("Domain.Entity.Products.Guaranties.Guarantee", b =>
@@ -446,7 +446,7 @@ namespace Domain.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Guarantees", (string)null);
+                    b.ToTable("Guarantees");
                 });
 
             modelBuilder.Entity("Domain.Entity.Products.ImageAttachments.ImageGallery", b =>
@@ -471,7 +471,7 @@ namespace Domain.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("ImageGalleries", (string)null);
+                    b.ToTable("ImageGalleries");
                 });
 
             modelBuilder.Entity("Domain.Entity.Products.Offers.Offer", b =>
@@ -507,7 +507,7 @@ namespace Domain.Migrations
 
                     b.HasIndex("ColorId");
 
-                    b.ToTable("Offers", (string)null);
+                    b.ToTable("Offers");
                 });
 
             modelBuilder.Entity("Domain.Entity.Products.Product", b =>
@@ -616,7 +616,7 @@ namespace Domain.Migrations
 
                     b.HasIndex("UserUpdateId");
 
-                    b.ToTable("Products", (string)null);
+                    b.ToTable("Products");
                 });
 
             modelBuilder.Entity("Domain.Entity.Users.Role", b =>
@@ -774,10 +774,7 @@ namespace Domain.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId")
-                        .IsUnique();
-
-                    b.ToTable("Wallets", (string)null);
+                    b.ToTable("Wallets");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
@@ -1067,17 +1064,6 @@ namespace Domain.Migrations
                     b.Navigation("City");
                 });
 
-            modelBuilder.Entity("Domain.Entity.Users.Wallet", b =>
-                {
-                    b.HasOne("Domain.Entity.Users.User", "User")
-                        .WithOne("Wallet")
-                        .HasForeignKey("Domain.Entity.Users.Wallet", "UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
                 {
                     b.HasOne("Domain.Entity.Users.Role", null)
@@ -1166,9 +1152,6 @@ namespace Domain.Migrations
             modelBuilder.Entity("Domain.Entity.Users.User", b =>
                 {
                     b.Navigation("BlogPosts");
-
-                    b.Navigation("Wallet")
-                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

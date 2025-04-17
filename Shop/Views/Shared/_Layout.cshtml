@@ -302,15 +302,15 @@
 <script src="~/Shop/assets/js/vendor/jquery.jqZoom.js"></script>
 <script src="~/Shop/assets/js/vendor/sweetalert2.all.min.js"></script>
 <!-- main js---------------------------------------------------->
-@await RenderSectionAsync("Scripts", required: false)
 <script src="~/Shop/assets/js/main.js"></script>
+
 <script>
     $('#SearchInput').on('input', function() {
         // Your function code here
         $.ajax({
             type: "Get",
             data: {keyword: $(this).val()},
-            url: "/Product/SearchProds/",
+            url: "api/v1/Product/search",
             beforeSend: function() {
             },
             error: function (xhr) {
@@ -345,5 +345,6 @@
         });
     });
 </script>
+@await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

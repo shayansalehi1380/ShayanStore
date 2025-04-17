@@ -10,27 +10,27 @@ namespace AdminPanel.UI.Controllers
 {
     public class WalletController(IUnitOfWork unitOfWork) : Controller
     {
-        public async Task<ActionResult<List<Wallet>>> GetAllWallet(string searchWallet, int tabs = 1)
-        {
-
-            ViewBag.selectTab = tabs;
-
-            IQueryable<Wallet> queryhWallet = unitOfWork.GenericRepository<Wallet>()
-                .TableNoTracking
-                .Include(w => w.User);
-
-            if (!string.IsNullOrEmpty(searchWallet))
-            {
-                queryhWallet = queryhWallet.Where(x =>
-                    x.User.UserName.Contains(searchWallet) ||
-                    x.User.Name.Contains(searchWallet) ||
-                    x.User.Family.Contains(searchWallet));
-            }
-
-
-            ViewBag.Wallet = await queryhWallet.ToListAsync();
-            return RedirectToAction("ManageWallet", "Admin");
-        }
+        // public async Task<ActionResult<List<Wallet>>> GetAllWallet(string searchWallet, int tabs = 1)
+        // {
+        //
+        //     ViewBag.selectTab = tabs;
+        //
+        //     IQueryable<Wallet> queryhWallet = unitOfWork.GenericRepository<Wallet>()
+        //         .TableNoTracking
+        //         .Include(w => w.User);
+        //
+        //     if (!string.IsNullOrEmpty(searchWallet))
+        //     {
+        //         queryhWallet = queryhWallet.Where(x =>
+        //             x.User.UserName.Contains(searchWallet) ||
+        //             x.User.Name.Contains(searchWallet) ||
+        //             x.User.Family.Contains(searchWallet));
+        //     }
+        //
+        //
+        //     ViewBag.Wallet = await queryhWallet.ToListAsync();
+        //     return RedirectToAction("ManageWallet", "Admin");
+        // }
 
         public async Task<ActionResult<Wallet>> Update(int id, int name)
         {

@@ -28,7 +28,7 @@
                             <div class="header-search row text-right">
                                 <div class="header-search-box">
                                     <form action="#" class="form-search">
-                                        <input type="search" id="SearchInput" class="header-search-input" name="search-input"
+                                        <input type="search" id="SearchInput1" class="header-search-input" name="search-input"
                                                placeholder="نام کالا، برند و یا دسته مورد نظر خود را جستجو کنید…">
                                         <div class="action-btns">
                                             <button class="btn btn-search" type="submit">
@@ -37,7 +37,7 @@
                                         </div>
                                     </form>
                                     <div class="search-result">
-                                        <ul class="search-result-list mb-0">
+                                        <ul class="search-result-list mb-0" id="SearchResult12">
                                             <li>
                                                 <a href="#"><i class="mdi mdi-clock-outline"></i>
                                                     کالای دیجیتال
@@ -63,7 +63,9 @@
                                     <span class="icon-account">
                                         <img src="~/Shop/assets/images/man.png" class="avator">
                                     </span>
-                                        <span class="title-account">حساب کاربری</span>
+                                    <span class="title-account">حساب کاربری</span>
+                                    @if (User.Identity.IsAuthenticated)
+                                    {
                                         <div class="dropdown-menu">
                                             <ul class="account-uls mb-0">
                                                 <li class="account-item">
@@ -80,6 +82,22 @@
                                                 </li>
                                             </ul>
                                         </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="dropdown-menu">
+                                            <ul class="account-uls mb-0">
+                                                <li class="account-item">
+                                                    <a href="@Url.Action("Login","Auth")" class="account-link">ورود</a>
+                                                </li>
+                                                <li class="account-item">
+                                                    <a href="@Url.Action("Register","Auth")" class="account-link">ثبت نام</a>
+                                                </li>
+                                              
+                                            </ul>
+                                        </div> 
+                                    }
+                                       
                                     </div>
                                 </div>
                             </div>
@@ -134,7 +152,7 @@
 
                             <li class="divider-space-card">
                                 <div class="header-cart-basket">
-                                    <a href="#" class="cart-basket-box">
+                                    <a href="@Url.Action("Basket","Basket")" class="cart-basket-box">
                                     <span class="icon-cart">
                                         <i class="mdi mdi-shopping"></i>
                                     </span>
@@ -2241,26 +2259,28 @@
     </div>
     </div>
 
-<script>
-    $('#SearchInput').on('input', function() {
-        // Your function code here
-        $.ajax({
-            type: "Get",
-            data: {keyword: $(this).val()},
-            url: "/Product/SearchProds/",
-            beforeSend: function() {
-            },
-            error: function (xhr) {
-            },
-            complete: function() {
-            },
-            timeout: 40000,
-            success: function (data) {
-                let html = ``;
-                if (data.length>0)
-                { data.map(x =>
-                {
-                    html+=`  <li>
+@section Scripts
+{
+    <script>
+        $('#SearchInput1').on('input', function() {
+            // Your function code here
+            $.ajax({
+                type: "Get",
+                data: {keyword: $(this).val()},
+                url: "api/v1/Product/search",
+                beforeSend: function() {
+                },
+                error: function (xhr) {
+                },
+                complete: function() {
+                },
+                timeout: 40000,
+                success: function (data) {
+                    let html = ``;
+                    if (data.length>0)
+                    { data.map(x =>
+                    {
+                        html+=`  <li>
                                             <a href="/product/ProductPage/${x.id}">
                                                 <img src="https://localhost:7001/Images/Images/Product/${x.imageUri}" width="30px">
                                                 ${x.faTitle}
@@ -2269,16 +2289,17 @@
                                                 </a>
                                             </a>
                             </li>`;
-                })}else{
-                    html+=`  <li>
+                    })}else{
+                        html+=`  <li>
                                             <a href="">
                                               نتیجه ای یافت نشد
                                             </a>
                             </li>`;
-                }
+                    }
 
-                document.getElementById("SearchResult2").innerHTML = html;
-            },
+                    document.getElementById("SearchResult12").innerHTML = html;
+                },
+            });
         });
-    });
-</script>
+    </script>
+}

@@ -7,6 +7,7 @@
     List<Category> categories = ViewBag.Categories;
     MainCategory mcategory = ViewBag.FirstMainCategory;
     SubCategory subCategory = ViewBag.SubCat;
+    Domain.Entity.Users.User user = ViewBag.user;
 }
 @section header
 {
@@ -408,11 +409,20 @@
                                     </div>
                                 </header>
                                 <footer class="profile-box-content-footer">
-                                    <span class="profile-box-nameuser">حسن شجاعی</span>
-                                    <span class="profile-box-registery-date">عضویت در سایت 2 پیش</span>
-                                    <span class="profile-box-phone">شماره همراه : *******0991</span>
+                                    <span class="profile-box-nameuser">@user.Name @user.Family</span>
+                                    <span class="profile-box-registery-date">@user.InsertDate</span>
+                                    @if (user.PhoneNumber!=null)
+                                    {
+                                        <span class="profile-box-phone">شماره همراه : *******0991</span>
+
+                                    }
+                                    else
+                                    {
+                                        <span class="profile-box-phone">شماره همراه : ثبت نشده</span>
+
+                                    }
                                     <div class="profile-box-tabs">
-                                        <a href="#" class="profile-box-tab-sign-out"><i
+                                        <a href="@Url.Action("Logout")" class="profile-box-tab-sign-out"><i
                                                 class="mdi mdi-logout-variant"></i>خروج از حساب</a>
                                     </div>
                                 </footer>

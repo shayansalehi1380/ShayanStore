@@ -2,13 +2,18 @@
 using Domain.Entity.Products;
 using Domain.Entity.Products.Brands;
 using Domain.Entity.Products.Categories;
+using Domain.Entity.Users;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace Shop.Controllers
 {
-    public class UserPanelController(IUnitOfWork _unitOfWork) : Controller
+    [Authorize]
+    public class UserPanelController(IUnitOfWork _unitOfWork,UserManager<User> userManager) : Controller
     {
+        
         public async Task<IActionResult> Panel()
         {
             #region Required
@@ -38,6 +43,7 @@ namespace Shop.Controllers
             ViewBag.MainCategories = mcategories;
 
             #endregion
+            ViewBag.user = await userManager.Users.FirstOrDefaultAsync(x=>x.UserName == User.Identity.Name);
             return View();
         }
         public async Task<IActionResult> UserInfo()

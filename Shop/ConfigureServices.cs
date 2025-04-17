@@ -36,7 +36,7 @@ public static class ConfigureServices
             options.AccessDeniedPath = "/Admin/AccessDenied";
             options.Cookie.Name = "webappPanel";
             options.ExpireTimeSpan = TimeSpan.FromHours(3);
-            options.LoginPath = "/Admin/AdminLogin";
+            options.LoginPath = "/auth/login";
             options.SlidingExpiration = true;
         });
         services.Configure<SecurityStampValidatorOptions>(options =>
