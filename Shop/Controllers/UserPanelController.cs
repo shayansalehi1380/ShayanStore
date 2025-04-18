@@ -43,7 +43,8 @@ namespace Shop.Controllers
             ViewBag.MainCategories = mcategories;
 
             #endregion
-            ViewBag.user = await userManager.Users.FirstOrDefaultAsync(x=>x.UserName == User.Identity.Name);
+            ViewBag.User = await userManager.Users.FirstOrDefaultAsync(x => x.UserName == User.Identity.Name);
+
             return View();
         }
         public async Task<IActionResult> UserInfo()

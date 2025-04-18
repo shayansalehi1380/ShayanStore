@@ -29,7 +29,7 @@
                             <div class="header-search row text-right">
                                 <div class="header-search-box">
                                     <form action="#" class="form-search">
-                                        <input type="search" id="SearchInput1" class="header-search-input" name="search-input"
+                                        <input type="search" id="SearchInput10" class="header-search-input" name="search-input"
                                                placeholder="نام کالا، برند و یا دسته مورد نظر خود را جستجو کنید…">
                                         <div class="action-btns">
                                             <button class="btn btn-search" type="submit">
@@ -38,9 +38,10 @@
                                         </div>
                                     </form>
                                     <div class="search-result">
-                                        <ul class="search-result-list mb-0" id="SearchResult12">
+                                        <ul class="search-result-list mb-0" id="SearchResult25">
                                             <li>
-                                                <a href="#"><i class="mdi mdi-clock-outline"></i>
+                                                <a href="#">
+                                                    <i class="mdi mdi-clock-outline"></i>
                                                     کالای دیجیتال
                                                     <button class="btn btn-light btn-continue-search" type="submit">
                                                         <i class="fa fa-angle-left"></i>
@@ -61,9 +62,9 @@
                             <div class="d-block">
                                 <div class="account-box">
                                     <div class="nav-account d-block pl">
-                                    <span class="icon-account">
-                                        <img src="~/Shop/assets/images/man.png" class="avator">
-                                    </span>
+                                        <span class="icon-account">
+                                            <img src="~/Shop/assets/images/man.png" class="avator">
+                                        </span>
                                         <span class="title-account">حساب کاربری</span>
                                         @if (User.Identity.IsAuthenticated)
                                         {
@@ -154,13 +155,14 @@
                             <li class="divider-space-card">
                                 <div class="header-cart-basket">
                                     <a href="@Url.Action("Basket","Basket")" class="cart-basket-box">
-                                    <span class="icon-cart">
-                                        <i class="mdi mdi-shopping"></i>
-                                    </span>
+                                        <span class="icon-cart">
+                                            <i class="mdi mdi-shopping"></i>
+                                        </span>
                                         <span class="title-cart">سبد خرید</span>
-                                        <span class="price-cart">25,000,000
-                                        <span>تومان</span>
-                                    </span>
+                                        <span class="price-cart">
+                                            25,000,000
+                                            <span>تومان</span>
+                                        </span>
                                         <span class="count-cart">2</span>
                                     </a>
                                     <div class="widget-shopping-cart">
@@ -177,12 +179,15 @@
                                                                     <a href="#" class="mini-cart-item-image d-block">
                                                                         <img src="~/Shop/assets/images/menu-main/img-card.jpg">
                                                                     </a>
-                                                                    <span class="product-name-card">لپ تاپ چووی
-                                                                    الترابوک 14
-                                                                    اینچ پرو</span>
-                                                                    <div class="variation">
-                                                                    <span class="variation-n">فروشنده :
+                                                                    <span class="product-name-card">
+                                                                        لپ تاپ چووی
+                                                                        الترابوک 14
+                                                                        اینچ پرو
                                                                     </span>
+                                                                    <div class="variation">
+                                                                        <span class="variation-n">
+                                                                            فروشنده :
+                                                                        </span>
                                                                         <p class="mb-0">کالامارکت </p>
                                                                     </div>
                                                                     <div class="header-basket-list-item-color-badge">
@@ -190,10 +195,10 @@
                                                                         <span style="background: #000"></span>
                                                                     </div>
                                                                     <div class="quantity">
-                                                                    <span class="quantity-Price-amount">
-                                                                        15,000,000
-                                                                        <span>تومان</span>
-                                                                    </span>
+                                                                        <span class="quantity-Price-amount">
+                                                                            15,000,000
+                                                                            <span>تومان</span>
+                                                                        </span>
                                                                     </div>
                                                                 </div>
                                                             </li>
@@ -203,15 +208,17 @@
                                                                         <i class="mdi mdi-close"></i>
                                                                     </a>
                                                                     <a href="#" class="mini-cart-item-image d-block">
-                                                                        <img
-                                                                            src="~/Shop/assets/images/menu-main/img-card-2.jpg">
+                                                                        <img src="~/Shop/assets/images/menu-main/img-card-2.jpg">
                                                                     </a>
-                                                                    <span class="product-name-card">هواوای میت
-                                                                    بوک X پرو
-                                                                    13.9 اینچ</span>
-                                                                    <div class="variation">
-                                                                    <span class="variation-n">فروشنده :
+                                                                    <span class="product-name-card">
+                                                                        هواوای میت
+                                                                        بوک X پرو
+                                                                        13.9 اینچ
                                                                     </span>
+                                                                    <div class="variation">
+                                                                        <span class="variation-n">
+                                                                            فروشنده :
+                                                                        </span>
                                                                         <p class="mb-0">کالامارکت </p>
                                                                     </div>
                                                                     <div class="header-basket-list-item-color-badge">
@@ -219,10 +226,10 @@
                                                                         <span style="background: #ccc"></span>
                                                                     </div>
                                                                     <div class="quantity">
-                                                                    <span class="quantity-Price-amount">
-                                                                        10,000,000
-                                                                        <span>تومان</span>
-                                                                    </span>
+                                                                        <span class="quantity-Price-amount">
+                                                                            10,000,000
+                                                                            <span>تومان</span>
+                                                                        </span>
                                                                     </div>
                                                                 </div>
                                                             </li>
@@ -232,9 +239,10 @@
                                             </div>
                                             <div class="mini-card-total">
                                                 <strong>قیمت کل : </strong>
-                                                <span class="price-total"> 25,000,000
-                                                <span>تومان</span>
-                                            </span>
+                                                <span class="price-total">
+                                                    25,000,000
+                                                    <span>تومان</span>
+                                                </span>
                                             </div>
                                             <div class="mini-card-button">
                                                 <a href="cart.html" class="view-card">مشاهده سبد خرید</a>
@@ -330,7 +338,8 @@
                                 <ul>
                                     @foreach (var c in i.Categories)
                                     {
-                                        <li class="has-sub"><a href="#" class="category-level-2">@c.Name</a>
+                                        <li class="has-sub">
+                                            <a href="#" class="category-level-2">@c.Name</a>
                                             <ul>
                                                 @foreach (var s in c.SubCategories)
                                                 {
@@ -434,7 +443,7 @@
                                                             <img src="assets/images/slider-product/zenbook.jpg">
                                                         </a>
                                                         <div class="product-remove">
-                                                            <a href="#" class="remove">
+                                                                <a href="@Url.Action("RemoveBasket","Basket")" class="remove">
                                                                 <i class="mdi mdi-close"></i>
                                                             </a>
                                                         </div>
@@ -584,4 +593,56 @@ else
             </div>
         </div>
     </div>
+}
+
+@section Scripts
+{
+    <script>
+        $('#SearchInput10').on('input', function() {
+            let keyword = $(this).val();
+            if(keyword.length < 1) {
+                $('#SearchResult13').empty();
+                return;
+            }
+
+            $.ajax({
+                type: "GET",
+                data: {keyword: keyword},
+                url: "/api/v1/Product/search", // اضافه کردن اسلش در ابتدا
+                beforeSend: function() {
+                    console.log("در حال ارسال درخواست...");
+                },
+                error: function (xhr) {
+                    console.error("خطا در درخواست AJAX:", xhr.status, xhr.statusText);
+                    $('#SearchResult13').html('<li><a href="#">خطا در دریافت نتایج</a></li>');
+                },
+                complete: function() {
+                    console.log("درخواست تکمیل شد");
+                },
+                timeout: 40000,
+                success: function (data) {
+                    console.log("داده دریافتی:", data); // برای دیباگ
+                    let html = '';
+
+                    if (data && data.length > 0) {
+                        data.forEach(function(x) {
+                            html += `<li>
+                                <a href="/product/ProductPage/${x.id}">
+                                    <img src="/Images/Images/Product/${x.imageUri}" width="30px">
+                                    ${x.faTitle}
+                                    <span class="btn btn-light btn-continue-search">
+                                        <i class="fa fa-angle-left"></i>
+                                    </span>
+                                </a>
+                            </li>`;
+                        });
+                    } else {
+                        html = `<li><a href="#">نتیجه ای یافت نشد</a></li>`;
+                    }
+
+                    $('#SearchResult25').html(html);
+                }
+            });
+        });
+    </script>
 }

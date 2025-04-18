@@ -13,7 +13,6 @@
     <link rel="stylesheet" href="~/Shop/assets/css/vendor/noUISlider.min.css">
 }
 @section header
-
 {
     <header class="header-main">
         <div class="d-block">
@@ -22,7 +21,7 @@
                     <div class="header-right">
                         <div class="col-lg-3 pr">
                             <div class="header-logo row text-right">
-                                <a href="#">
+                                <a href="@Url.Action("Index","Home")">
                                     <img src="~/Shop/assets/images/logo.png" alt="کالامارکت">
                                 </a>
                             </div>
@@ -31,72 +30,20 @@
                             <div class="header-search row text-right">
                                 <div class="header-search-box">
                                     <form action="#" class="form-search">
-                                        <input type="search" class="header-search-input" name="search-input"
-                                               placeholder="نام محصول یا برند را جستجو کنید…">
+                                        <input type="search" id="SearchInput9" class="header-search-input" name="search-input"
+                                               placeholder="نام کالا، برند و یا دسته مورد نظر خود را جستجو کنید…">
                                         <div class="action-btns">
                                             <button class="btn btn-search" type="submit">
                                                 <img src="~/Shop/assets/images/search.png" alt="search">
                                             </button>
-                                            <div class="search-filter">
-                                                <div class="form-ui">
-                                                    <div class="custom-select-ui">
-                                                        <select class="right">
-                                                            <option>@mcategory.Title</option>
-                                                            @foreach (var category in categories)
-                                                            {
-                                                                <option value="@category.Id">@category.Name</option>
-                                                            }
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </div>
                                         </div>
                                     </form>
                                     <div class="search-result">
-                                        <ul class="search-result-list mb-0">
+                                        <ul class="search-result-list mb-0" id="SearchResult22">
                                             <li>
-                                                <a href="#"><i class="mdi mdi-clock-outline"></i>
+                                                <a href="#">
+                                                    <i class="mdi mdi-clock-outline"></i>
                                                     کالای دیجیتال
-                                                    <button class="btn btn-light btn-continue-search" type="submit">
-                                                        <i class="fa fa-angle-left"></i>
-                                                    </button>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#"><i class="mdi mdi-clock-outline"></i>
-                                                    آرایشی و بهداشتی
-                                                    <button class="btn btn-light btn-continue-search" type="submit">
-                                                        <i class="fa fa-angle-left"></i>
-                                                    </button>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#"><i class="mdi mdi-clock-outline"></i>
-                                                    گوشی موبایل
-                                                    <button class="btn btn-light btn-continue-search" type="submit">
-                                                        <i class="fa fa-angle-left"></i>
-                                                    </button>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#"><i class="mdi mdi-clock-outline"></i>
-                                                    تبلت
-                                                    <button class="btn btn-light btn-continue-search" type="submit">
-                                                        <i class="fa fa-angle-left"></i>
-                                                    </button>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#"><i class="mdi mdi-clock-outline"></i>
-                                                    لپ تاپ
-                                                    <button class="btn btn-light btn-continue-search" type="submit">
-                                                        <i class="fa fa-angle-left"></i>
-                                                    </button>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#"><i class="mdi mdi-clock-outline"></i>
-                                                    دوربین
                                                     <button class="btn btn-light btn-continue-search" type="submit">
                                                         <i class="fa fa-angle-left"></i>
                                                     </button>
@@ -116,26 +63,44 @@
                             <div class="d-block">
                                 <div class="account-box">
                                     <div class="nav-account d-block pl">
-                                    <span class="icon-account">
-                                        <img src="~/Shop/assets/images/man.png" class="avator">
-                                    </span>
+                                        <span class="icon-account">
+                                            <img src="~/Shop/assets/images/man.png" class="avator">
+                                        </span>
                                         <span class="title-account">حساب کاربری</span>
-                                        <div class="dropdown-menu">
-                                            <ul class="account-uls mb-0">
-                                                <li class="account-item">
-                                                    <a href="#" class="account-link">پنل کاربری</a>
-                                                </li>
-                                                <li class="account-item">
-                                                    <a href="#" class="account-link">سفارشات من</a>
-                                                </li>
-                                                <li class="account-item">
-                                                    <a href="#" class="account-link">تنظیمات</a>
-                                                </li>
-                                                <li class="account-item">
-                                                    <a href="#" class="account-link">خروج</a>
-                                                </li>
-                                            </ul>
-                                        </div>
+                                        @if (User.Identity.IsAuthenticated)
+                                        {
+                                            <div class="dropdown-menu">
+                                                <ul class="account-uls mb-0">
+                                                    <li class="account-item">
+                                                        <a href="@Url.Action("Panel","UserPanel")" class="account-link">پنل کاربری</a>
+                                                    </li>
+                                                    <li class="account-item">
+                                                        <a href="@Url.Action("Orders","UserPanel")" class="account-link">سفارشات من</a>
+                                                    </li>
+                                                    <li class="account-item">
+                                                        <a href="@Url.Action("Wallet","UserPanel")" class="account-link" style="background-color: #f5f5f5">کیف پول:  0 تومان</a>
+                                                    </li>
+                                                    <li class="account-item">
+                                                        <a href="@Url.Action("Logout","UserPanel")" class="account-link">خروج</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="dropdown-menu">
+                                                <ul class="account-uls mb-0">
+                                                    <li class="account-item">
+                                                        <a href="@Url.Action("Login","Auth")" class="account-link">ورود</a>
+                                                    </li>
+                                                    <li class="account-item">
+                                                        <a href="@Url.Action("Register","Auth")" class="account-link">ثبت نام</a>
+                                                    </li>
+
+                                                </ul>
+                                            </div>
+                                        }
+
                                     </div>
                                 </div>
                             </div>
@@ -149,8 +114,7 @@
                         <ul class="menu-ul mega-menu-level-one">
                             @foreach (var mainCat in mcategories)
                             {
-                                <li id="nav-menu-item"
-                                    class="menu-item @(mainCat.Categories.Any() ? "nav-overlay" : "")">
+                                <li id="nav-menu-item" class="menu-item @(mainCat.Categories.Any() ? "nav-overlay" : "")">
                                     <a href="#" class="current-link-menu">
                                         @mainCat.Title
                                         @if (mainCat.Categories.Any())
@@ -191,14 +155,15 @@
 
                             <li class="divider-space-card">
                                 <div class="header-cart-basket">
-                                    <a href="#" class="cart-basket-box">
-                                    <span class="icon-cart">
-                                        <i class="mdi mdi-shopping"></i>
-                                    </span>
+                                    <a href="@Url.Action("Basket","Basket")" class="cart-basket-box">
+                                        <span class="icon-cart">
+                                            <i class="mdi mdi-shopping"></i>
+                                        </span>
                                         <span class="title-cart">سبد خرید</span>
-                                        <span class="price-cart">25,000,000
-                                        <span>تومان</span>
-                                    </span>
+                                        <span class="price-cart">
+                                            25,000,000
+                                            <span>تومان</span>
+                                        </span>
                                         <span class="count-cart">2</span>
                                     </a>
                                     <div class="widget-shopping-cart">
@@ -213,15 +178,17 @@
                                                                         <i class="mdi mdi-close"></i>
                                                                     </a>
                                                                     <a href="#" class="mini-cart-item-image d-block">
-                                                                        <img
-                                                                            src="~/Shop/assets/images/menu-main/img-card.jpg">
+                                                                        <img src="~/Shop/assets/images/menu-main/img-card.jpg">
                                                                     </a>
-                                                                    <span class="product-name-card">لپ تاپ چووی
-                                                                    الترابوک 14
-                                                                    اینچ پرو</span>
-                                                                    <div class="variation">
-                                                                    <span class="variation-n">فروشنده :
+                                                                    <span class="product-name-card">
+                                                                        لپ تاپ چووی
+                                                                        الترابوک 14
+                                                                        اینچ پرو
                                                                     </span>
+                                                                    <div class="variation">
+                                                                        <span class="variation-n">
+                                                                            فروشنده :
+                                                                        </span>
                                                                         <p class="mb-0">کالامارکت </p>
                                                                     </div>
                                                                     <div class="header-basket-list-item-color-badge">
@@ -229,10 +196,10 @@
                                                                         <span style="background: #000"></span>
                                                                     </div>
                                                                     <div class="quantity">
-                                                                    <span class="quantity-Price-amount">
-                                                                        15,000,000
-                                                                        <span>تومان</span>
-                                                                    </span>
+                                                                        <span class="quantity-Price-amount">
+                                                                            15,000,000
+                                                                            <span>تومان</span>
+                                                                        </span>
                                                                     </div>
                                                                 </div>
                                                             </li>
@@ -242,15 +209,17 @@
                                                                         <i class="mdi mdi-close"></i>
                                                                     </a>
                                                                     <a href="#" class="mini-cart-item-image d-block">
-                                                                        <img
-                                                                            src="~/Shop/assets/images/menu-main/img-card-2.jpg">
+                                                                        <img src="~/Shop/assets/images/menu-main/img-card-2.jpg">
                                                                     </a>
-                                                                    <span class="product-name-card">هواوای میت
-                                                                    بوک X پرو
-                                                                    13.9 اینچ</span>
-                                                                    <div class="variation">
-                                                                    <span class="variation-n">فروشنده :
+                                                                    <span class="product-name-card">
+                                                                        هواوای میت
+                                                                        بوک X پرو
+                                                                        13.9 اینچ
                                                                     </span>
+                                                                    <div class="variation">
+                                                                        <span class="variation-n">
+                                                                            فروشنده :
+                                                                        </span>
                                                                         <p class="mb-0">کالامارکت </p>
                                                                     </div>
                                                                     <div class="header-basket-list-item-color-badge">
@@ -258,10 +227,10 @@
                                                                         <span style="background: #ccc"></span>
                                                                     </div>
                                                                     <div class="quantity">
-                                                                    <span class="quantity-Price-amount">
-                                                                        10,000,000
-                                                                        <span>تومان</span>
-                                                                    </span>
+                                                                        <span class="quantity-Price-amount">
+                                                                            10,000,000
+                                                                            <span>تومان</span>
+                                                                        </span>
                                                                     </div>
                                                                 </div>
                                                             </li>
@@ -271,9 +240,10 @@
                                             </div>
                                             <div class="mini-card-total">
                                                 <strong>قیمت کل : </strong>
-                                                <span class="price-total"> 25,000,000
-                                                <span>تومان</span>
-                                            </span>
+                                                <span class="price-total">
+                                                    25,000,000
+                                                    <span>تومان</span>
+                                                </span>
                                             </div>
                                             <div class="mini-card-button">
                                                 <a href="cart.html" class="view-card">مشاهده سبد خرید</a>
@@ -295,7 +265,60 @@
             </nav>
 
             <!--    responsive-megamenu-mobile----------------->
-
+            @* <nav class="sidebar"> *@
+            @*     <div class="nav-header"> *@
+            @*         <div class="header-cover"></div> *@
+            @*         <div class="logo-wrap"> *@
+            @*             <a class="logo-icon" href="#"><img alt="logo-icon" src="~/Shop/assets/images/logo.png" width="40"></a> *@
+            @*         </div> *@
+            @*     </div> *@
+            @*     <ul class="nav-categories ul-base"> *@
+            @*         @foreach (var mainCat in mcategories) *@
+            @*         { *@
+            @*             <li class="menu-item @(mainCat.Categories.Any() ? "has-submenu" : "")"> *@
+            @*                 <a href="#" class="current-link-menu"> *@
+            @*                     @mainCat.Title *@
+            @*                     @if (mainCat.Categories.Any()) *@
+            @*                     { *@
+            @*                         <i class="fa fa-angle-down toggle-submenu"></i> *@
+            @*                     } *@
+            @*                 </a> *@
+            @* *@
+            @*                 @if (mainCat.Categories.Any()) *@
+            @*                 { *@
+            @*                     <ul class="sub-menu level-1"> *@
+            @*                         @foreach (var category in mainCat.Categories) *@
+            @*                         { *@
+            @*                             <li class="menu-item @(category.SubCategories.Any() ? "has-submenu" : "")"> *@
+            @*                                 <a href="#" class="mega-menu-link"> *@
+            @*                                     @category.Name *@
+            @*                                     @if (category.SubCategories.Any()) *@
+            @*                                     { *@
+            @*                                         <i class="fa fa-angle-down toggle-submenu"></i> *@
+            @*                                     } *@
+            @*                                 </a> *@
+            @* *@
+            @*                                 @if (category.SubCategories.Any()) *@
+            @*                                 { *@
+            @*                                     <ul class="sub-menu level-2"> *@
+            @*                                         @foreach (var subCat in category.SubCategories) *@
+            @*                                         { *@
+            @*                                             <li class="menu-item"> *@
+            @*                                                 <a href="#"> *@
+            @*                                                     @subCat.Title *@
+            @*                                                 </a> *@
+            @*                                             </li> *@
+            @*                                         } *@
+            @*                                     </ul> *@
+            @*                                 } *@
+            @*                             </li> *@
+            @*                         } *@
+            @*                     </ul> *@
+            @*                 } *@
+            @*             </li> *@
+            @*         } *@
+            @*     </ul> *@
+            @* </nav> *@
             <nav class="sidebar">
                 <div class="nav-header">
                     <div class="header-cover"></div>
@@ -309,21 +332,19 @@
                         var id = "collapseOne" + i.Id;
                         <li>
                             <a href="#" class="collapsed" type="button" data-toggle="collapse" data-target="#@id"
-                               aria-expanded="false" aria-controls="collapseOne"><i
-                                    class="mdi mdi-chevron-down"></i>@i.Title</a>
+                               aria-expanded="false" aria-controls="collapseOne"><i class="mdi mdi-chevron-down"></i>@i.Title</a>
 
                             <div id="@id" class="collapse" aria-labelledby="headingOne"
                                  data-parent="#accordionExample" style="">
                                 <ul>
                                     @foreach (var c in i.Categories)
                                     {
-                                        <li class="has-sub"><a href="#" class="category-level-2">@c.Name</a>
+                                        <li class="has-sub">
+                                            <a href="#" class="category-level-2">@c.Name</a>
                                             <ul>
                                                 @foreach (var s in c.SubCategories)
                                                 {
-                                                    <li>
-                                                        <a href="@Url.Action("SubCategoryProduct", "Home", new { id = @c.Id })"
-                                                           class="category-level-3">@s.Title</a></li>
+                                                    <li><a href="@Url.Action("SubCategoryProduct", "Home", new { id = @c.Id })" class="category-level-3">@s.Title</a></li>
                                                 }
                                             </ul>
                                         </li>
@@ -2483,5 +2504,54 @@
     <script src="~/Shop/assets/js/vendor/theia-sticky-sidebar.min.js"></script>
     <script src="~/Shop/assets/js/vendor/wNumb.js"></script>
     <script src="~/Shop/assets/js/vendor/nouislider.min.js"></script>
+
+    <script>
+        $('#SearchInput9').on('input', function() {
+            let keyword = $(this).val();
+            if(keyword.length < 1) {
+                $('#SearchResult13').empty();
+                return;
+            }
+
+            $.ajax({
+                type: "GET",
+                data: {keyword: keyword},
+                url: "/api/v1/Product/search", // اضافه کردن اسلش در ابتدا
+                beforeSend: function() {
+                    console.log("در حال ارسال درخواست...");
+                },
+                error: function (xhr) {
+                    console.error("خطا در درخواست AJAX:", xhr.status, xhr.statusText);
+                    $('#SearchResult13').html('<li><a href="#">خطا در دریافت نتایج</a></li>');
+                },
+                complete: function() {
+                    console.log("درخواست تکمیل شد");
+                },
+                timeout: 40000,
+                success: function (data) {
+                    console.log("داده دریافتی:", data); // برای دیباگ
+                    let html = '';
+
+                    if (data && data.length > 0) {
+                        data.forEach(function(x) {
+                            html += `<li>
+                                <a href="/product/ProductPage/${x.id}">
+                                    <img src="/Images/Images/Product/${x.imageUri}" width="30px">
+                                    ${x.faTitle}
+                                    <span class="btn btn-light btn-continue-search">
+                                        <i class="fa fa-angle-left"></i>
+                                    </span>
+                                </a>
+                            </li>`;
+                        });
+                    } else {
+                        html = `<li><a href="#">نتیجه ای یافت نشد</a></li>`;
+                    }
+
+                    $('#SearchResult22').html(html);
+                }
+            });
+        });
+    </script>
 
 }

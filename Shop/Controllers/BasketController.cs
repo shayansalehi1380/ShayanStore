@@ -80,4 +80,18 @@ public class BasketController(IUnitOfWork _unitOfWork) : Controller
 
         return RedirectToAction("Index", "Home");
     }
+
+    public async Task<ActionResult> RemoveBasket(int id)
+    {
+        var basketList = new List<int>();
+        if (HttpContext.Session.GetString("basket") != null)
+        {
+            basketList = JsonConvert.DeserializeObject<List<int>>(HttpContext.Session.GetString("basket")).ToList();
+            basketList.RemoveAll(item => item == id);
+            HttpContext.Session.SetString("basket", JsonConvert.SerializeObject(basketList));
+        }
+
+        return RedirectToAction("Basket");
+
+    }
 }
