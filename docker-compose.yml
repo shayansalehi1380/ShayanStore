@@ -1,0 +1,13 @@
+services:
+  adminpanel.ui:
+    image: ${DOCKER_REGISTRY-}adminpanelui
+    build:
+      context: .
+      dockerfile: AdminPanel.UI/Dockerfile
+
+  shop:
+    image: ${DOCKER_REGISTRY-}shop
+    build:
+      context: .
+      dockerfile: Shop/Dockerfile
+
